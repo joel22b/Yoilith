@@ -3,7 +3,7 @@ package com.icsproject.client;
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.backends.gwt.GwtApplication;
 import com.badlogic.gdx.backends.gwt.GwtApplicationConfiguration;
-import com.icsproject.Main;
+import com.icsgame.Main;
 
 public class HtmlLauncher extends GwtApplication {
 
