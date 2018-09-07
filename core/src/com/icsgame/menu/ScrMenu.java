@@ -45,10 +45,10 @@ public class ScrMenu implements Screen {
     private void checkButtons(){ // Checks if Buttons are pressed
         checkButtonTextures();
         if(btnStart.justClicked()){
-            main.changeScreen(4);
+            main.changeScreen(2);
         }
         if(btnHighscores.justClicked()){
-            main.changeScreen(3);
+            main.changeScreen(1);
         }
     }
 

@@ -13,7 +13,7 @@ public class ScrSetup implements Screen {
     SpriteBatch batch;
     Texture txtBG;
     Sprite sprBG;
-    Button btnStart, btnHighscores;
+    Button btnStart, btnBack;
 
     public ScrSetup (Main _main){
         main = _main;
@@ -22,8 +22,8 @@ public class ScrSetup implements Screen {
         sprBG = new Sprite(txtBG, 0, 0, main.nWidth, main.nHeight);
 
         // Create Buttons
-        btnStart = new Button(20, 330, 600, 216, "btnStart.png", "btnStartPressed.png", "Blank.png");
-        btnHighscores = new Button(660, 60, 600, 216, "btnHighscores.png", "btnHighscoresPressed.png", "Blank.png");
+        btnStart = new Button(20, 60, 600, 216, "btnStart.png", "btnStartPressed.png", "Blank.png");
+        btnBack = new Button(660, 60, 600, 216, "btnBack.png", "btnBackPressed.png", "Blank.png");
     }
 
     @Override
@@ -34,7 +34,7 @@ public class ScrSetup implements Screen {
 
         // Draw Buttons
         btnStart.draw(batch);
-        btnHighscores.draw(batch);
+        btnBack.draw(batch);
 
         batch.end();
 
@@ -45,10 +45,10 @@ public class ScrSetup implements Screen {
     private void checkButtons(){ // Checks if Buttons are pressed
         checkButtonTextures();
         if(btnStart.justClicked()){
-            main.changeScreen(4);
-        }
-        if(btnHighscores.justClicked()){
             main.changeScreen(3);
+        }
+        if(btnBack.justClicked()){
+            main.changeScreen(0);
         }
     }
 
@@ -58,10 +58,10 @@ public class ScrSetup implements Screen {
         } else {
             btnStart.changeTexture(0);
         }
-        if(btnHighscores.isMousedOver()){
-            btnHighscores.changeTexture(1);
+        if(btnBack.isMousedOver()){
+            btnBack.changeTexture(1);
         } else {
-            btnHighscores.changeTexture(0);
+            btnBack.changeTexture(0);
         }
     }
 

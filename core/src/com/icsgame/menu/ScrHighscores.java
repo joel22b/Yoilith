@@ -1,7 +1,10 @@
 package com.icsgame.menu;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.icsgame.Main;
@@ -13,7 +16,8 @@ public class ScrHighscores implements Screen {
     SpriteBatch batch;
     Texture txtBG;
     Sprite sprBG;
-    Button btnStart, btnHighscores;
+    Button btnBack;
+    BitmapFont fontHighscores;
 
     public ScrHighscores (Main _main){
         main = _main;
@@ -22,8 +26,11 @@ public class ScrHighscores implements Screen {
         sprBG = new Sprite(txtBG, 0, 0, main.nWidth, main.nHeight);
 
         // Create Buttons
-        btnStart = new Button(20, 330, 600, 216, "btnStart.png", "btnStartPressed.png", "Blank.png");
-        btnHighscores = new Button(660, 60, 600, 216, "btnHighscores.png", "btnHighscoresPressed.png", "Blank.png");
+        btnBack = new Button(660, 60, 600, 216, "btnBack.png", "btnBackPressed.png", "Blank.png");
+
+        // Create Font
+        fontHighscores = new BitmapFont(Gdx.files.internal("fontHighscores.fnt"));
+        fontHighscores.setColor(Color.YELLOW);
     }
 
     @Override
@@ -31,10 +38,10 @@ public class ScrHighscores implements Screen {
         batch.begin();
         // Draw Background
         sprBG.draw(batch);
+        fontHighscores.draw( batch,"High Scores:", 60, main.nHeight-100);
 
         // Draw Buttons
-        btnStart.draw(batch);
-        btnHighscores.draw(batch);
+        btnBack.draw(batch);
 
         batch.end();
 
@@ -44,24 +51,16 @@ public class ScrHighscores implements Screen {
 
     private void checkButtons(){ // Checks if Buttons are pressed
         checkButtonTextures();
-        if(btnStart.justClicked()){
-            main.changeScreen(4);
-        }
-        if(btnHighscores.justClicked()){
-            main.changeScreen(3);
+        if(btnBack.justClicked()){
+            main.changeScreen(0);
         }
     }
 
     private void checkButtonTextures(){
-        if(btnStart.isMousedOver()){
-            btnStart.changeTexture(1);
+        if(btnBack.isMousedOver()){
+            btnBack.changeTexture(1);
         } else {
-            btnStart.changeTexture(0);
-        }
-        if(btnHighscores.isMousedOver()){
-            btnHighscores.changeTexture(1);
-        } else {
-            btnHighscores.changeTexture(0);
+            btnBack.changeTexture(0);
         }
     }
 
