@@ -1,7 +1,10 @@
 package com.icsgame.menu;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.icsgame.Main;
@@ -14,6 +17,7 @@ public class ScrSetup implements Screen {
     Texture txtBG;
     Sprite sprBG;
     Button btnStart, btnBack;
+    BitmapFont fontHighscores;
 
     public ScrSetup (Main _main){
         main = _main;
@@ -24,6 +28,10 @@ public class ScrSetup implements Screen {
         // Create Buttons
         btnStart = new Button(20, 60, 600, 216, "btnStart.png", "btnStartPressed.png", "Blank.png");
         btnBack = new Button(660, 60, 600, 216, "btnBack.png", "btnBackPressed.png", "Blank.png");
+
+        // Create Font
+        fontHighscores = new BitmapFont(Gdx.files.internal("fontHighscores.fnt"));
+        fontHighscores.setColor(Color.RED);
     }
 
     @Override
@@ -31,6 +39,7 @@ public class ScrSetup implements Screen {
         batch.begin();
         // Draw Background
         sprBG.draw(batch);
+        fontHighscores.draw( batch,"Player Setup:", 60, main.nHeight-100);
 
         // Draw Buttons
         btnStart.draw(batch);
