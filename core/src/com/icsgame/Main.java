@@ -13,7 +13,7 @@ public class Main extends Game {
 	ScrMenu scrMenu;
 	ScrHighscores scrHighscores;
 	ScrSetup scrSetup;
-	GameMain scrGameMain;
+	public GameMain scrGameMain;
 
 	// Width and Height Of Screen
 	public int nWidth, nHeight;
@@ -46,15 +46,15 @@ public class Main extends Game {
 				setScreen(scrMenu);
 				break;
 			case 1:
-				// Instructions
+				// Highscores
 				setScreen(scrHighscores);
 				break;
 			case 2:
-				// Options
+				// Game Setup
 				setScreen(scrSetup);
 				break;
 			case 3:
-				// Highscores
+				// Game
 				setScreen(scrGameMain);
 				break;
 			default:

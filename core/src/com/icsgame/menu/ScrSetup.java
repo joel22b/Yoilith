@@ -54,6 +54,7 @@ public class ScrSetup implements Screen {
     private void checkButtons(){ // Checks if Buttons are pressed
         checkButtonTextures();
         if(btnStart.justClicked()){
+            main.scrGameMain.setupGame();
             main.changeScreen(3);
         }
         if(btnBack.justClicked()){
