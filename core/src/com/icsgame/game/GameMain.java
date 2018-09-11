@@ -1,15 +1,19 @@
 package com.icsgame.game;
 
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.icsgame.Main;
 import com.icsgame.game.map.MapMain;
 
 public class GameMain implements Screen {
 
     Main main;
+    public SpriteBatch batch = new SpriteBatch();
 
     // Game Assets
     MapMain map;
+    Camera camera;
+    InputManager input;
 
     public GameMain (Main _main) {
         main = _main;
@@ -17,17 +21,23 @@ public class GameMain implements Screen {
     }
 
     public void setupGame(){
-        map.createMap(100, 100, 20, 10, 10, 10);
+        map.createMap(0, 0, 20, 10, 100, 100);
     }
 
     private void createGameAssets(){
         map = new MapMain(this);
+        camera = new Camera(this, main.nWidth, main.nHeight);
+        input = new InputManager(this);
     }
 
     @Override
     public void render(float delta){
+        input.handleInput();
+
+        camera.update(batch);
+
         // Render Game Assets
-        map.render();
+        map.render(batch);
     }
 
     @Override

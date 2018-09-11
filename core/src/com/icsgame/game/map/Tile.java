@@ -6,7 +6,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 public class Tile {
 
     MapMain map;
-    SpriteBatch batch = new SpriteBatch();
     Texture txtTile;
     int nX, nY, nW, nH;
 
@@ -19,7 +18,7 @@ public class Tile {
         nH = _nH;
     }
 
-    public void render(){
+    public void render(SpriteBatch batch){
         batch.begin();
         batch.draw(txtTile, nX, nY, nW, nH);
         batch.end();
