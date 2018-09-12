@@ -16,19 +16,21 @@ public class MapMain {
     Tile[][] tiles;
     Random ranGen;
     Texture[] txtTiles;
+    MapGenerator mapGen;
 
     public MapMain(GameMain _game){
         game = _game;
         ranGen = new Random();
+        mapGen = new MapGenerator(this);
     }
 
-    public void createMap(int _nX, int _nY, int _nW, int _nH, int _nWTile, int _nHTile, String sTheme){
+    public void createMap(int _nX, int _nY, int _nW, int _nH, int _nTileSize, String sTheme){
         nX = _nX;
         nY = _nY;
         nW = _nW;
         nH = _nH;
-        nWTile = _nWTile;
-        nHTile = _nHTile;
+        nWTile = _nTileSize;
+        nHTile = _nTileSize;
 
         loadTileTextures(sTheme);
         tiles = new Tile[nW][nH];
