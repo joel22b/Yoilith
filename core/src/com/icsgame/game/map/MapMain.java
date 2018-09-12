@@ -15,13 +15,14 @@ public class MapMain {
     // Map Assets
     Tile[][] tiles;
     Random ranGen;
+    Texture[] txtTiles;
 
     public MapMain(GameMain _game){
         game = _game;
         ranGen = new Random();
     }
 
-    public void createMap(int _nX, int _nY, int _nW, int _nH, int _nWTile, int _nHTile){
+    public void createMap(int _nX, int _nY, int _nW, int _nH, int _nWTile, int _nHTile, String sTheme){
         nX = _nX;
         nY = _nY;
         nW = _nW;
@@ -29,6 +30,7 @@ public class MapMain {
         nWTile = _nWTile;
         nHTile = _nHTile;
 
+        loadTileTextures(sTheme);
         tiles = new Tile[nW][nH];
         genMap();
     }
@@ -46,12 +48,29 @@ public class MapMain {
         for (int x = 0; x < tiles.length; x++) {
             for (int y = 0; y < tiles[x].length; y++) {
                 if(ranGen.nextInt(2) == 1){
-                    tiles[x][y] = new Tile(this, new Texture("themeDesert/tileWallCenter.png"), nX+(nWTile*x), nY+(nHTile*y), nWTile, nHTile);
+                    tiles[x][y] = new Tile(this, 2, txtTiles[2], nX+(nWTile*x), nY+(nHTile*y), nWTile, nHTile);
                 } else {
-                    tiles[x][y] = new Tile(this, new Texture("themeDesert/tileFloor.png"), nX+(nWTile*x), nY+(nHTile*y), nWTile, nHTile);
+                    tiles[x][y] = new Tile(this, 1, txtTiles[1], nX+(nWTile*x), nY+(nHTile*y), nWTile, nHTile);
 
                 }
             }
         }
+    }
+
+    private void loadTileTextures(String sTheme){
+        txtTiles = new Texture[11];
+
+        // Load Textures
+        txtTiles[0] = new Texture("theme"+sTheme+"/tileBoundary.png");
+        txtTiles[1] = new Texture("theme"+sTheme+"/tileFloor.png");
+        txtTiles[2] = new Texture("theme"+sTheme+"/tileWallCenter.png");
+        txtTiles[3] = new Texture("theme"+sTheme+"/tileWallTop.png");
+        txtTiles[4] = new Texture("theme"+sTheme+"/tileWallRight.png");
+        txtTiles[5] = new Texture("theme"+sTheme+"/tileWallBottom.png");
+        txtTiles[6] = new Texture("theme"+sTheme+"/tileWallLeft.png");
+        txtTiles[7] = new Texture("theme"+sTheme+"/tileWallTopLeft.png");
+        txtTiles[8] = new Texture("theme"+sTheme+"/tileWallTopRight.png");
+        txtTiles[9] = new Texture("theme"+sTheme+"/tileWallBottomRight.png");
+        txtTiles[10] = new Texture("theme"+sTheme+"/tileWallBottomLeft.png");
     }
 }

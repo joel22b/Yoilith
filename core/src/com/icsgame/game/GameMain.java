@@ -25,7 +25,7 @@ public class GameMain implements Screen {
     }
 
     public void setupGame(){
-        map.createMap(nX, nY, nW, nH, nTileSize, nTileSize);
+        map.createMap(nX, nY, nW, nH, nTileSize, nTileSize, "Desert");
     }
 
     private void createGameAssets(){

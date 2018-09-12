@@ -7,10 +7,11 @@ public class Tile {
 
     MapMain map;
     Texture txtTile;
-    int nX, nY, nW, nH;
+    int nType, nX, nY, nW, nH;
 
-    public Tile(MapMain _map, Texture _txtTile, int _nX, int _nY, int _nW, int _nH){
+    public Tile(MapMain _map, int _nType, Texture _txtTile, int _nX, int _nY, int _nW, int _nH){
         map = _map;
+        nType = _nType;
         txtTile = _txtTile;
         nX = _nX;
         nY = _nY;
