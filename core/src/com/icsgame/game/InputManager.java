@@ -18,16 +18,16 @@ public class InputManager {
 
     private void wasd(){
         if(Gdx.input.isKeyPressed(Input.Keys.W)){
-            game.camera.camera.translate(0, 2);
+            game.sprBox.translate(0, 3);
         }
         if(Gdx.input.isKeyPressed(Input.Keys.A)){
-            game.camera.camera.translate(-2, 0);
+            game.sprBox.translate(-3, 0);
         }
         if(Gdx.input.isKeyPressed(Input.Keys.S)){
-            game.camera.camera.translate(0, -2);
+            game.sprBox.translate(0, -3);
         }
         if(Gdx.input.isKeyPressed(Input.Keys.D)){
-            game.camera.camera.translate(2, 0);
+            game.sprBox.translate(3, 0);
         }
     }
 }
