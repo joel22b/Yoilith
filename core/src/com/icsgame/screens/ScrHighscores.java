@@ -1,4 +1,4 @@
-package com.icsgame.menu;
+package com.icsgame.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;

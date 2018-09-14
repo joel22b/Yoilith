@@ -3,12 +3,13 @@ package com.icsgame.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.icsgame.screens.ScrGame;
 
 public class InputManager {
 
-    GameMain game;
+    ScrGame game;
 
-    public InputManager(GameMain _game){
+    public InputManager(ScrGame _game){
         game = _game;
     }
 

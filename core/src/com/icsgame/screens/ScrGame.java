@@ -1,25 +1,27 @@
-package com.icsgame.game;
+package com.icsgame.screens;
 
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.icsgame.Main;
+import com.icsgame.game.Camera;
+import com.icsgame.game.InputManager;
 import com.icsgame.game.map.MapMain;
 
-public class GameMain implements Screen {
+public class ScrGame implements Screen {
 
     Main main;
     public SpriteBatch batch = new SpriteBatch();
     public int nX = 0, nY = 0, nW = 20, nH = 10, nTileSize = 100;
-    Sprite sprBox = new Sprite(new Texture("themeDesert/tileBoundary.png"), 300, 300 ,100, 100);
+    public Sprite sprBox = new Sprite(new Texture("themeDesert/tileBoundary.png"), 300, 300 ,100, 100);
 
     // Game Assets
     MapMain map;
     Camera camera;
     InputManager input;
 
-    public GameMain (Main _main) {
+    public ScrGame(Main _main) {
         main = _main;
         createGameAssets();
     }

@@ -5,15 +5,16 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
+import com.icsgame.screens.ScrGame;
 
 public class Camera {
 
-    GameMain game;
+    ScrGame game;
     OrthographicCamera camera;
     StretchViewport viewport;
     int nFollowW, nFollowH;
 
-    public Camera(GameMain _game, int w, int h){
+    public Camera(ScrGame _game, int w, int h){
         game = _game;
 
         // Setup Camera

@@ -24,14 +24,14 @@ public class Tile {
     10 = wall bottom left  edge
     ========================================== */
 
-    public Tile(MapMain _map, int _nType, Texture _txtTile, int _nX, int _nY, int _nW, int _nH){
+    public Tile(MapMain _map, int _nType, Texture _txtTile, int _nX, int _nY, int _nSize){
         map = _map;
         nType = _nType;
         txtTile = _txtTile;
         nX = _nX;
         nY = _nY;
-        nW = _nW;
-        nH = _nH;
+        nW = _nSize;
+        nH = _nSize;
     }
 
     public void render(SpriteBatch batch){

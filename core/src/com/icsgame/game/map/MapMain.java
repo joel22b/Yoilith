@@ -2,14 +2,13 @@ package com.icsgame.game.map;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.icsgame.game.Camera;
-import com.icsgame.game.GameMain;
+import com.icsgame.screens.ScrGame;
 
 import java.util.Random;
 
 public class MapMain {
 
-    GameMain game;
+    ScrGame game;
     int nX, nY, nW, nH, nWTile, nHTile;
 
     // Map Assets
@@ -18,7 +17,7 @@ public class MapMain {
     Texture[] txtTiles;
     MapGenerator mapGen;
 
-    public MapMain(GameMain _game){
+    public MapMain(ScrGame _game){
         game = _game;
         ranGen = new Random();
         mapGen = new MapGenerator(this);
@@ -34,27 +33,17 @@ public class MapMain {
 
         loadTileTextures(sTheme);
         tiles = new Tile[nW][nH];
-        genMap();
+        tiles = mapGen.generateMap(txtTiles, nX, nY, nW, nH, nWTile);
     }
 
     public void render(SpriteBatch batch){
         // Render Tiles
         for (int x = 0; x < tiles.length; x++){
             for (int y = 0; y < tiles[x].length; y++){
-                tiles[x][y].render(batch);
-            }
-        }
-    }
-
-    private void genMap(){
-        for (int x = 0; x < tiles.length; x++) {
-            for (int y = 0; y < tiles[x].length; y++) {
-                if(ranGen.nextInt(2) == 1){
-                    tiles[x][y] = new Tile(this, 2, txtTiles[2], nX+(nWTile*x), nY+(nHTile*y), nWTile, nHTile);
-                } else {
-                    tiles[x][y] = new Tile(this, 1, txtTiles[1], nX+(nWTile*x), nY+(nHTile*y), nWTile, nHTile);
-
+                if(tiles[x][y] == null){
+                    tiles[x][y] = new Tile(this, 1, txtTiles[1], x*nWTile, y*nHTile, nWTile);
                 }
+                tiles[x][y].render(batch);
             }
         }
     }

@@ -2,10 +2,10 @@ package com.icsgame;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
-import com.icsgame.game.GameMain;
-import com.icsgame.menu.ScrHighscores;
-import com.icsgame.menu.ScrMenu;
-import com.icsgame.menu.ScrSetup;
+import com.icsgame.screens.ScrGame;
+import com.icsgame.screens.ScrHighscores;
+import com.icsgame.screens.ScrMenu;
+import com.icsgame.screens.ScrSetup;
 
 public class Main extends Game {
 
@@ -13,7 +13,7 @@ public class Main extends Game {
 	ScrMenu scrMenu;
 	ScrHighscores scrHighscores;
 	ScrSetup scrSetup;
-	public GameMain scrGameMain;
+	public ScrGame scrScrGame;
 
 	// Width and Height Of Screen
 	public int nWidth, nHeight;
@@ -23,10 +23,10 @@ public class Main extends Game {
 		nWidth = Gdx.graphics.getWidth();
 		nHeight = Gdx.graphics.getHeight();
 
-		scrMenu = new com.icsgame.menu.ScrMenu(this);
-		scrHighscores = new com.icsgame.menu.ScrHighscores(this);
-		scrSetup = new com.icsgame.menu.ScrSetup(this);
-		scrGameMain = new com.icsgame.game.GameMain(this);
+		scrMenu = new com.icsgame.screens.ScrMenu(this);
+		scrHighscores = new com.icsgame.screens.ScrHighscores(this);
+		scrSetup = new com.icsgame.screens.ScrSetup(this);
+		scrScrGame = new ScrGame(this);
 		changeScreen(0);
 	}
 
@@ -55,7 +55,7 @@ public class Main extends Game {
 				break;
 			case 3:
 				// Game
-				setScreen(scrGameMain);
+				setScreen(scrScrGame);
 				break;
 			default:
 				break;

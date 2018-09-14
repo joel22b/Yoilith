@@ -1,37 +1,29 @@
-package com.icsgame.menu;
+package com.icsgame.screens;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.icsgame.Main;
 import com.icsgame.objects.Button;
 
-public class ScrSetup implements Screen {
+public class ScrMenu implements Screen {
 
     Main main;
     SpriteBatch batch;
     Texture txtBG;
     Sprite sprBG;
-    Button btnStart, btnBack;
-    BitmapFont fontHighscores;
+    Button btnStart, btnHighscores;
 
-    public ScrSetup (Main _main){
+    public ScrMenu (Main _main){
         main = _main;
         batch = new SpriteBatch();
         txtBG = new Texture("backgroundBlackBoards.jpg");
         sprBG = new Sprite(txtBG, 0, 0, main.nWidth, main.nHeight);
 
         // Create Buttons
-        btnStart = new Button(20, 60, 600, 216, "btnStart.png", "btnStartPressed.png", "Blank.png");
-        btnBack = new Button(660, 60, 600, 216, "btnBack.png", "btnBackPressed.png", "Blank.png");
-
-        // Create Font
-        fontHighscores = new BitmapFont(Gdx.files.internal("fontHighscores.fnt"));
-        fontHighscores.setColor(Color.RED);
+        btnStart = new Button(main.nWidth/2-300, 330, 600, 216, "btnStart.png", "btnStartPressed.png", "Blank.png");
+        btnHighscores = new Button(main.nWidth/2-300, 60, 600, 216, "btnHighscores.png", "btnHighscoresPressed.png", "Blank.png");
     }
 
     @Override
@@ -39,11 +31,10 @@ public class ScrSetup implements Screen {
         batch.begin();
         // Draw Background
         sprBG.draw(batch);
-        fontHighscores.draw( batch,"Player Setup:", 60, main.nHeight-100);
 
         // Draw Buttons
         btnStart.draw(batch);
-        btnBack.draw(batch);
+        btnHighscores.draw(batch);
 
         batch.end();
 
@@ -54,11 +45,10 @@ public class ScrSetup implements Screen {
     private void checkButtons(){ // Checks if Buttons are pressed
         checkButtonTextures();
         if(btnStart.justClicked()){
-            main.scrGameMain.setupGame();
-            main.changeScreen(3);
+            main.changeScreen(2);
         }
-        if(btnBack.justClicked()){
-            main.changeScreen(0);
+        if(btnHighscores.justClicked()){
+            main.changeScreen(1);
         }
     }
 
@@ -68,10 +58,10 @@ public class ScrSetup implements Screen {
         } else {
             btnStart.changeTexture(0);
         }
-        if(btnBack.isMousedOver()){
-            btnBack.changeTexture(1);
+        if(btnHighscores.isMousedOver()){
+            btnHighscores.changeTexture(1);
         } else {
-            btnBack.changeTexture(0);
+            btnHighscores.changeTexture(0);
         }
     }
 
