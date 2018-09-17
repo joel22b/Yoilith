@@ -81,6 +81,11 @@ public class Tile {
         }
     }
 
+    public void updateType(int _nType, Texture[] txtTiles){
+        nType = _nType;
+        txtTile = txtTiles[nType];
+    }
+
     private boolean hitDetectionUp(int _nX, int _nY){
         if(_nY < nY+nH){
             if(_nX > nX && _nX < nX + nW) {

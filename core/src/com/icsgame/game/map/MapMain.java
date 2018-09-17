@@ -40,9 +40,6 @@ public class MapMain {
         // Render Tiles
         for (int x = 0; x < tiles.length; x++){
             for (int y = 0; y < tiles[x].length; y++){
-                if(tiles[x][y] == null){
-                    tiles[x][y] = new Tile(this, 1, txtTiles[1], x*nWTile, y*nHTile, nWTile);
-                }
                 tiles[x][y].render(batch);
             }
         }

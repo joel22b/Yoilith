@@ -13,7 +13,7 @@ public class ScrGame implements Screen {
 
     Main main;
     public SpriteBatch batch = new SpriteBatch();
-    public int nX = 0, nY = 0, nW = 20, nH = 10, nTileSize = 100;
+    public int nX = 0, nY = 0, nW = 20, nH = 20, nTileSize = 100;
     public Sprite sprBox = new Sprite(new Texture("themeDesert/tileBoundary.png"), 300, 300 ,100, 100);
 
     // Game Assets
