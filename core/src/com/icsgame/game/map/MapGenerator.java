@@ -2,7 +2,6 @@ package com.icsgame.game.map;
 
 import com.badlogic.gdx.graphics.Texture;
 
-import java.util.ArrayList;
 import java.util.Random;
 
 public class MapGenerator {
@@ -10,9 +9,11 @@ public class MapGenerator {
     MapMain map;
     Tile[][] tiles;
     Random ranGen = new Random();
+    int[][][] arbTileTemplate;
 
     public MapGenerator(MapMain _map){
         map = _map;
+        createTileTemplate();
     }
 
     public Tile[][] generateMap(Texture[] txtTiles, int nX, int nY, int nW, int nH, int nTileSize){
@@ -23,6 +24,7 @@ public class MapGenerator {
         generateEdgeWalls(nX, nY, nW, nH, nTileSize, txtTiles[2], 30);
         generateWallNodes(nX, nY, nW, nH, nTileSize, txtTiles[2]);
         fillInFloor(nX, nY, nW, nH, nTileSize, txtTiles[1]);
+        correctTextures(nW, nH, txtTiles);
 
         // Return the map
         return tiles;
@@ -143,11 +145,61 @@ public class MapGenerator {
         }
     }
 
-    private void correctTextures(int nW, int nH, Texture[] txtTiles){
+    private void correctTextures(int nW, int nH, Texture[] txtTiles){ // True means there's a wall
+        int[][] arnTiles, arnUpdatedTiles = new int[nW][nH];
         for (int x = 1; x < nW-1; x++){
             for (int y = 1; y < nH-1; y++){
-
+                if(tiles[x][y].nType == 2){
+                    arnTiles = new int[3][3];
+                    arnTiles[1][1] = 1;
+                    for (int bX = 0; bX < 3; bX++){
+                        for (int bY = 0; bY < 3; bY++){
+                            if(bX != 1 && bY != 1){
+                                if(tiles[x+(bX-1)][y+(bY-1)].nType == 2){
+                                    arnTiles[bX][bY] = 1;
+                                } else {
+                                    arnTiles[bX][bY] = 0;
+                                }
+                                // Create output line to debug misreading
+                            }
+                        }
+                    }
+                    updateTexture(arnTiles, arnUpdatedTiles, x, y);
+                } else {
+                    arnUpdatedTiles[x][y] = tiles[x][y].nType;
+                }
             }
+        }
+        for (int x = 1; x < nW-1; x++) {
+            for (int y = 1; y < nH - 1; y++) {
+                System.out.println("Tile "+x+" "+y+" = "+arnUpdatedTiles[x][y]);
+                tiles[x][y].updateType(arnUpdatedTiles[x][y], txtTiles);
+            }
+        }
+    }
+
+    private void updateTexture(int[][] arnTiles, int[][] arnUpdatedTiles, int x, int y){
+        Boolean bTemplate, bFoundType = false;
+        for (int i = 0; i < arbTileTemplate.length; i++){
+            bTemplate = true;
+            bFoundType = false;
+            for (int bX = 0; bX < 3; bX++){
+                for (int bY = 0; bY < 3; bY++){
+                    if(bTemplate) {
+                        if (arbTileTemplate[i][bX][bY] != arnTiles[bX][bY] && arbTileTemplate[i][bX][bY] != 2) {
+                            bTemplate = false;
+                            System.out.println("Template does not match "+x+" "+y+": Template "+i+" "+arbTileTemplate[i][bX][bY]+" != "+arnTiles[bX][bY]+" | "+bX+" "+bY);
+                        }
+                    }
+                }
+            }
+            if(bTemplate){
+                arnUpdatedTiles[x][y] = i+2;
+                bFoundType = true;
+            }
+        }
+        if(!bFoundType){
+            arnUpdatedTiles[x][y] = 2;
         }
     }
 
@@ -157,5 +209,108 @@ public class MapGenerator {
         } else {
             return false;
         }
+    }
+
+    private void createTileTemplate(){
+        arbTileTemplate = new int[9][3][3]; // 0 = floor, 1 = wall, 2 = doesn't matter
+
+        // no edge
+        arbTileTemplate[0][0][0] = 1;
+        arbTileTemplate[0][0][1] = 1;
+        arbTileTemplate[0][0][2] = 1;
+        arbTileTemplate[0][1][0] = 1;
+        arbTileTemplate[0][1][1] = 1;
+        arbTileTemplate[0][1][2] = 1;
+        arbTileTemplate[0][2][0] = 1;
+        arbTileTemplate[0][2][1] = 1;
+        arbTileTemplate[0][2][2] = 1;
+
+        // top edge
+        arbTileTemplate[1][0][0] = 2;
+        arbTileTemplate[1][0][1] = 0;
+        arbTileTemplate[1][0][2] = 2;
+        arbTileTemplate[1][1][0] = 1;
+        arbTileTemplate[1][1][1] = 1;
+        arbTileTemplate[1][1][2] = 1;
+        arbTileTemplate[1][2][0] = 1;
+        arbTileTemplate[1][2][1] = 1;
+        arbTileTemplate[1][2][2] = 1;
+
+        // right edge
+        arbTileTemplate[2][0][0] = 1;
+        arbTileTemplate[2][0][1] = 1;
+        arbTileTemplate[2][0][2] = 2;
+        arbTileTemplate[2][1][0] = 1;
+        arbTileTemplate[2][1][1] = 1;
+        arbTileTemplate[2][1][2] = 0;
+        arbTileTemplate[2][2][0] = 1;
+        arbTileTemplate[2][2][1] = 1;
+        arbTileTemplate[2][2][2] = 2;
+
+        // bottom edge
+        arbTileTemplate[3][0][0] = 1;
+        arbTileTemplate[3][0][1] = 1;
+        arbTileTemplate[3][0][2] = 1;
+        arbTileTemplate[3][1][0] = 1;
+        arbTileTemplate[3][1][1] = 1;
+        arbTileTemplate[3][1][2] = 1;
+        arbTileTemplate[3][2][0] = 2;
+        arbTileTemplate[3][2][1] = 0;
+        arbTileTemplate[3][2][2] = 2;
+
+        // left edge
+        arbTileTemplate[4][0][0] = 2;
+        arbTileTemplate[4][0][1] = 1;
+        arbTileTemplate[4][0][2] = 1;
+        arbTileTemplate[4][1][0] = 0;
+        arbTileTemplate[4][1][1] = 1;
+        arbTileTemplate[4][1][2] = 1;
+        arbTileTemplate[4][2][0] = 2;
+        arbTileTemplate[4][2][1] = 1;
+        arbTileTemplate[4][2][2] = 1;
+
+        // top left edge
+        arbTileTemplate[5][0][0] = 0;
+        arbTileTemplate[5][0][1] = 0;
+        arbTileTemplate[5][0][2] = 2;
+        arbTileTemplate[5][1][0] = 0;
+        arbTileTemplate[5][1][1] = 1;
+        arbTileTemplate[5][1][2] = 1;
+        arbTileTemplate[5][2][0] = 2;
+        arbTileTemplate[5][2][1] = 1;
+        arbTileTemplate[5][2][2] = 1;
+
+        // top right edge
+        arbTileTemplate[6][0][0] = 2;
+        arbTileTemplate[6][0][1] = 0;
+        arbTileTemplate[6][0][2] = 0;
+        arbTileTemplate[6][1][0] = 1;
+        arbTileTemplate[6][1][1] = 1;
+        arbTileTemplate[6][1][2] = 0;
+        arbTileTemplate[6][2][0] = 1;
+        arbTileTemplate[6][2][1] = 1;
+        arbTileTemplate[6][2][2] = 2;
+
+        // bottom right edge
+        arbTileTemplate[7][0][0] = 1;
+        arbTileTemplate[7][0][1] = 1;
+        arbTileTemplate[7][0][2] = 2;
+        arbTileTemplate[7][1][0] = 1;
+        arbTileTemplate[7][1][1] = 1;
+        arbTileTemplate[7][1][2] = 0;
+        arbTileTemplate[7][2][0] = 2;
+        arbTileTemplate[7][2][1] = 0;
+        arbTileTemplate[7][2][2] = 0;
+
+        // bottom left edge
+        arbTileTemplate[8][0][0] = 2;
+        arbTileTemplate[8][0][1] = 1;
+        arbTileTemplate[8][0][2] = 1;
+        arbTileTemplate[8][1][0] = 0;
+        arbTileTemplate[8][1][1] = 1;
+        arbTileTemplate[8][1][2] = 1;
+        arbTileTemplate[8][2][0] = 0;
+        arbTileTemplate[8][2][1] = 0;
+        arbTileTemplate[8][2][2] = 2;
     }
 }
