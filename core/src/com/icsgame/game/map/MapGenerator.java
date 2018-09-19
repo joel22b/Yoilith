@@ -1,15 +1,20 @@
 package com.icsgame.game.map;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.math.Vector2;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 public class MapGenerator {
 
     MapMain map;
-    Tile[][] tiles;
     Random ranGen = new Random();
     int[][][] arbTileTemplate;
+
+    // Map Things
+    Tile[][] tiles;
+    ArrayList<Item> Items = new ArrayList<>();
 
     public MapGenerator(MapMain _map){
         map = _map;
@@ -25,6 +30,7 @@ public class MapGenerator {
         generateWallNodes(nX, nY, nW, nH, nTileSize, txtTiles[2]);
         fillInFloor(nX, nY, nW, nH, nTileSize, txtTiles[1]);
         correctTextures(nW, nH, txtTiles);
+        createItems((int)Math.ceil(Math.pow(Math.ceil(((nW/3)+(nH/3))/2), 2)/8));
 
         // Return the map
         return tiles;
@@ -199,12 +205,29 @@ public class MapGenerator {
         }
     }
 
+    private void createItems(int nNumODecoration){
+        int x, y, w, h;
+        for (int i = 0; i < nNumODecoration; i++){
+            do{
+                x = ranGen.nextInt(20);
+                y = ranGen.nextInt(20);
+                w = ranGen.nextInt(20);
+                h = ranGen.nextInt(20);
+            } while (canPlace(x, y, w, h));
+            Items.add(new Item(map, new Texture("themeDesert/tileBoundary.png"), new Vector2(x, y), w, h));
+        }
+    }
+
     private boolean ranPercent(int nPercent){
         if(ranGen.nextInt(100) < nPercent) {
             return true;
         } else {
             return false;
         }
+    }
+
+    private boolean canPlace(int x, int y, int w, int h){
+        return true;
     }
 
     private void createTileTemplate(){

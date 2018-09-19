@@ -40,7 +40,7 @@ public class Tile {
         batch.end();
     }
 
-    public void hitDetection(int _nX, int _nY, int _nW, int _nH){
+    public void hitDetection(int _nX, int _nY, int _nW, int _nH){ // Fix!!!! You need a vertical and horizontal only!!!
         switch (nType){
             case 0:
                 hitDetectionUp(_nX, _nY);
