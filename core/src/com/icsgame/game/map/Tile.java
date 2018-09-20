@@ -22,6 +22,12 @@ public class Tile {
     8 = wall top right edge
     9 = wall bottom right edge
     10 = wall bottom left  edge
+    11 = wall top cap
+    12 = wall bottom cap
+    13 = wall left cap
+    14 = wall right cap
+    15 = wall vertical tunnel
+    16 = wall horizontal tunnel
     ========================================== */
 
     public Tile(MapMain _map, int _nType, Texture _txtTile, int _nX, int _nY, int _nSize){
