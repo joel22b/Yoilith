@@ -57,7 +57,7 @@ public class MapMain {
     }
 
     private void loadTileTextures(String sTheme){
-        txtTiles = new Texture[17];
+        txtTiles = new Texture[18];
         txtDecorations = new Texture[2];
 
         // Load Tile Textures
@@ -78,6 +78,7 @@ public class MapMain {
         txtTiles[14] = new Texture("theme"+sTheme+"/tileWallCapRight.png");
         txtTiles[15] = new Texture("theme"+sTheme+"/tileWallTunnelVertical.png");
         txtTiles[16] = new Texture("theme"+sTheme+"/tileWallTunnelHorizontal.png");
+        txtTiles[17] = new Texture("theme"+sTheme+"/tileWallAlone.png");
 
         // Load Decoration Textures
         for (int i = 0; i < 2; i++) {

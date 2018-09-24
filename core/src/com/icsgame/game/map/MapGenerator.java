@@ -236,7 +236,7 @@ public class MapGenerator {
     }
 
     private void createTileTemplate(){
-        arbTileTemplate = new int[15][3][3]; // 0 = floor, 1 = wall, 2 = doesn't matter
+        arbTileTemplate = new int[16][3][3]; // 0 = floor, 1 = wall, 2 = doesn't matter
 
         // no edge
         arbTileTemplate[0][0][0] = 2;
@@ -402,5 +402,16 @@ public class MapGenerator {
         arbTileTemplate[14][2][0] = 2;
         arbTileTemplate[14][2][1] = 1;
         arbTileTemplate[14][2][2] = 2;
+
+        // wall alone
+        arbTileTemplate[15][0][0] = 2;
+        arbTileTemplate[15][0][1] = 0;
+        arbTileTemplate[15][0][2] = 2;
+        arbTileTemplate[15][1][0] = 0;
+        arbTileTemplate[15][1][1] = 1;
+        arbTileTemplate[15][1][2] = 0;
+        arbTileTemplate[15][2][0] = 2;
+        arbTileTemplate[15][2][1] = 0;
+        arbTileTemplate[15][2][2] = 2;
     }
 }
