@@ -231,7 +231,14 @@ public class MapGenerator {
         }
     }
 
-    private boolean canPlace(int x, int y, int w, int h){
+    private boolean canPlace(int nX, int nY, int nW, int nH){
+        for (int x = 0; x < tiles.length; x++){
+            for (int y = 0; y < tiles.length; y++){
+                if(tiles[x][y].isHit(nX, nY, nW, nH)){
+                    return false;
+                }
+            }
+        }
         return true;
     }
 

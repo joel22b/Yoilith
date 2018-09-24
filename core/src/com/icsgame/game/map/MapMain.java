@@ -52,7 +52,7 @@ public class MapMain {
 
         // Render Decorations
         for (int i = 0; i < decorations.size(); i++){
-            decorations.get(i).render(batch);
+            //decorations.get(i).render(batch);
         }
     }
 

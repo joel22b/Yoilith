@@ -49,7 +49,7 @@ public class ScrGame implements Screen {
         camera.follow(sprBox.getX(), sprBox.getY(), 100, 100);
 
         batch.begin();
-        sprBox.draw(batch);
+        //sprBox.draw(batch);
         batch.end();
     }
 
