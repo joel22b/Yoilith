@@ -43,7 +43,7 @@ public class ScrSetup implements Screen {
         for (int i = 0; i < 2; i++) {
             txtThemeImages[i] = new Texture("theme" + arsThemeReturns[i] + "/themeImage.png");
         }
-        sbTheme = new SelectionBox(main.nWidth-500, 100, 400, 640, new Texture("selectionBackground.png"), new Texture("selectionButtonLeft"), new Texture("selectionButtonRight"), txtThemeImages, "Map Theme", arsThemeReturns);
+        sbTheme = new SelectionBox(main.nWidth-500, 300, 360, 576, new Texture("selectionBackground.png"), "selectionButtonLeft.png", "selectionButtonRight.png", txtThemeImages, "Map Theme", arsThemeReturns);
     }
 
     @Override
@@ -51,7 +51,7 @@ public class ScrSetup implements Screen {
         batch.begin();
         // Draw Background
         sprBG.draw(batch);
-        fontHighscores.draw( batch,"Player Setup:", 60, main.nHeight-100);
+        fontHighscores.draw( batch,"Game Setup:", 60, main.nHeight-100);
 
         // Draw Buttons
         btnStart.draw(batch);
