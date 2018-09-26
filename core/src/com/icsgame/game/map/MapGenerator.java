@@ -1,7 +1,9 @@
 package com.icsgame.game.map;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.icsgame.game.utils.RectCollision;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -15,9 +17,11 @@ public class MapGenerator {
     // Map Things
     Tile[][] tiles;
     ArrayList<Item> Items = new ArrayList<>();
+    RectCollision rectCollision;
 
-    public MapGenerator(MapMain _map){
+    public MapGenerator(MapMain _map, RectCollision rectCollision){
         map = _map;
+        this.rectCollision = rectCollision;
         createTileTemplate();
     }
 
@@ -211,14 +215,19 @@ public class MapGenerator {
     }
 
     private void createItems(int nNumODecoration, int nX, int nY, int nW, int nH, int nTileSize, Texture[] txtDecorations){
-        int x, y, w, h;
+        int x, y, w, h, nCount;
         for (int i = 0; i < nNumODecoration; i++){
+            nCount = 0;
             do{
                 x = ranGen.nextInt((nW*nTileSize)-(nTileSize*2));
                 y = ranGen.nextInt((nH*nTileSize)-(nTileSize*2));
                 w = 50;
                 h = 50;
-            } while (!canPlace(nX+x+nTileSize, nY+y+nTileSize, w, h));
+                if(nCount >= 10){
+                    break;
+                }
+                nCount++;
+            } while (!canPlace(new Rectangle(nX+x+nTileSize, nY+y+nTileSize, w, h)));
             Items.add(new Item(map, txtDecorations[ranGen.nextInt(2)], new Vector2(nX+x+nTileSize, nY+y+nTileSize), w, h));
         }
     }
@@ -231,10 +240,10 @@ public class MapGenerator {
         }
     }
 
-    private boolean canPlace(int nX, int nY, int nW, int nH){
+    private boolean canPlace(Rectangle rect){
         for (int x = 0; x < tiles.length; x++){
             for (int y = 0; y < tiles.length; y++){
-                if(tiles[x][y].isHit(nX, nY, nW, nH)){
+                if(rectCollision.isColliding(tiles[x][y].getRect(), rect) && tiles[x][y].nType >= 2){
                     return false;
                 }
             }

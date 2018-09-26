@@ -5,9 +5,10 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.icsgame.Main;
-import com.icsgame.game.Camera;
+import com.icsgame.game.utils.Camera;
 import com.icsgame.game.InputManager;
 import com.icsgame.game.map.MapMain;
+import com.icsgame.game.utils.RectCollision;
 
 public class ScrGame implements Screen {
 
@@ -20,6 +21,7 @@ public class ScrGame implements Screen {
     MapMain map;
     Camera camera;
     InputManager input;
+    RectCollision rectCollision;
 
     public ScrGame(Main _main) {
         main = _main;
@@ -31,7 +33,8 @@ public class ScrGame implements Screen {
     }
 
     private void createGameAssets(){
-        map = new MapMain(this);
+        rectCollision = new RectCollision();
+        map = new MapMain(this, rectCollision);
         camera = new Camera(this, main.nWidth, main.nHeight);
         camera.setFollowBox(300, 200);
         input = new InputManager(this);

@@ -2,6 +2,7 @@ package com.icsgame.game.map;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.icsgame.game.utils.RectCollision;
 import com.icsgame.screens.ScrGame;
 
 import java.util.ArrayList;
@@ -20,11 +21,13 @@ public class MapMain {
     Random ranGen;
     Texture[] txtTiles, txtDecorations;
     MapGenerator mapGen;
+    RectCollision rectCollision;
 
-    public MapMain(ScrGame _game){
+    public MapMain(ScrGame _game, RectCollision rectCollision){
         game = _game;
         ranGen = new Random();
-        mapGen = new MapGenerator(this);
+        mapGen = new MapGenerator(this, rectCollision);
+        this.rectCollision = rectCollision;
     }
 
     public void createMap(int _nX, int _nY, int _nW, int _nH, int _nTileSize, String sTheme){
@@ -52,7 +55,7 @@ public class MapMain {
 
         // Render Decorations
         for (int i = 0; i < decorations.size(); i++){
-            //decorations.get(i).render(batch);
+            decorations.get(i).render(batch);
         }
     }
 

@@ -3,12 +3,14 @@ package com.icsgame.game.map;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Rectangle;
 
 public class Tile {
 
     MapMain map;
     Texture txtTile;
-    int nType, nX, nY, nW, nH;
+    int nType;
+    Rectangle rect = new Rectangle();
 
     /* =========== Type Meaning =================
     0 = boundary wall
@@ -34,33 +36,30 @@ public class Tile {
         map = _map;
         nType = _nType;
         txtTile = _txtTile;
-        nX = _nX;
-        nY = _nY;
-        nW = _nSize;
-        nH = _nSize;
+        rect.x = _nX;
+        rect.y = _nY;
+        rect.width = _nSize;
+        rect.height = _nSize;
     }
 
     public void render(SpriteBatch batch){
         batch.begin();
-        batch.draw(txtTile, nX, nY, nW, nH);
+        batch.draw(txtTile, getX(), getY(), getW(), getH());
         batch.end();
-    }
-
-    public boolean isHit(int _nX, int _nY, int _nW, int _nH){
-        if(_nX > nX && _nX < nX + nW){
-            if(_nY > nY && _nY < nY + nH){
-                if(_nX+_nW > nX && _nX+_nW < nX + nW) {
-                    if (_nY+_nH > nY && _nY+_nH < nY + nH) {
-                        return true;
-                    }
-                }
-            }
-        }
-        return false;
     }
 
     public void updateType(int _nType, Texture[] txtTiles){
         nType = _nType;
         txtTile = txtTiles[nType];
     }
+
+    public int getX(){ return (int)rect.x; }
+
+    public int getY(){ return (int)rect.y; }
+
+    public int getW(){ return (int)rect.width; }
+
+    public int getH(){ return (int)rect.height; }
+
+    public Rectangle getRect(){ return rect; }
 }
