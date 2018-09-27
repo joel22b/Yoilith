@@ -34,7 +34,7 @@ public class MapGenerator {
         generateWallNodes(nX, nY, nW, nH, nTileSize, txtTiles[2]);
         fillInFloor(nX, nY, nW, nH, nTileSize, txtTiles[1]);
         correctTextures(nW, nH, txtTiles);
-        createItems((int)Math.ceil(Math.pow(Math.ceil(((nW/3)+(nH/3))/2), 2)/8), nX, nY, nW, nH, nTileSize, txtDecorations);
+        createItems((int)Math.ceil(Math.ceil(((nW/3)*(nH/3)))/4), nX, nY, nW, nH, nTileSize, txtDecorations);
     }
 
     public Tile[][] getTiles(){
