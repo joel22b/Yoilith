@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.icsgame.screens.ScrGame;
 
@@ -13,6 +14,8 @@ public class Camera {
     OrthographicCamera camera;
     StretchViewport viewport;
     int nFollowW, nFollowH;
+    float fSpeed;
+    Vector2 vel = new Vector2(0,0);
 
     public Camera(ScrGame _game, int w, int h){
         game = _game;
@@ -40,6 +43,14 @@ public class Camera {
     }
 
     public void follow(float nX, float nY, int nW, int nH){
+        // Calculate Velocity
+        fSpeed = (float)Math.sqrt(Math.pow((nX+(nW/2))-camera.position.x, 2)+Math.pow((nY+(nH/2))-camera.position.y, 2))/50;
+
+        vel.set((nX+(nW/2))-camera.position.x, (nY+(nH/2))-camera.position.y);
+        vel.nor();
+        vel.set(vel.x*fSpeed, vel.y*fSpeed);
+
+        // Move Camera
         if(nY+nH > camera.position.y+(nFollowH/2)){ // Up
             moveUp();
         }
@@ -61,7 +72,7 @@ public class Camera {
 
     public void moveUp(){
         if(boundaryUp()){
-            camera.translate(0, 3);
+            camera.translate(0, vel.y);
         }
     }
 
@@ -75,7 +86,7 @@ public class Camera {
 
     public void moveDown(){
         if(boundaryDown()){
-            camera.translate(0, -3);
+            camera.translate(0, vel.y);
         }
     }
 
@@ -89,7 +100,7 @@ public class Camera {
 
     public void moveLeft(){
         if(boundaryLeft()){
-            camera.translate(-3, 0);
+            camera.translate(vel.x, 0);
         }
     }
 
@@ -103,7 +114,7 @@ public class Camera {
 
     public void moveRight(){
         if(boundaryRight()){
-            camera.translate(3, 0);
+            camera.translate(vel.x, 0);
         }
     }
 

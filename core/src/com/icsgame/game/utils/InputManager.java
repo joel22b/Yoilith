@@ -1,4 +1,4 @@
-package com.icsgame.game;
+package com.icsgame.game.utils;
 
 
 import com.badlogic.gdx.Gdx;
@@ -19,16 +19,16 @@ public class InputManager {
 
     private void wasd(){
         if(Gdx.input.isKeyPressed(Input.Keys.W)){
-            game.sprBox.translate(0, 3);
+            game.getPlayer().addVel(0f, 0.5f);
         }
         if(Gdx.input.isKeyPressed(Input.Keys.A)){
-            game.sprBox.translate(-3, 0);
+            game.getPlayer().addVel(-0.5f, 0f);
         }
         if(Gdx.input.isKeyPressed(Input.Keys.S)){
-            game.sprBox.translate(0, -3);
+            game.getPlayer().addVel(0f, -0.5f);
         }
         if(Gdx.input.isKeyPressed(Input.Keys.D)){
-            game.sprBox.translate(3, 0);
+            game.getPlayer().addVel(0.5f, 0f);
         }
     }
 }
