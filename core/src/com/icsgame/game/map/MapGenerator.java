@@ -37,6 +37,17 @@ public class MapGenerator {
         createItems((int)Math.ceil(Math.ceil(((nW/3)*(nH/3)))/4), nX, nY, nW, nH, nTileSize, txtDecorations);
     }
 
+    public Rectangle findPlayerSpawnRect(int nX, int nY, int nW, int nH, int nTileSize){
+        int x, y, w = 80, h = 80;
+        Rectangle rect;
+        do {
+            x = ranGen.nextInt(nX+(nW*nTileSize));
+            y = ranGen.nextInt(nY+(nH*nTileSize));
+            rect = new Rectangle(x, y, w, h);
+        } while (!canPlace(rect));
+        return rect;
+    }
+
     public Tile[][] getTiles(){
         return tiles;
     }

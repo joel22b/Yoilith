@@ -62,4 +62,6 @@ public class Tile {
     public int getH(){ return (int)rect.height; }
 
     public Rectangle getRect(){ return rect; }
+
+    public  int getType() { return nType; }
 }

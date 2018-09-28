@@ -88,4 +88,8 @@ public class MapMain {
             txtDecorations[i] = new Texture("theme"+sTheme+"/decorationPlant"+i+".png");
         }
     }
+
+    public Tile[][] getTiles() { return tiles; }
+
+    public MapGenerator getMapGen() { return mapGen; }
 }

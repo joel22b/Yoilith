@@ -34,6 +34,9 @@ public class ScrGame implements Screen {
 
     public void setupGame(){
         map.createMap(nX, nY, nW, nH, nTileSize, "Desert");
+
+        // Player
+        player = new Player(this, new Texture("themeDesert/tileBoundary.png"), map.getMapGen().findPlayerSpawnRect(nX, nY, nW, nH, nTileSize), new Vector2(0, 0));
     }
 
     private void createGameAssets(){
@@ -42,10 +45,7 @@ public class ScrGame implements Screen {
         camera = new Camera(this, main.nWidth, main.nHeight);
         camera.setFollowBox(300, 200);
         input = new InputManager(this);
-
-        // Player
-        player = new Player(this, new Texture("themeDesert/tileBoundary.png"), new Rectangle(300, 300, 80, 80), new Vector2(0, 0));
-    }
+        }
 
     @Override
     public void render(float delta){
@@ -54,6 +54,9 @@ public class ScrGame implements Screen {
         //Player Update
         player.update();
 
+        // Collision Detection
+        collisionDetection();
+
         // Camera Update
         camera.update(batch);
         camera.follow(player.getX(), player.getY(), (int)player.getW(), (int)player.getH());
@@ -61,6 +64,19 @@ public class ScrGame implements Screen {
         // Render Game Assets
         map.render(batch);
         player.render(batch);
+    }
+
+    private void collisionDetection(){
+        // For Player
+        for (int x = 0; x < map.getTiles().length; x++){
+            for (int y = 0; y < map.getTiles().length; y++){
+                if(rectCollision.isColliding(player.getRect(), map.getTiles()[x][y].getRect())){
+                    if(map.getTiles()[x][y].getType() != 1){
+                        rectCollision.collisionResponse(player.getRect(), map.getTiles()[x][y].getRect());
+                    }
+                }
+            }
+        }
     }
 
     public Player getPlayer(){ return player; }

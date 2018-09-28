@@ -60,4 +60,6 @@ public class Player {
     public void addVel(float vX, float vY){
         vel.add(vX, vY);
     }
+
+    public Rectangle getRect() { return rect; }
 }
