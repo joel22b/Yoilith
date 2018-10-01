@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.icsgame.screens.ScrGame;
 
@@ -124,5 +125,9 @@ public class Camera {
         } else {
             return false;
         }
+    }
+
+    public void setPosition(Vector2 pos) {
+        camera.translate(pos.x - camera.position.x, pos.y - camera.position.y);
     }
 }

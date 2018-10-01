@@ -37,6 +37,7 @@ public class ScrGame implements Screen {
 
         // Player
         player = new Player(this, new Texture("themeDesert/tileBoundary.png"), map.getMapGen().findPlayerSpawnRect(nX, nY, nW, nH, nTileSize), new Vector2(0, 0));
+        camera.setPosition(player.getPosition());
     }
 
     private void createGameAssets(){
@@ -72,7 +73,7 @@ public class ScrGame implements Screen {
             for (int y = 0; y < map.getTiles().length; y++){
                 if(rectCollision.isColliding(player.getRect(), map.getTiles()[x][y].getRect())){
                     if(map.getTiles()[x][y].getType() != 1){
-                        rectCollision.collisionResponse(player.getRect(), map.getTiles()[x][y].getRect());
+                        rectCollision.collisionResponseSimple(player.getRect(), map.getTiles()[x][y].getRect(), player.getVel());
                     }
                 }
             }

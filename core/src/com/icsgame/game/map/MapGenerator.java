@@ -254,7 +254,7 @@ public class MapGenerator {
     private boolean canPlace(Rectangle rect){
         for (int x = 0; x < tiles.length; x++){
             for (int y = 0; y < tiles.length; y++){
-                if(rectCollision.isColliding(tiles[x][y].getRect(), rect) && tiles[x][y].nType >= 2){
+                if(rectCollision.isColliding(tiles[x][y].getRect(), rect) && tiles[x][y].nType != 1){
                     return false;
                 }
             }

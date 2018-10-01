@@ -62,4 +62,8 @@ public class Player {
     }
 
     public Rectangle getRect() { return rect; }
+
+    public Vector2 getVel() { return vel; }
+
+    public Vector2 getPosition() { return new Vector2(rect.x, rect.y); }
 }
