@@ -49,15 +49,16 @@ public class ScrSetup implements Screen {
     @Override
     public void render(float delta){
         batch.begin();
+
         // Draw Background
         sprBG.draw(batch);
         fontHighscores.draw( batch,"Game Setup:", 60, main.nHeight-100);
 
-        // Draw Buttons
-        btnStart.draw(batch);
-        btnBack.draw(batch);
-
         batch.end();
+
+        // Update Buttons
+        btnStart.update(batch);
+        btnBack.update(batch);
 
         // Draw Selection Boxes
         sbTheme.render(batch);
@@ -68,26 +69,12 @@ public class ScrSetup implements Screen {
     }
 
     private void checkButtons(){ // Checks if Buttons are pressed
-        checkButtonTextures();
         if(btnStart.justClicked()){
             main.scrScrGame.setupGame();
             main.changeScreen(3);
         }
         if(btnBack.justClicked()){
             main.changeScreen(0);
-        }
-    }
-
-    private void checkButtonTextures(){
-        if(btnStart.isMousedOver()){
-            btnStart.changeTexture(1);
-        } else {
-            btnStart.changeTexture(0);
-        }
-        if(btnBack.isMousedOver()){
-            btnBack.changeTexture(1);
-        } else {
-            btnBack.changeTexture(0);
         }
     }
 

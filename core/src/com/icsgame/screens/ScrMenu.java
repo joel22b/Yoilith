@@ -29,39 +29,26 @@ public class ScrMenu implements Screen {
     @Override
     public void render(float delta){
         batch.begin();
+
         // Draw Background
         sprBG.draw(batch);
 
-        // Draw Buttons
-        btnStart.draw(batch);
-        btnHighscores.draw(batch);
-
         batch.end();
+
+        // Update buttons
+        btnStart.update(batch);
+        btnHighscores.update(batch);
 
         // Checks if buttons are pressed
         checkButtons();
     }
 
     private void checkButtons(){ // Checks if Buttons are pressed
-        checkButtonTextures();
         if(btnStart.justClicked()){
             main.changeScreen(2);
         }
         if(btnHighscores.justClicked()){
             main.changeScreen(1);
-        }
-    }
-
-    private void checkButtonTextures(){
-        if(btnStart.isMousedOver()){
-            btnStart.changeTexture(1);
-        } else {
-            btnStart.changeTexture(0);
-        }
-        if(btnHighscores.isMousedOver()){
-            btnHighscores.changeTexture(1);
-        } else {
-            btnHighscores.changeTexture(0);
         }
     }
 

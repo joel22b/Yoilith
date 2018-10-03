@@ -36,31 +36,23 @@ public class ScrHighscores implements Screen {
     @Override
     public void render(float delta){
         batch.begin();
+
         // Draw Background
         sprBG.draw(batch);
         fontHighscores.draw( batch,"High Scores:", 60, main.nHeight-100);
 
-        // Draw Buttons
-        btnBack.draw(batch);
-
         batch.end();
+
+        // Update buttons
+        btnBack.update(batch);
 
         // Checks if buttons are pressed
         checkButtons();
     }
 
     private void checkButtons(){ // Checks if Buttons are pressed
-        checkButtonTextures();
         if(btnBack.justClicked()){
             main.changeScreen(0);
-        }
-    }
-
-    private void checkButtonTextures(){
-        if(btnBack.isMousedOver()){
-            btnBack.changeTexture(1);
-        } else {
-            btnBack.changeTexture(0);
         }
     }
 
