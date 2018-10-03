@@ -52,6 +52,7 @@ public class Camera {
         vel.set(vel.x*fSpeed, vel.y*fSpeed);
 
         // Move Camera
+        ///*
         if(nY+nH > camera.position.y+(nFollowH/2)){ // Up
             moveUp();
         }
@@ -64,11 +65,21 @@ public class Camera {
         if(nX+nW > camera.position.x+(nFollowW/2)){ // Right
             moveRight();
         }
+        //*/
+        //move();
     }
 
     public void resize(int w, int h){
         viewport.update(w, h);
         camera.position.set(camera.viewportWidth / 2, camera.viewportHeight / 2, 0);
+    }
+
+    public void move(){ // Moves camera
+        if(boundaryUp() && boundaryDown()){ // Check vertical
+            if(boundaryLeft() && boundaryRight()){ // Check Horizontal
+                camera.translate(vel);
+            }
+        }
     }
 
     public void moveUp(){
