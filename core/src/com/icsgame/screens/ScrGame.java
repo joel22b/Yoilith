@@ -3,10 +3,10 @@ package com.icsgame.screens;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.icsgame.Main;
 import com.icsgame.game.Player;
+import com.icsgame.game.ui.PlayerInfo;
 import com.icsgame.game.utils.Camera;
 import com.icsgame.game.utils.InputManager;
 import com.icsgame.game.map.MapMain;
@@ -24,6 +24,9 @@ public class ScrGame implements Screen {
     InputManager input;
     RectCollision rectCollision;
 
+    // Game UI
+    PlayerInfo playerInfo;
+
     // Player
     Player player;
 
@@ -38,6 +41,7 @@ public class ScrGame implements Screen {
         // Player
         player = new Player(this, new Texture("themeDesert/tileBoundary.png"), map.getMapGen().findPlayerSpawnRect(nX, nY, nW, nH, nTileSize), new Vector2(0, 0));
         camera.setPosition(player.getPosition());
+        playerInfo.setPlayer(player);
     }
 
     private void createGameAssets(){
@@ -46,7 +50,8 @@ public class ScrGame implements Screen {
         camera = new Camera(this, main.nWidth, main.nHeight);
         camera.setFollowBox(300, 200);
         input = new InputManager(this);
-        }
+        playerInfo = new PlayerInfo(camera);
+    }
 
     @Override
     public void render(float delta){
@@ -65,6 +70,9 @@ public class ScrGame implements Screen {
         // Render Game Assets
         map.render(batch);
         player.render(batch);
+
+        // Render UI
+        playerInfo.render(batch);
     }
 
     private void collisionDetection(){

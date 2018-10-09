@@ -52,21 +52,18 @@ public class Camera {
         vel.set(vel.x*fSpeed, vel.y*fSpeed);
 
         // Move Camera
-        ///*
-        if(nY+nH > camera.position.y+(nFollowH/2)){ // Up
-            moveUp();
+        if(boundaryUp()) {
+            move();
         }
-        if(nY < camera.position.y-(nFollowH/2)){ // Down
-            moveDown();
+        if(boundaryDown()) {
+            move();
         }
-        if(nX < camera.position.x-(nFollowW/2)){ // Left
-            moveLeft();
+        if(boundaryLeft()) {
+            move();
         }
-        if(nX+nW > camera.position.x+(nFollowW/2)){ // Right
-            moveRight();
+        if(boundaryRight()) {
+            move();
         }
-        //*/
-        //move();
     }
 
     public void resize(int w, int h){
@@ -75,17 +72,7 @@ public class Camera {
     }
 
     public void move(){ // Moves camera
-        if(boundaryUp() && boundaryDown()){ // Check vertical
-            if(boundaryLeft() && boundaryRight()){ // Check Horizontal
-                camera.translate(vel);
-            }
-        }
-    }
-
-    public void moveUp(){
-        if(boundaryUp()){
-            camera.translate(0, vel.y);
-        }
+        camera.translate(vel);
     }
 
     private boolean boundaryUp(){
@@ -93,12 +80,6 @@ public class Camera {
             return true;
         } else {
             return false;
-        }
-    }
-
-    public void moveDown(){
-        if(boundaryDown()){
-            camera.translate(0, vel.y);
         }
     }
 
@@ -110,23 +91,11 @@ public class Camera {
         }
     }
 
-    public void moveLeft(){
-        if(boundaryLeft()){
-            camera.translate(vel.x, 0);
-        }
-    }
-
     private boolean boundaryLeft(){
         if(camera.position.x-(camera.viewportWidth/2) >= game.nX){
             return true;
         } else {
             return false;
-        }
-    }
-
-    public void moveRight(){
-        if(boundaryRight()){
-            camera.translate(vel.x, 0);
         }
     }
 
@@ -141,4 +110,12 @@ public class Camera {
     public void setPosition(Vector2 pos) {
         camera.translate(pos.x - camera.position.x, pos.y - camera.position.y);
     }
+
+    public float getX() { return camera.position.x; }
+
+    public float getY() { return camera.position.y; }
+
+    public float getW() { return camera.viewportWidth; }
+
+    public float getH() { return camera.viewportHeight; }
 }

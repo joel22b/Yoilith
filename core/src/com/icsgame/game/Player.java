@@ -11,6 +11,7 @@ public class Player {
     ScrGame game;
 
     // Player Info
+    int nHealthMax = 50, nHealth = 30;
     Texture txtPlayer;
     Rectangle rect;
     Vector2 vel;
@@ -35,6 +36,11 @@ public class Player {
         // Update Position
         setX(getX()+vel.x);
         setY(getY()+vel.y);
+    }
+
+    public void setupHealth(int nHealth, int nHealthMax){
+        this.nHealth = nHealth;
+        this.nHealthMax = nHealthMax;
     }
 
     public float getX(){ return rect.x; }
@@ -66,4 +72,8 @@ public class Player {
     public Vector2 getVel() { return vel; }
 
     public Vector2 getPosition() { return new Vector2(rect.x, rect.y); }
+
+    public int getHealth() { return nHealth; }
+
+    public int getHealthMax() { return nHealthMax; }
 }
