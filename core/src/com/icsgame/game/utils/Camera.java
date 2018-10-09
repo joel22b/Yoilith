@@ -43,6 +43,10 @@ public class Camera {
         batch.setProjectionMatrix(camera.combined);
     }
 
+    public Vector3 unProject(Vector3 coordinate){
+        return camera.unproject(coordinate);
+    }
+
     public void follow(float nX, float nY, int nW, int nH){
         // Calculate Velocity
         fSpeed = (float)Math.sqrt(Math.pow((nX+(nW/2))-camera.position.x, 2)+Math.pow((nY+(nH/2))-camera.position.y, 2))/50;

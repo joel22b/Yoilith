@@ -1,9 +1,13 @@
 package com.icsgame.game;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 import com.icsgame.screens.ScrGame;
 
 public class Player {
@@ -13,19 +17,30 @@ public class Player {
     // Player Info
     int nHealthMax = 50, nHealth = 30;
     Texture txtPlayer;
+    Sprite sprPlayerTop;
     Rectangle rect;
     Vector2 vel;
+    Vector3 posMouse3D;
 
     public Player(ScrGame game, Texture txtPlayer, Rectangle rect, Vector2 vel){
         this.game = game;
         this.txtPlayer = txtPlayer;
         this.rect = rect;
         this.vel = vel;
+
+        // Create Sprites
+        sprPlayerTop = new Sprite(txtPlayer, (int)(getX()+(getW()/2)), (int)(getY()+((getH()/4)*3)), (int)(getW()), (int)(getH()));
     }
 
     public void render(SpriteBatch batch){
         batch.begin();
+
+        // Player Bottom
         batch.draw(txtPlayer, getX(), getY(), getW(), getH());
+
+        // Player Top
+        sprPlayerTop.draw(batch);
+
         batch.end();
     }
 
@@ -36,6 +51,10 @@ public class Player {
         // Update Position
         setX(getX()+vel.x);
         setY(getY()+vel.y);
+
+        // Rotate Top
+        posMouse3D = game.getCamera().unProject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0));
+        sprPlayerTop.setRotation((float)Math.toDegrees(MathUtils.atan2(posMouse3D.y-sprPlayerTop.getY() ,posMouse3D.x-sprPlayerTop.getX())));
     }
 
     public void setupHealth(int nHealth, int nHealthMax){
@@ -51,9 +70,15 @@ public class Player {
 
     public float getH(){ return rect.height; }
 
-    public void setX(float x){ rect.setX(x); }
+    public void setX(float x){
+        rect.setX(x);
+        sprPlayerTop.setCenterX(x+(getW()/2));
+    }
 
-    public void setY(float y){ rect.setY(y); }
+    public void setY(float y){
+        rect.setY(y);
+        sprPlayerTop.setCenterY(y+((getH()/4)*3));
+    }
 
     public void setW(float w){ rect.setWidth(w); }
 

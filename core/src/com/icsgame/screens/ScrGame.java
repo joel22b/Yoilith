@@ -90,6 +90,8 @@ public class ScrGame implements Screen {
 
     public Player getPlayer(){ return player; }
 
+    public Camera getCamera() { return camera; }
+
     @Override
     public void show() {
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
