@@ -19,7 +19,7 @@ public class Player {
     Texture txtPlayer;
     Sprite sprPlayerTop;
     Rectangle rect;
-    Vector2 vel;
+    Vector2 vel, angleHead = new Vector2();
     Vector3 posMouse3D;
 
     public Player(ScrGame game, Texture txtPlayer, Rectangle rect, Vector2 vel){
@@ -54,7 +54,8 @@ public class Player {
 
         // Rotate Top
         posMouse3D = game.getCamera().unProject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0));
-        sprPlayerTop.setRotation((float)Math.toDegrees(MathUtils.atan2(posMouse3D.y-sprPlayerTop.getY() ,posMouse3D.x-sprPlayerTop.getX())));
+        angleHead.set(posMouse3D.x-(sprPlayerTop.getX()+(sprPlayerTop.getWidth()/2)), posMouse3D.y-(sprPlayerTop.getY()+(sprPlayerTop.getHeight()/2)));
+        sprPlayerTop.setRotation(angleHead.angle());
     }
 
     public void setupHealth(int nHealth, int nHealthMax){
