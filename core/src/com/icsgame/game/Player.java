@@ -8,6 +8,7 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
+import com.icsgame.game.weapons.Gun;
 import com.icsgame.screens.ScrGame;
 
 public class Player {
@@ -15,6 +16,7 @@ public class Player {
     ScrGame game;
 
     // Player Info
+    Gun gun;
     int nHealthMax = 50, nHealth = 30;
     Texture txtPlayer;
     Sprite sprPlayerTop;
@@ -30,6 +32,8 @@ public class Player {
 
         // Create Sprites
         sprPlayerTop = new Sprite(txtPlayer, (int)(getX()+(getW()/2)), (int)(getY()+((getH()/4)*3)), (int)(getW()), (int)(getH()));
+        gun = new Gun(game);
+        gun.loadType("pistol");
     }
 
     public void render(SpriteBatch batch){
@@ -102,4 +106,6 @@ public class Player {
     public int getHealth() { return nHealth; }
 
     public int getHealthMax() { return nHealthMax; }
+
+    public Gun getGun() { return gun; }
 }

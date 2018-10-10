@@ -11,6 +11,9 @@ import com.icsgame.game.utils.Camera;
 import com.icsgame.game.utils.InputManager;
 import com.icsgame.game.map.MapMain;
 import com.icsgame.game.utils.RectCollision;
+import com.icsgame.game.weapons.Bullet;
+
+import java.util.ArrayList;
 
 public class ScrGame implements Screen {
 
@@ -29,6 +32,9 @@ public class ScrGame implements Screen {
 
     // Player
     Player player;
+
+    // Bullets
+    ArrayList<Bullet> bullets = new ArrayList<>();
 
     public ScrGame(Main _main) {
         main = _main;
@@ -53,12 +59,16 @@ public class ScrGame implements Screen {
         playerInfo = new PlayerInfo(camera);
     }
 
-    @Override
-    public void render(float delta){
+    public void update(){
         input.handleInput();
 
         //Player Update
         player.update();
+
+        // Bullets Update
+        for (int i = 0; i < bullets.size(); i++){
+            bullets.get(i).update();
+        }
 
         // Collision Detection
         collisionDetection();
@@ -66,22 +76,41 @@ public class ScrGame implements Screen {
         // Camera Update
         camera.update(batch);
         camera.follow(player.getX(), player.getY(), (int)player.getW(), (int)player.getH());
+    }
+
+    @Override
+    public void render(float delta){
+        update();
 
         // Render Game Assets
         map.render(batch);
         player.render(batch);
+
+        // Render Bullets
+        for (int i = 0; i < bullets.size(); i++){
+            bullets.get(i).render(batch);
+        }
 
         // Render UI
         playerInfo.render(batch);
     }
 
     private void collisionDetection(){
-        // For Player
+        // With Map
         for (int x = 0; x < map.getTiles().length; x++){
             for (int y = 0; y < map.getTiles().length; y++){
-                if(rectCollision.isColliding(player.getRect(), map.getTiles()[x][y].getRect())){
-                    if(map.getTiles()[x][y].getType() != 1){
+                if(map.getTiles()[x][y].getType() != 1) {
+                    // For Player
+                    if (rectCollision.isColliding(player.getRect(), map.getTiles()[x][y].getRect())) {
                         rectCollision.collisionResponseSimple(player.getRect(), map.getTiles()[x][y].getRect(), player.getVel());
+                    }
+
+                    // For Bullets
+                    for (int i = 0; i < bullets.size(); i++){
+                        if (rectCollision.isColliding(bullets.get(i).getRect(), map.getTiles()[x][y].getRect())){
+                            bullets.get(i).dispose();
+                            bullets.remove(i);
+                        }
                     }
                 }
             }

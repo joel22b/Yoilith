@@ -29,7 +29,7 @@ public class PlayerInfo {
 
         // Setup UI
         txtHeart = new Texture("extra/heart.png");
-        txtBullet = new Texture("extra/bullet.png");
+        txtBullet = new Texture("extra/Bullet.png");
         txtBlack = new Texture("extra/black.png");
         txtRed = new Texture("extra/red.png");
         txtGreen = new Texture("extra/green.png");
@@ -46,7 +46,7 @@ public class PlayerInfo {
 
         // Render Ammo Bar
         batch.draw(txtBullet, camera.getX()-(camera.getW()/2)+nMargin, camera.getY()+(camera.getH()/2)- (objectOffset()*2), nObjectSize, nObjectSize);
-        renderBar(batch, camera.getX()-(camera.getW()/2)+nMargin+ objectOffset(), camera.getY()+(camera.getH()/2)- (objectOffset()*2), nObjectSize, txtBlue, txtGrey, player.getHealth(), player.getHealthMax(), 2);
+        renderBar(batch, camera.getX()-(camera.getW()/2)+nMargin+ objectOffset(), camera.getY()+(camera.getH()/2)- (objectOffset()*2), nObjectSize, txtBlue, txtGrey, player.getGun().getAmmo(), player.getGun().getAmmoMax(), 5);
 
         batch.end();
     }
