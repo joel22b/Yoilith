@@ -15,6 +15,13 @@ public class InputManager {
 
     public void handleInput(){
         wasd();
+        click();
+    }
+
+    private void click(){
+        if(Gdx.input.isTouched()){
+            game.getPlayer().getGun().fire();
+        }
     }
 
     private void wasd(){

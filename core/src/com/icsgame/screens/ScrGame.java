@@ -21,6 +21,11 @@ public class ScrGame implements Screen {
     public SpriteBatch batch = new SpriteBatch();
     public int nX = 0, nY = 0, nW = 20, nH = 20, nTileSize = 100;
 
+    // Tick Rate / Frames Info
+    float tickAccumulator, tickRate;
+    int TICK_RATE = 30;
+    float TICK_PERIOD = 1 / TICK_RATE;
+
     // Game Assets
     MapMain map;
     Camera camera;
@@ -79,20 +84,44 @@ public class ScrGame implements Screen {
     }
 
     @Override
-    public void render(float delta){
+    public void render(float delta) {
+        // Tick counting system by David Neuman to regulate the frames
+
+        tickAccumulator += delta;
+
+        //Check if a tick's worth of time has passed since last tick
+        if (tickAccumulator > TICK_PERIOD) {
+
+            doTick();
+
+            //Get remainder of time
+            tickAccumulator -= TICK_PERIOD;
+
+            //If two ticks worth of time or more has passed since last tick,
+            //prevent accumulator from winding up
+            if (tickAccumulator > TICK_PERIOD) {
+                tickRate = 1 / tickAccumulator;
+                tickAccumulator = TICK_PERIOD;
+            } else {
+                tickRate = TICK_RATE;
+            }
+        }
+    }
+
+    private void doTick(){
         update();
 
         // Render Game Assets
         map.render(batch);
         player.render(batch);
 
+        // Render UI
+        playerInfo.render(batch);
+
         // Render Bullets
         for (int i = 0; i < bullets.size(); i++){
             bullets.get(i).render(batch);
         }
-
-        // Render UI
-        playerInfo.render(batch);
     }
 
     private void collisionDetection(){
@@ -120,6 +149,8 @@ public class ScrGame implements Screen {
     public Player getPlayer(){ return player; }
 
     public Camera getCamera() { return camera; }
+
+    public ArrayList<Bullet> getBullets() { return bullets; }
 
     @Override
     public void show() {

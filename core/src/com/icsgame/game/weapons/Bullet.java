@@ -6,27 +6,37 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
+import java.util.Random;
+
 public class Bullet extends Sprite {
 
-    Vector2 vel;
+    Vector2 vel = new Vector2();
     Rectangle rect;
-    float fDamage;
+    int nDamage, nSpray;
+    float fSpeed = 1;
+    Random ranGen = new Random();
 
-    public Bullet(Texture txtBullet, Rectangle rect, Vector2 vel, float fDamage){
+    public Bullet(Texture txtBullet, Rectangle rect, Vector2 vel, int nDamage, int nSpray){
         super(txtBullet, (int)rect.getX(), (int)rect.getY(), (int)rect.getWidth(), (int)rect.getHeight());
         this.rect = rect;
-        this.vel = vel;
-        this.fDamage = fDamage;
+        this.vel.set(vel);
+        this.nDamage = nDamage;
+        setX(rect.getX());
+        setY(rect.getY());
+        setRegion(txtBullet);
+        this.nSpray = ranGen.nextInt(nSpray*2)-nSpray;
+        setRotation(this.vel.angle()-90+this.nSpray);
+        this.vel.nor();
     }
 
     public void update(){
-        setX(super.getX()+vel.x);
-        setY(super.getY()+vel.y);
+        setX(super.getX()+(vel.x*fSpeed));
+        setY(super.getY()+(vel.y*fSpeed));
     }
 
     public void render(SpriteBatch batch){
         batch.begin();
-        super.draw(batch);
+        draw(batch);
         batch.end();
     }
 

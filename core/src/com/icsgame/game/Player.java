@@ -32,7 +32,7 @@ public class Player {
 
         // Create Sprites
         sprPlayerTop = new Sprite(txtPlayer, (int)(getX()+(getW()/2)), (int)(getY()+((getH()/4)*3)), (int)(getW()), (int)(getH()));
-        gun = new Gun(game);
+        gun = new Gun(game, this);
         gun.loadType("pistol");
     }
 
@@ -49,6 +49,9 @@ public class Player {
     }
 
     public void update(){
+        // Update Gun
+        gun.update();
+
         // Slowing Down
         vel.set(vel.x*0.9f, vel.y*0.9f);
 
@@ -108,4 +111,6 @@ public class Player {
     public int getHealthMax() { return nHealthMax; }
 
     public Gun getGun() { return gun; }
+
+    public Vector2 getAngleHead() { return angleHead; }
 }
