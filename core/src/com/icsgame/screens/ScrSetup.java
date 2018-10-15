@@ -18,10 +18,10 @@ public class ScrSetup implements Screen {
     Texture txtBG;
     Sprite sprBG;
     Button btnStart, btnBack;
-    BitmapFont fontHighscores;
-    SelectionBox sbTheme;
-    Texture[] txtThemeImages = new Texture[2];
-    String[] arsThemeReturns = new String[2];
+    BitmapFont fontRed;
+    SelectionBox sbTheme, sbGun;
+    Texture[] txtThemeImages = new Texture[2], txtGunImages = new Texture[5];
+    String[] arsThemeReturns = new String[2], arsGunReturns = new String[5];
 
     public ScrSetup (Main _main){
         main = _main;
@@ -34,8 +34,8 @@ public class ScrSetup implements Screen {
         btnBack = new Button(660, 60, 600, 216, "btnBack.png", "btnBackPressed.png", "Blank.png");
 
         // Create Font
-        fontHighscores = new BitmapFont(Gdx.files.internal("fontHighscores.fnt"));
-        fontHighscores.setColor(Color.RED);
+        fontRed = new BitmapFont(Gdx.files.internal("fontHighscores.fnt"));
+        fontRed.setColor(Color.RED);
 
         // Create selection boxes
         arsThemeReturns[0] = "Desert";
@@ -43,7 +43,17 @@ public class ScrSetup implements Screen {
         for (int i = 0; i < 2; i++) {
             txtThemeImages[i] = new Texture("theme" + arsThemeReturns[i] + "/themeImage.png");
         }
-        sbTheme = new SelectionBox(main.nWidth-500, 300, 360, 576, new Texture("selectionBackground.png"), "selectionButtonLeft.png", "selectionButtonRight.png", txtThemeImages, "Map Theme", arsThemeReturns);
+        sbTheme = new SelectionBox(main.nWidth-400, 300, 300, 480, new Texture("selectionBackground.png"), "selectionButtonLeft.png", "selectionButtonRight.png", txtThemeImages, "Map Theme", arsThemeReturns);
+
+        arsGunReturns[0] = "pistol";
+        arsGunReturns[1] = "smg";
+        arsGunReturns[2] = "sniper";
+        arsGunReturns[3] = "shotgun";
+        arsGunReturns[4] = "machine_gun";
+        for (int i = 0; i < 5; i++) {
+            txtGunImages[i] = new Texture("themeSnow/themeImage.png");
+        }
+        sbGun = new SelectionBox(main.nWidth-880, 300, 300, 480, new Texture("selectionBackground.png"), "selectionButtonLeft.png", "selectionButtonRight.png", txtGunImages, "Map Theme", arsGunReturns);
     }
 
     @Override
@@ -52,7 +62,7 @@ public class ScrSetup implements Screen {
 
         // Draw Background
         sprBG.draw(batch);
-        fontHighscores.draw( batch,"Game Setup:", 60, main.nHeight-100);
+        fontRed.draw( batch,"Game Setup:", 60, main.nHeight-100);
 
         batch.end();
 
@@ -62,10 +72,12 @@ public class ScrSetup implements Screen {
 
         // Draw Selection Boxes
         sbTheme.render(batch);
+        sbGun.render(batch);
 
         // Checks if buttons are pressed
         checkButtons();
         sbTheme.checkButtons();
+        sbGun.checkButtons();
     }
 
     private void checkButtons(){ // Checks if Buttons are pressed
@@ -77,6 +89,8 @@ public class ScrSetup implements Screen {
             main.changeScreen(0);
         }
     }
+
+    public String getSbGunReturn() { return sbGun.getReturn(); }
 
     @Override
     public void show() {

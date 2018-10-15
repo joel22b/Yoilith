@@ -14,7 +14,7 @@ public class SelectionBox {
     String sTitle, txtButtonLeft, txtButtonRight;
     String[] arsReturn;
     Button btnLeft, btnRight;
-    BitmapFont font;
+    BitmapFont fontRed, fontBlack;
 
     public SelectionBox(int nX, int nY, int nW, int nH, Texture txtOutline, String txtButtonLeft, String txtButtonRight, Texture[] txtImages, String sTitle, String[] arsReturn){
         this.nX = nX;
@@ -29,12 +29,14 @@ public class SelectionBox {
         this.arsReturn = arsReturn;
 
         // Create Buttons
-        btnLeft = new Button(nX-130, nY+(nH/2)-50, 100, 100, txtButtonLeft, txtButtonLeft, txtButtonLeft);
-        btnRight = new Button(nX+nW+30, nY+(nH/2)-50, 100, 100, txtButtonRight, txtButtonRight, txtButtonRight);
+        btnLeft = new Button(nX-80, nY+(nH/2)-50, 50, 50, txtButtonLeft, txtButtonLeft, txtButtonLeft);
+        btnRight = new Button(nX+nW+30, nY+(nH/2)-50, 50, 50, txtButtonRight, txtButtonRight, txtButtonRight);
 
-        // Font
-        font = new BitmapFont(Gdx.files.internal("fontHighscores.fnt"));
-        font.setColor(Color.RED);
+        // Fonts
+        fontRed = new BitmapFont(Gdx.files.internal("fontHighscores.fnt"));
+        fontRed.setColor(Color.RED);
+        fontBlack = new BitmapFont(Gdx.files.internal("fontHighscores.fnt"));
+        fontBlack.setColor(Color.BLACK);
 
     }
 
@@ -44,7 +46,8 @@ public class SelectionBox {
         batch.draw(txtImages[nIndex], nX+50, nY+100, nW-100, nH-300);
         btnLeft.draw(batch);
         btnRight.draw(batch);
-        font.draw(batch, sTitle, nX+100, nY+nH-100);
+        fontRed.draw(batch, sTitle, nX+70, nY+nH-100);
+        fontBlack.draw(batch, arsReturn[nIndex], nX+50, nY+nH-150);
         batch.end();
     }
 
@@ -65,5 +68,5 @@ public class SelectionBox {
         }
     }
 
-
+    public String getReturn() { return arsReturn[nIndex]; }
 }

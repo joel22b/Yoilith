@@ -16,6 +16,7 @@ public class InputManager {
     public void handleInput(){
         wasd();
         click();
+        keyboard();
     }
 
     private void click(){
@@ -36,6 +37,12 @@ public class InputManager {
         }
         if(Gdx.input.isKeyPressed(Input.Keys.D)){
             game.getPlayer().addVel(0.5f, 0f);
+        }
+    }
+
+    private void keyboard(){
+        if(Gdx.input.isKeyJustPressed(Input.Keys.R)){
+            game.getPlayer().getGun().reload();
         }
     }
 }

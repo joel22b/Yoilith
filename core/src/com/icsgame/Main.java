@@ -12,7 +12,7 @@ public class Main extends Game {
 	// Screens
 	ScrMenu scrMenu;
 	ScrHighscores scrHighscores;
-	ScrSetup scrSetup;
+	public ScrSetup scrSetup;
 	public ScrGame scrScrGame;
 
 	// Width and Height Of Screen

@@ -2,6 +2,7 @@ package com.icsgame.game.weapons;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
 import com.icsgame.game.Player;
 import com.icsgame.screens.ScrGame;
 import sun.misc.IOUtils;
@@ -10,17 +11,23 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
+import java.util.Random;
 
 public class Gun {
 
     ScrGame game;
     Player player;
+    Random ranGen = new Random();
 
     // Gun info
     String sGun;
-    int nDamage, nBulletPerShot, nAmmo, nAmmoMax, nCooldown, nSpray;
+    int nDamage, nBulletPerShot, nAmmo, nAmmoMax, nCooldown, nSpray, nAngleRan;
+    Vector2 velRan = new Vector2();
+    Rectangle rectBullet = new Rectangle();
+    float fSpeed;
     boolean canFire = true;
     int tickCount = 0;
+
 
     public Gun(ScrGame game, Player player){
         this.game = game;
@@ -31,7 +38,18 @@ public class Gun {
         if(canFire){
             if(nAmmo > 0) {
                 for (int i = 0; i < nBulletPerShot; i++) {
-                    game.getBullets().add(new Bullet(new Texture("bullet.png"), new Rectangle(player.getX(), player.getY(), 20, 20), player.getAngleHead(), nDamage, nSpray));
+                    // Get the correct angle and velocity vector
+                    nAngleRan = ranGen.nextInt(nSpray*2)-nSpray;
+                    velRan.set(player.getAngleHead());
+                    velRan.setAngle(nAngleRan+player.getAngleHead().angle());
+                    velRan.nor();
+
+                    // Get Bullet Starting Location
+                    rectBullet.set(player.getHeadX()+(velRan.x*player.getHeadSize()), player.getHeadY()+(velRan.y*player.getHeadSize()), 20, 20);
+
+                    // Create Bullet
+                    game.getBullets().add(new Bullet(new Texture("bullet.png"),
+                            rectBullet, velRan, nDamage, nAngleRan, fSpeed));
                 }
                 canFire = false;
                 nAmmo--;
@@ -70,6 +88,7 @@ public class Gun {
             nAmmoMax = Integer.valueOf(prop.getProperty("ammoMax"));
             nBulletPerShot = Integer.valueOf(prop.getProperty("bulletPerShot"));
             nSpray = Integer.valueOf(prop.getProperty("spray"));
+            fSpeed = Float.valueOf(prop.getProperty("speed"));
             nAmmo = nAmmoMax;
 
         } catch (IOException ex) {
@@ -88,4 +107,6 @@ public class Gun {
     public int getAmmoMax() { return nAmmoMax; }
 
     public int getAmmo() { return nAmmo; }
+
+    public void reload() { nAmmo = nAmmoMax; }
 }

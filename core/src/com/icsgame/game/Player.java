@@ -33,7 +33,7 @@ public class Player {
         // Create Sprites
         sprPlayerTop = new Sprite(txtPlayer, (int)(getX()+(getW()/2)), (int)(getY()+((getH()/4)*3)), (int)(getW()), (int)(getH()));
         gun = new Gun(game, this);
-        gun.loadType("pistol");
+        gun.loadType(game.getMain().scrSetup.getSbGunReturn());
     }
 
     public void render(SpriteBatch batch){
@@ -113,4 +113,10 @@ public class Player {
     public Gun getGun() { return gun; }
 
     public Vector2 getAngleHead() { return angleHead; }
+
+    public float getHeadX() { return sprPlayerTop.getX(); }
+
+    public float getHeadY() { return sprPlayerTop.getY(); }
+
+    public float getHeadSize() { return sprPlayerTop.getWidth(); }
 }

@@ -115,13 +115,13 @@ public class ScrGame implements Screen {
         map.render(batch);
         player.render(batch);
 
-        // Render UI
-        playerInfo.render(batch);
-
         // Render Bullets
         for (int i = 0; i < bullets.size(); i++){
             bullets.get(i).render(batch);
         }
+
+        // Render UI
+        playerInfo.render(batch);
     }
 
     private void collisionDetection(){
@@ -139,6 +139,7 @@ public class ScrGame implements Screen {
                         if (rectCollision.isColliding(bullets.get(i).getRect(), map.getTiles()[x][y].getRect())){
                             bullets.get(i).dispose();
                             bullets.remove(i);
+                            System.out.println("Bullet Hit");
                         }
                     }
                 }
@@ -151,6 +152,8 @@ public class ScrGame implements Screen {
     public Camera getCamera() { return camera; }
 
     public ArrayList<Bullet> getBullets() { return bullets; }
+
+    public Main getMain() { return main; }
 
     @Override
     public void show() {
