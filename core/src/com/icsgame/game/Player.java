@@ -70,6 +70,14 @@ public class Player {
         this.nHealthMax = nHealthMax;
     }
 
+    public void kill(){
+        gun = null;
+        sprPlayerTop = null;
+        rect = null;
+        vel = null;
+        angleHead = null;
+    }
+
     public float getX(){ return rect.x; }
 
     public float getY(){ return rect.y; }

@@ -12,10 +12,10 @@ public class Bullet extends Sprite {
 
     Vector2 vel = new Vector2();
     Rectangle rect;
-    int nDamage;
+    int nDamage, nDist;
     float fSpeed;
 
-    public Bullet(Texture txtBullet, Rectangle rect, Vector2 vel, int nDamage, int nSpray, float fSpeed){
+    public Bullet(Texture txtBullet, Rectangle rect, Vector2 vel, int nDamage, int nSpray, float fSpeed, int nDist){
         super(txtBullet, (int)rect.getX(), (int)rect.getY(), (int)rect.getWidth(), (int)rect.getHeight());
         this.rect = rect;
         this.vel.set(vel);
@@ -25,11 +25,18 @@ public class Bullet extends Sprite {
         setRegion(txtBullet);
         this.fSpeed = fSpeed;
         setRotation(this.vel.angle()-90+nSpray);
+        this.nDist = nDist;
     }
 
-    public void update(){
+    public boolean update(){
         setX(super.getX()+(vel.x*fSpeed));
         setY(super.getY()+(vel.y*fSpeed));
+
+        nDist--;
+        if(nDist <= 0){
+            return true;
+        }
+        return false;
     }
 
     public void render(SpriteBatch batch){

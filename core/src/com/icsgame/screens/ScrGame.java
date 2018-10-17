@@ -39,7 +39,7 @@ public class ScrGame implements Screen {
     Player player;
 
     // Bullets
-    ArrayList<Bullet> bullets = new ArrayList<>();
+    ArrayList<Bullet> bullets;
 
     public ScrGame(Main _main) {
         main = _main;
@@ -53,6 +53,8 @@ public class ScrGame implements Screen {
         player = new Player(this, new Texture("themeDesert/tileBoundary.png"), map.getMapGen().findPlayerSpawnRect(nX, nY, nW, nH, nTileSize), new Vector2(0, 0));
         camera.setPosition(player.getPosition());
         playerInfo.setPlayer(player);
+
+        bullets = new ArrayList<>();
     }
 
     private void createGameAssets(){
@@ -64,53 +66,31 @@ public class ScrGame implements Screen {
         playerInfo = new PlayerInfo(camera);
     }
 
-    public void update(){
-        input.handleInput();
+    private void doTick(){
+        if(!input.handleInput()) {
+            collisionDetection();
+            update();
+            renderGame();
+        }
+    }
 
+    private void update(){
         //Player Update
         player.update();
 
         // Bullets Update
         for (int i = 0; i < bullets.size(); i++){
-            bullets.get(i).update();
+            if(bullets.get(i).update()){
+                killBullet(i);
+            }
         }
-
-        // Collision Detection
-        collisionDetection();
 
         // Camera Update
         camera.update(batch);
         camera.follow(player.getX(), player.getY(), (int)player.getW(), (int)player.getH());
     }
 
-    @Override
-    public void render(float delta) {
-        // Tick counting system by David Neuman to regulate the frames
-
-        tickAccumulator += delta;
-
-        //Check if a tick's worth of time has passed since last tick
-        if (tickAccumulator > TICK_PERIOD) {
-
-            doTick();
-
-            //Get remainder of time
-            tickAccumulator -= TICK_PERIOD;
-
-            //If two ticks worth of time or more has passed since last tick,
-            //prevent accumulator from winding up
-            if (tickAccumulator > TICK_PERIOD) {
-                tickRate = 1 / tickAccumulator;
-                tickAccumulator = TICK_PERIOD;
-            } else {
-                tickRate = TICK_RATE;
-            }
-        }
-    }
-
-    private void doTick(){
-        update();
-
+    private  void renderGame(){
         // Render Game Assets
         map.render(batch);
         player.render(batch);
@@ -137,12 +117,47 @@ public class ScrGame implements Screen {
                     // For Bullets
                     for (int i = 0; i < bullets.size(); i++){
                         if (rectCollision.isColliding(bullets.get(i).getRect(), map.getTiles()[x][y].getRect())){
-                            bullets.get(i).dispose();
-                            bullets.remove(i);
-                            System.out.println("Bullet Hit");
+                            killBullet(i);
                         }
                     }
                 }
+            }
+        }
+    }
+
+    public void killGame(){
+        map.kill();
+        player.kill();
+        player = null;
+        bullets = null;
+    }
+
+    private void killBullet(int nBulletIndex){
+        bullets.get(nBulletIndex).dispose();
+        bullets.remove(nBulletIndex);
+    }
+
+    @Override
+    public void render(float delta) {
+        // Tick counting system by David Neuman to regulate the frames
+
+        tickAccumulator += delta;
+
+        //Check if a tick's worth of time has passed since last tick
+        if (tickAccumulator > TICK_PERIOD) {
+
+            doTick();
+
+            //Get remainder of time
+            tickAccumulator -= TICK_PERIOD;
+
+            //If two ticks worth of time or more has passed since last tick,
+            //prevent accumulator from winding up
+            if (tickAccumulator > TICK_PERIOD) {
+                tickRate = 1 / tickAccumulator;
+                tickAccumulator = TICK_PERIOD;
+            } else {
+                tickRate = TICK_RATE;
             }
         }
     }

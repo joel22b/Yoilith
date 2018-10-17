@@ -13,10 +13,14 @@ public class InputManager {
         game = _game;
     }
 
-    public void handleInput(){
-        wasd();
-        click();
-        keyboard();
+    public boolean handleInput(){
+        if(!esc()) { // True means the game is stopping
+            wasd();
+            click();
+            keyboard();
+            return false;
+        }
+        return true;
     }
 
     private void click(){
@@ -44,5 +48,14 @@ public class InputManager {
         if(Gdx.input.isKeyJustPressed(Input.Keys.R)){
             game.getPlayer().getGun().reload();
         }
+    }
+
+    private boolean esc(){
+        if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)){
+            game.getMain().changeScreen(0);
+            game.killGame();
+            return true;
+        }
+        return false;
     }
 }

@@ -21,7 +21,7 @@ public class Gun {
 
     // Gun info
     String sGun;
-    int nDamage, nBulletPerShot, nAmmo, nAmmoMax, nCooldown, nSpray, nAngleRan;
+    int nDamage, nBulletPerShot, nAmmo, nAmmoMax, nCooldown, nSpray, nAngleRan, nDist;
     Vector2 velRan = new Vector2();
     Rectangle rectBullet = new Rectangle();
     float fSpeed;
@@ -49,7 +49,7 @@ public class Gun {
 
                     // Create Bullet
                     game.getBullets().add(new Bullet(new Texture("bullet.png"),
-                            rectBullet, velRan, nDamage, nAngleRan, fSpeed));
+                            rectBullet, velRan, nDamage, nAngleRan, fSpeed, nDist));
                 }
                 canFire = false;
                 nAmmo--;
@@ -89,6 +89,7 @@ public class Gun {
             nBulletPerShot = Integer.valueOf(prop.getProperty("bulletPerShot"));
             nSpray = Integer.valueOf(prop.getProperty("spray"));
             fSpeed = Float.valueOf(prop.getProperty("speed"));
+            nDist = Integer.valueOf(prop.getProperty("distance"));
             nAmmo = nAmmoMax;
 
         } catch (IOException ex) {

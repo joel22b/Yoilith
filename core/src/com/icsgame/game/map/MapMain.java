@@ -89,6 +89,11 @@ public class MapMain {
         }
     }
 
+    public void kill(){
+        tiles = null;
+        decorations = null;
+    }
+
     public Tile[][] getTiles() { return tiles; }
 
     public MapGenerator getMapGen() { return mapGen; }
