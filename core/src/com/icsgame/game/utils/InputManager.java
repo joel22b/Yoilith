@@ -25,7 +25,7 @@ public class InputManager {
 
     private void click(){
         if(Gdx.input.isTouched()){
-            game.getPlayer().getGun().fire();
+            game.getPlayer().useWeapon();
         }
     }
 
@@ -46,7 +46,10 @@ public class InputManager {
 
     private void keyboard(){
         if(Gdx.input.isKeyJustPressed(Input.Keys.R)){
-            game.getPlayer().getGun().reload();
+            game.getPlayer().reloadWeapon();
+        }
+        if(Gdx.input.isKeyJustPressed(Input.Keys.F)){
+            game.getPlayer().nextWeapon();
         }
     }
 

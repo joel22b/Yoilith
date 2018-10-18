@@ -9,7 +9,7 @@ public class Tile {
 
     MapMain map;
     Texture txtTile;
-    int nType;
+    int nType, nHealth;
     Rectangle rect = new Rectangle();
 
     /* =========== Type Meaning =================
@@ -32,7 +32,7 @@ public class Tile {
     16 = wall horizontal tunnel
     ========================================== */
 
-    public Tile(MapMain _map, int _nType, Texture _txtTile, int _nX, int _nY, int _nSize){
+    public Tile(MapMain _map, int _nType, Texture _txtTile, int _nX, int _nY, int _nSize, int nHealth){
         map = _map;
         nType = _nType;
         txtTile = _txtTile;
@@ -40,6 +40,7 @@ public class Tile {
         rect.y = _nY;
         rect.width = _nSize;
         rect.height = _nSize;
+        this.nHealth = nHealth;
     }
 
     public void render(SpriteBatch batch){

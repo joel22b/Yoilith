@@ -17,12 +17,13 @@ public class Player {
 
     // Player Info
     Gun gun;
-    int nHealthMax = 50, nHealth = 30;
+    int nHealthMax = 50, nHealth = 30, nBombsMax = 10, nBombs = nBombsMax;
     Texture txtPlayer;
     Sprite sprPlayerTop;
     Rectangle rect;
     Vector2 vel, angleHead = new Vector2();
     Vector3 posMouse3D;
+    int nActiveWeapon = 0, nWeaponNum = 2; // The Weapon that is currently in use
 
     public Player(ScrGame game, Texture txtPlayer, Rectangle rect, Vector2 vel){
         this.game = game;
@@ -127,4 +128,34 @@ public class Player {
     public float getHeadY() { return sprPlayerTop.getY(); }
 
     public float getHeadSize() { return sprPlayerTop.getWidth(); }
+
+    public int getBombs() { return nBombs; }
+
+    public int getBombsMax() { return nBombsMax; }
+
+    public int getActiveWeapon() { return nActiveWeapon; }
+
+    public void nextWeapon() {
+        if(nActiveWeapon >= nWeaponNum-1){
+            nActiveWeapon = 0;
+        } else {
+            nActiveWeapon++;
+        }
+    }
+
+    public void useWeapon() {
+        if(nActiveWeapon == 0){ // Gun
+            gun.fire();
+        } else if(nActiveWeapon == 1){ // Bombs
+            System.out.println("Boom");
+        }
+    }
+
+    public void reloadWeapon() {
+        if(nActiveWeapon == 0) { // Gun
+            gun.reload();
+        } else if(nActiveWeapon == 1) { // Bombs
+            nBombs = nBombsMax;
+        }
+    }
 }
