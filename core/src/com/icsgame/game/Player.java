@@ -4,10 +4,10 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
+import com.icsgame.game.weapons.ExplosiveLauncher;
 import com.icsgame.game.weapons.Gun;
 import com.icsgame.screens.ScrGame;
 
@@ -17,6 +17,7 @@ public class Player {
 
     // Player Info
     Gun gun;
+    ExplosiveLauncher explosiveLauncher;
     int nHealthMax = 50, nHealth = 30, nBombsMax = 10, nBombs = nBombsMax;
     Texture txtPlayer;
     Sprite sprPlayerTop;
@@ -35,6 +36,8 @@ public class Player {
         sprPlayerTop = new Sprite(txtPlayer, (int)(getX()+(getW()/2)), (int)(getY()+((getH()/4)*3)), (int)(getW()), (int)(getH()));
         gun = new Gun(game, this);
         gun.loadType(game.getMain().scrSetup.getSbGunReturn());
+        explosiveLauncher = new ExplosiveLauncher(game, this);
+        explosiveLauncher.loadType("explosive_launcher");
     }
 
     public void render(SpriteBatch batch){
@@ -52,6 +55,9 @@ public class Player {
     public void update(){
         // Update Gun
         gun.update();
+
+        // Update Explosive Launcher
+        explosiveLauncher.update();
 
         // Slowing Down
         vel.set(vel.x*0.9f, vel.y*0.9f);
@@ -73,6 +79,7 @@ public class Player {
 
     public void kill(){
         gun = null;
+        explosiveLauncher = null;
         sprPlayerTop = null;
         rect = null;
         vel = null;
@@ -121,6 +128,8 @@ public class Player {
 
     public Gun getGun() { return gun; }
 
+    public ExplosiveLauncher getExplosiveLauncher() { return explosiveLauncher; }
+
     public Vector2 getAngleHead() { return angleHead; }
 
     public float getHeadX() { return sprPlayerTop.getX(); }
@@ -148,6 +157,7 @@ public class Player {
             gun.fire();
         } else if(nActiveWeapon == 1){ // Bombs
             System.out.println("Boom");
+            explosiveLauncher.fire();
         }
     }
 
@@ -155,7 +165,7 @@ public class Player {
         if(nActiveWeapon == 0) { // Gun
             gun.reload();
         } else if(nActiveWeapon == 1) { // Bombs
-            nBombs = nBombsMax;
+            explosiveLauncher.reload();
         }
     }
 }

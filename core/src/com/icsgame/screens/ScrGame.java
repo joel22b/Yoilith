@@ -3,6 +3,7 @@ package com.icsgame.screens;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.icsgame.Main;
 import com.icsgame.game.Player;
@@ -12,6 +13,7 @@ import com.icsgame.game.utils.InputManager;
 import com.icsgame.game.map.MapMain;
 import com.icsgame.game.utils.RectCollision;
 import com.icsgame.game.weapons.Bullet;
+import com.icsgame.game.weapons.Explosive;
 
 import java.util.ArrayList;
 
@@ -40,6 +42,7 @@ public class ScrGame implements Screen {
 
     // Bullets
     ArrayList<Bullet> bullets;
+    ArrayList<Explosive> explosives;
 
     public ScrGame(Main _main) {
         main = _main;
@@ -55,6 +58,7 @@ public class ScrGame implements Screen {
         playerInfo.setPlayer(player);
 
         bullets = new ArrayList<>();
+        explosives = new ArrayList<>();
     }
 
     private void createGameAssets(){
@@ -85,6 +89,14 @@ public class ScrGame implements Screen {
             }
         }
 
+        // Explosives Update
+        for (int i = 0; i < explosives.size(); i++){
+            if(explosives.get(i).update()){
+                killExplosive(i);
+                explode(explosives.get(i).getRect(), explosives.get(i).getDamage(), explosives.get(i).getRange());
+            }
+        }
+
         // Camera Update
         camera.update(batch);
         camera.follow(player.getX(), player.getY(), (int)player.getW(), (int)player.getH());
@@ -98,6 +110,11 @@ public class ScrGame implements Screen {
         // Render Bullets
         for (int i = 0; i < bullets.size(); i++){
             bullets.get(i).render(batch);
+        }
+
+        // Render Explosives
+        for (int i = 0; i < explosives.size(); i++){
+            explosives.get(i).render(batch);
         }
 
         // Render UI
@@ -125,6 +142,10 @@ public class ScrGame implements Screen {
         }
     }
 
+    private void explode(Rectangle rect, int nDamage, int nRange){
+
+    }
+
     public void killGame(){
         map.kill();
         player.kill();
@@ -132,9 +153,14 @@ public class ScrGame implements Screen {
         bullets = null;
     }
 
-    private void killBullet(int nBulletIndex){
-        bullets.get(nBulletIndex).dispose();
-        bullets.remove(nBulletIndex);
+    private void killBullet(int index){
+        bullets.get(index).dispose();
+        bullets.remove(index);
+    }
+
+    private void killExplosive(int index){
+        explosives.get(index).dispose();
+        explosives.remove(index);
     }
 
     @Override
@@ -167,6 +193,8 @@ public class ScrGame implements Screen {
     public Camera getCamera() { return camera; }
 
     public ArrayList<Bullet> getBullets() { return bullets; }
+
+    public ArrayList<Explosive> getExplosives() { return explosives; }
 
     public Main getMain() { return main; }
 

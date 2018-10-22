@@ -55,7 +55,7 @@ public class PlayerInfo {
 
         // Render Bombs Bar
         batch.draw(txtBomb, camera.getX()-(camera.getW()/2)+nMargin, camera.getY()+(camera.getH()/2)- (objectOffset()*3), nObjectSize, nObjectSize);
-        renderBar(batch, camera.getX()-(camera.getW()/2)+nMargin+ objectOffset(), camera.getY()+(camera.getH()/2)- (objectOffset()*3), nObjectSize, txtGrey, txtRed, player.getBombs(), player.getBombsMax(), 5);
+        renderBar(batch, camera.getX()-(camera.getW()/2)+nMargin+ objectOffset(), camera.getY()+(camera.getH()/2)- (objectOffset()*3), nObjectSize, txtGrey, txtRed, player.getExplosiveLauncher().getBombs(), player.getExplosiveLauncher().getBombsMax(), 5);
 
         batch.end();
     }
