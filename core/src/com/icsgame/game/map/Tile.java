@@ -54,6 +54,13 @@ public class Tile {
         txtTile = txtTiles[nType];
     }
 
+    public void checkHealth(Texture[] txts) {
+        if(nHealth <= 0) {
+            nType = 1;
+            txtTile = txts[1];
+        }
+    }
+
     public int getX(){ return (int)rect.x; }
 
     public int getY(){ return (int)rect.y; }
@@ -65,4 +72,6 @@ public class Tile {
     public Rectangle getRect(){ return rect; }
 
     public  int getType() { return nType; }
+
+    public void decreaseHealth(int decrease) { nHealth -= decrease; }
 }

@@ -156,7 +156,6 @@ public class Player {
         if(nActiveWeapon == 0){ // Gun
             gun.fire();
         } else if(nActiveWeapon == 1){ // Bombs
-            System.out.println("Boom");
             explosiveLauncher.fire();
         }
     }

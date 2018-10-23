@@ -25,6 +25,10 @@ public class MapGenerator {
         createTileTemplate();
     }
 
+    public void updateTexture(Texture[] txtTiles) {
+        correctTextures(tiles.length, tiles[0].length, txtTiles);
+    }
+
     public void generateMap(Texture[] txtTiles, Texture[] txtDecorations, int nX, int nY, int nW, int nH, int nTileSize){
         tiles = new Tile[nW][nH];
 
@@ -175,12 +179,12 @@ public class MapGenerator {
         int[][] arnTiles, arnUpdatedTiles = new int[nW][nH];
         for (int x = 1; x < nW-1; x++){
             for (int y = 1; y < nH-1; y++){
-                if(tiles[x][y].nType == 2){
+                if(tiles[x][y].nType != 1 && tiles[x][y].nType != 0){
                     arnTiles = new int[3][3];
                     arnTiles[1][1] = 1;
                     for (int bX = 0; bX < 3; bX++){
                         for (int bY = 0; bY < 3; bY++){
-                            if(tiles[x+(bX-1)][y+(bY-1)].nType == 2){
+                            if(tiles[x+(bX-1)][y+(bY-1)].nType >= 2){
                                 arnTiles[bX][bY] = 1;
                             } else {
                                 arnTiles[bX][bY] = 0;

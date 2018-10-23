@@ -45,7 +45,6 @@ public class ExplosiveLauncher {
 
                     // Get Bullet Starting Location
                     rectExplosive.set(player.getHeadX()+(velRan.x*player.getHeadSize()), player.getHeadY()+(velRan.y*player.getHeadSize()), 80, 80);
-System.out.println("Creating bomb");
                     // Create Bullet
                     game.getExplosives().add(new Explosive(new Texture("extra/bomb.png"),
                             rectExplosive, velRan, fSpeed, nDamage, nRange, nTime));

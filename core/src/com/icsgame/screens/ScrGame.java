@@ -3,6 +3,7 @@ package com.icsgame.screens;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.icsgame.Main;
@@ -92,8 +93,8 @@ public class ScrGame implements Screen {
         // Explosives Update
         for (int i = 0; i < explosives.size(); i++){
             if(explosives.get(i).update()){
-                killExplosive(i);
                 explode(explosives.get(i).getRect(), explosives.get(i).getDamage(), explosives.get(i).getRange());
+                killExplosive(i);
             }
         }
 
@@ -142,8 +143,50 @@ public class ScrGame implements Screen {
         }
     }
 
-    private void explode(Rectangle rect, int nDamage, int nRange){
+    private void explode(Rectangle rect, int damage, int range){
+        // Distance from bomb
+        int distance;
+        // Center location of object
+        Vector2 objectCenter = new Vector2();
+        // Center of location of the bomb
+        Vector2 bombCenter = new Vector2();
 
+        // Find Center of Bomb
+        bombCenter.set(rect.getX()+(rect.getWidth()/2), rect.getY()+(rect.getHeight()/2));
+
+        // Check collision with map and apply damage
+        for (int x = 0; x < map.getTiles().length; x++){
+            for (int y = 0; y < map.getTiles().length; y++){
+                if(map.getTiles()[x][y].getType() != 1 && map.getTiles()[x][y].getType() != 0) {
+                    // Find Center of Object
+                    objectCenter.set(map.getTiles()[x][y].getX()+(map.getTiles()[x][y].getW()/2),
+                            map.getTiles()[x][y].getY()+(map.getTiles()[x][y].getH()/2));
+
+                    // Find distance
+                    objectCenter.sub(bombCenter);
+                    objectCenter.setAngle(0);
+                    distance = (int)objectCenter.x;
+
+                    if(range >= distance){
+                        // Is int explosion radius
+
+                        // Find the damage level
+                        if(distance >= (range/3)*2) {
+                            map.getTiles()[x][y].decreaseHealth(damage / 3);
+                        } else if(distance >= range/3) {
+                            map.getTiles()[x][y].decreaseHealth((damage/3)*2);
+                        } else {
+                            map.getTiles()[x][y].decreaseHealth(damage);
+                        }
+
+                        // Check to see if the wall changed
+                        map.getTiles()[x][y].checkHealth(map.getTxtTiles());
+                    }
+                }
+            }
+        }
+        // Update the Textures
+        map.getMapGen().updateTexture(map.getTxtTiles());
     }
 
     public void killGame(){

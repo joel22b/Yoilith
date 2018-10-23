@@ -97,4 +97,6 @@ public class MapMain {
     public Tile[][] getTiles() { return tiles; }
 
     public MapGenerator getMapGen() { return mapGen; }
+
+    public Texture[] getTxtTiles() { return txtTiles; }
 }
