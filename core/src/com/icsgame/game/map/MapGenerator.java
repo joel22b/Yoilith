@@ -64,11 +64,11 @@ public class MapGenerator {
         for (int x = 0; x < nW; x++){
             if(x == 0 || x == nW-1){
                 for(int y = 0; y < nH; y++){
-                    tiles[x][y] = new Tile(map, 0, txtBoundary, nX+(nTileSize*x), nY+(nTileSize*y), nTileSize, 100);
+                    tiles[x][y] = new Tile(map, 0, txtBoundary, nX+(nTileSize*x), nY+(nTileSize*y), nTileSize, 50);
                 }
             } else {
-                tiles[x][0] = new Tile(map, 0, txtBoundary, nX+(nTileSize*x), nY+(nTileSize*0), nTileSize, 100);
-                tiles[x][nH-1] = new Tile(map, 0, txtBoundary, nX+(nTileSize*x), nY+(nTileSize*(nH-1)), nTileSize, 100);
+                tiles[x][0] = new Tile(map, 0, txtBoundary, nX+(nTileSize*x), nY+(nTileSize*0), nTileSize, 50);
+                tiles[x][nH-1] = new Tile(map, 0, txtBoundary, nX+(nTileSize*x), nY+(nTileSize*(nH-1)), nTileSize, 50);
             }
         }
     }
@@ -77,15 +77,15 @@ public class MapGenerator {
         for (int i = 1; i < Math.ceil(((nW/3)+(nH/3))/2); i++) {
             for (int x = i; x < (nW - i); x++) {
                 if(ranPercent(100-((i-1)*nPercentChange))) {
-                    tiles[x][i] = new Tile(map, 2, txtWall, nX + (x * nTileSize), nY + (i * nTileSize), nTileSize, 100);
+                    tiles[x][i] = new Tile(map, 2, txtWall, nX + (x * nTileSize), nY + (i * nTileSize), nTileSize, 50);
                 }
                 if(ranPercent(100-((i-1)*nPercentChange))) {
-                    tiles[x][nH - (i + 1)] = new Tile(map, 2, txtWall, nX + (x * nTileSize), nY + ((nH - (i + 1)) * nTileSize), nTileSize, 100);
+                    tiles[x][nH - (i + 1)] = new Tile(map, 2, txtWall, nX + (x * nTileSize), nY + ((nH - (i + 1)) * nTileSize), nTileSize, 50);
                 }
                 if (x == i || x == nW - (i+1)) {
                     for (int y = 1; y < nH - 1; y++) {
                         if(ranPercent(100-((i-1)*nPercentChange))) {
-                            tiles[x][y] = new Tile(map, 2, txtWall, nX + (x * nTileSize), nY + (y * nTileSize), nTileSize, 100);
+                            tiles[x][y] = new Tile(map, 2, txtWall, nX + (x * nTileSize), nY + (y * nTileSize), nTileSize, 50);
                         }
                     }
                 }
@@ -104,7 +104,7 @@ public class MapGenerator {
                 ranX = ranGen.nextInt(nW - (nSizeFromEdge * 2)) + nSizeFromEdge;
                 ranY = ranGen.nextInt(nH - (nSizeFromEdge * 2)) + nSizeFromEdge;
             } while (tiles[ranX][ranY] != null);
-            tiles[ranX][ranY] = new Tile(map, 2, txtWall, nX+(ranX*nTileSize), nY+(ranY*nTileSize), nTileSize, 100);
+            tiles[ranX][ranY] = new Tile(map, 2, txtWall, nX+(ranX*nTileSize), nY+(ranY*nTileSize), nTileSize, 50);
             if(ranPercent(50)) {
                 ranSize = nNodeSize + (ranGen.nextInt((int) Math.ceil(nNodeSize / 4)));
             } else {
@@ -115,7 +115,7 @@ public class MapGenerator {
                 switch (ranGen.nextInt(4)){
                     case 0:
                         if(tiles[ranX+1][ranY] == null){
-                            tiles[ranX+1][ranY] = new Tile(map, 2, txtWall, nX+((ranX+1)*nTileSize), nY+((ranY)*nTileSize), nTileSize, 100);
+                            tiles[ranX+1][ranY] = new Tile(map, 2, txtWall, nX+((ranX+1)*nTileSize), nY+((ranY)*nTileSize), nTileSize, 50);
                             ranX++;
                         } else {
                             if(nFailCount < 5) {
@@ -137,7 +137,7 @@ public class MapGenerator {
                         break;
                     case 2:
                         if(tiles[ranX-1][ranY] == null){
-                            tiles[ranX-1][ranY] = new Tile(map, 2, txtWall, nX+((ranX-1)*nTileSize), nY+((ranY)*nTileSize), nTileSize, 100);
+                            tiles[ranX-1][ranY] = new Tile(map, 2, txtWall, nX+((ranX-1)*nTileSize), nY+((ranY)*nTileSize), nTileSize, 50);
                             ranX--;
                         } else {
                             if(nFailCount < 5) {
@@ -148,7 +148,7 @@ public class MapGenerator {
                         break;
                     case 3:
                         if(tiles[ranX][ranY-1] == null){
-                            tiles[ranX][ranY-1] = new Tile(map, 2, txtWall, nX+((ranX)*nTileSize), nY+((ranY-1)*nTileSize), nTileSize, 100);
+                            tiles[ranX][ranY-1] = new Tile(map, 2, txtWall, nX+((ranX)*nTileSize), nY+((ranY-1)*nTileSize), nTileSize, 50);
                             ranY--;
                         } else {
                             if(nFailCount < 5) {
@@ -169,7 +169,7 @@ public class MapGenerator {
         for (int x = 0; x < tiles.length; x++) {
             for (int y = 0; y < tiles[x].length; y++) {
                 if (tiles[x][y] == null) {
-                    tiles[x][y] = new Tile(map, 1, txtFloor, nX+(x*nTileSize), nY+(y*nTileSize), nTileSize, 100);
+                    tiles[x][y] = new Tile(map, 1, txtFloor, nX+(x*nTileSize), nY+(y*nTileSize), nTileSize, 50);
                 }
             }
         }

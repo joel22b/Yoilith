@@ -8,8 +8,8 @@ import com.badlogic.gdx.math.Rectangle;
 public class Tile {
 
     MapMain map;
-    Texture txtTile;
-    int nType, nHealth;
+    Texture txtTile, txtDamage = null;
+    int nType, nHealth, healthMax;
     Rectangle rect = new Rectangle();
 
     /* =========== Type Meaning =================
@@ -41,11 +41,16 @@ public class Tile {
         rect.width = _nSize;
         rect.height = _nSize;
         this.nHealth = nHealth;
+        healthMax = nHealth;
     }
 
     public void render(SpriteBatch batch){
         batch.begin();
         batch.draw(txtTile, getX(), getY(), getW(), getH());
+
+        if(txtDamage != null) {
+            batch.draw(txtDamage, getX(), getY(), getW(), getH());
+        }
         batch.end();
     }
 
@@ -54,10 +59,18 @@ public class Tile {
         txtTile = txtTiles[nType];
     }
 
-    public void checkHealth(Texture[] txts) {
+    public void checkHealth(Texture[] txts, Texture[] txtDamage) {
         if(nHealth <= 0) {
             nType = 1;
             txtTile = txts[1];
+            this.txtDamage = null;
+        } else {
+            for (int i = 0; i < txtDamage.length; i++) {
+                if(nHealth >= (healthMax/txtDamage.length)*(txtDamage.length-i-1)) {
+                    this.txtDamage = txtDamage[i];
+                    break;
+                }
+            }
         }
     }
 

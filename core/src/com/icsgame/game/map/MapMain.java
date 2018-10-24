@@ -19,7 +19,7 @@ public class MapMain {
 
     // Map Assets
     Random ranGen;
-    Texture[] txtTiles, txtDecorations;
+    Texture[] txtTiles, txtDamage, txtDecorations;
     MapGenerator mapGen;
     RectCollision rectCollision;
 
@@ -61,6 +61,7 @@ public class MapMain {
 
     private void loadTileTextures(String sTheme){
         txtTiles = new Texture[18];
+        txtDamage = new Texture[3];
         txtDecorations = new Texture[2];
 
         // Load Tile Textures
@@ -83,6 +84,11 @@ public class MapMain {
         txtTiles[16] = new Texture("theme"+sTheme+"/tileWallTunnelHorizontal.png");
         txtTiles[17] = new Texture("theme"+sTheme+"/tileWallAlone.png");
 
+        // Load Damage Textures
+        for (int i = 0; i < 3; i++) {
+            txtDamage[i] = new Texture("theme"+sTheme+"/tileDamage"+(i+1)+".png");
+        }
+
         // Load Decoration Textures
         for (int i = 0; i < 2; i++) {
             txtDecorations[i] = new Texture("theme"+sTheme+"/decorationPlant"+i+".png");
@@ -99,4 +105,6 @@ public class MapMain {
     public MapGenerator getMapGen() { return mapGen; }
 
     public Texture[] getTxtTiles() { return txtTiles; }
+
+    public Texture[] getTxtDamage() { return txtDamage; }
 }

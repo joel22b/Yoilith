@@ -18,7 +18,7 @@ public class Player {
     // Player Info
     Gun gun;
     ExplosiveLauncher explosiveLauncher;
-    int nHealthMax = 50, nHealth = 30, nBombsMax = 10, nBombs = nBombsMax;
+    int nHealthMax = 100, nHealth = nHealthMax, nBombsMax = 10, nBombs = nBombsMax;
     Texture txtPlayer;
     Sprite sprPlayerTop;
     Rectangle rect;
@@ -26,14 +26,20 @@ public class Player {
     Vector3 posMouse3D;
     int nActiveWeapon = 0, nWeaponNum = 2; // The Weapon that is currently in use
 
-    public Player(ScrGame game, Texture txtPlayer, Rectangle rect, Vector2 vel){
+    public Player(ScrGame game, String playerFile, Rectangle rect, Vector2 vel){
         this.game = game;
-        this.txtPlayer = txtPlayer;
+        this.txtPlayer = new Texture(playerFile+"/playerBody.png");
         this.rect = rect;
         this.vel = vel;
 
+        Texture txtHead = new Texture(playerFile+"/playerHead.png");
+
         // Create Sprites
-        sprPlayerTop = new Sprite(txtPlayer, (int)(getX()+(getW()/2)), (int)(getY()+((getH()/4)*3)), (int)(getW()), (int)(getH()));
+        sprPlayerTop = new Sprite(txtHead, (int)(getX()+(getW()/2)-20), (int)(getY()+((getH()/4)*3)-20),
+                (int)(getW()+40), (int)(getH()+40));
+        sprPlayerTop.setRegion(txtHead);
+
+        // Create Weapons
         gun = new Gun(game, this);
         gun.loadType(game.getMain().scrSetup.getSbGunReturn());
         explosiveLauncher = new ExplosiveLauncher(game, this);
@@ -69,7 +75,7 @@ public class Player {
         // Rotate Top
         posMouse3D = game.getCamera().unProject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0));
         angleHead.set(posMouse3D.x-(sprPlayerTop.getX()+(sprPlayerTop.getWidth()/2)), posMouse3D.y-(sprPlayerTop.getY()+(sprPlayerTop.getHeight()/2)));
-        sprPlayerTop.setRotation(angleHead.angle());
+        sprPlayerTop.setRotation(angleHead.angle()+90);
     }
 
     public void setupHealth(int nHealth, int nHealthMax){
@@ -96,12 +102,12 @@ public class Player {
 
     public void setX(float x){
         rect.setX(x);
-        sprPlayerTop.setCenterX(x+(getW()/2));
+        sprPlayerTop.setCenterX(x+(sprPlayerTop.getWidth()/2)-20);
     }
 
     public void setY(float y){
         rect.setY(y);
-        sprPlayerTop.setCenterY(y+((getH()/4)*3));
+        sprPlayerTop.setCenterY(y+((sprPlayerTop.getHeight()/4)*3)-5);
     }
 
     public void setW(float w){ rect.setWidth(w); }
@@ -166,5 +172,9 @@ public class Player {
         } else if(nActiveWeapon == 1) { // Bombs
             explosiveLauncher.reload();
         }
+    }
+
+    public void decreaseHealth(int decrease) {
+        nHealth -= decrease;
     }
 }

@@ -55,8 +55,6 @@ public class InputManager {
 
     private boolean esc(){
         if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)){
-            game.getMain().changeScreen(0);
-            game.killGame();
             return true;
         }
         return false;
