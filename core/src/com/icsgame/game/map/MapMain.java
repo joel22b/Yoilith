@@ -12,6 +12,7 @@ public class MapMain {
 
     ScrGame game;
     int nX, nY, nW, nH, nWTile, nHTile;
+    int mapW, mapH;
 
     // Map Parts
     Tile[][] tiles;
@@ -37,6 +38,9 @@ public class MapMain {
         nH = _nH;
         nWTile = _nTileSize;
         nHTile = _nTileSize;
+
+        mapW = nW * nWTile;
+        mapH = nH * nHTile;
 
         loadTileTextures(sTheme);
         tiles = new Tile[nW][nH];
@@ -107,4 +111,8 @@ public class MapMain {
     public Texture[] getTxtTiles() { return txtTiles; }
 
     public Texture[] getTxtDamage() { return txtDamage; }
+
+    public int getMapW() { return mapW; }
+
+    public int getMapH() { return mapH; }
 }

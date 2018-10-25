@@ -7,6 +7,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.icsgame.Main;
 import com.icsgame.game.Player;
+import com.icsgame.game.enemies.Enemy;
 import com.icsgame.game.ui.PlayerInfo;
 import com.icsgame.game.utils.Camera;
 import com.icsgame.game.utils.InputManager;
@@ -43,6 +44,7 @@ public class ScrGame implements Screen {
     // Bullets
     ArrayList<Bullet> bullets;
     ArrayList<Explosive> explosives;
+    ArrayList<Enemy> enemies;
 
     public ScrGame(Main _main) {
         main = _main;
@@ -59,6 +61,7 @@ public class ScrGame implements Screen {
 
         bullets = new ArrayList<>();
         explosives = new ArrayList<>();
+        enemies = new ArrayList<>();
     }
 
     private void createGameAssets(){
@@ -85,6 +88,13 @@ public class ScrGame implements Screen {
         //Player Update
         player.update();
 
+        // Enemies Update
+        for (int i = 0; i < enemies.size(); i++) {
+            if(enemies.get(i).update()){
+                // Kill
+            }
+        }
+
         // Bullets Update
         for (int i = 0; i < bullets.size(); i++){
             if(bullets.get(i).update()){
@@ -108,6 +118,13 @@ public class ScrGame implements Screen {
     private  void renderGame(){
         // Render Game Assets
         map.render(batch);
+
+        // Render Enemies
+        for (int i = 0; i < enemies.size(); i++) {
+            enemies.get(i).render(batch);
+        }
+
+        // Render Player
         player.render(batch);
 
         // Render Bullets
@@ -256,6 +273,10 @@ public class ScrGame implements Screen {
         }
     }
 
+    public void spawnEnemy(){
+        enemies.add(new Enemy(this, new Texture("themeDesert/tileBoundary.png"), 80, 80, 2));
+    }
+
     public Player getPlayer(){ return player; }
 
     public Camera getCamera() { return camera; }
@@ -265,6 +286,12 @@ public class ScrGame implements Screen {
     public ArrayList<Explosive> getExplosives() { return explosives; }
 
     public Main getMain() { return main; }
+
+    public MapMain getMap() { return map; }
+
+    public RectCollision getRectCollision() {
+        return rectCollision;
+    }
 
     @Override
     public void show() {

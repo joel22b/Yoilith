@@ -4,16 +4,29 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.icsgame.game.map.Tile;
+import com.icsgame.screens.ScrGame;
 
-public abstract class Enemy {
+import java.util.Random;
+
+public class Enemy {
+
+    protected ScrGame game;
 
     protected Rectangle rect;
     protected Texture txt;
     protected Vector2 vel;
+    protected float fSpeed;
 
-    public Enemy(Texture txt, int w, int h) {
+    protected Random ranGen = new Random();
+
+    public Enemy(ScrGame game, Texture txt, int w, int h, float fSpeed) {
+        this.game = game;
         this.txt = txt;
         rect = new Rectangle(0, 0, w, h);
+        this.fSpeed = fSpeed;
+
+        vel = new Vector2();
 
         spawnController();
     }
@@ -28,18 +41,33 @@ public abstract class Enemy {
         aiController();
 
         // Update position
-        setX(getX()+vel.x);
-        setY(getY()+vel.y);
+        setX(getX()+(vel.x*fSpeed));
+        setY(getY()+(vel.y*fSpeed));
 
         return false;
     }
 
     protected void aiController() {
-
+        vel.set(game.getPlayer().getX()-getX(), game.getPlayer().getY()-getY());
+        vel.nor();
     }
 
     protected void spawnController() {
+        do {
+            setX(ranGen.nextInt(game.getMap().getMapW()));
+            setY(ranGen.nextInt(game.getMap().getMapH()));
+        } while (!canSpawn(game.getMap().getTiles()));
+    }
 
+    protected boolean canSpawn(Tile[][] tiles) {
+        for (int x = 0; x < tiles.length; x++){
+            for (int y = 0; y < tiles.length; y++){
+                if(game.getRectCollision().isColliding(tiles[x][y].getRect(), rect) && tiles[x][y].getType() != 1){
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 
     public void setX(float x) {

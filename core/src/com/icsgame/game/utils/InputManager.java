@@ -51,6 +51,9 @@ public class InputManager {
         if(Gdx.input.isKeyJustPressed(Input.Keys.F)){
             game.getPlayer().nextWeapon();
         }
+        if(Gdx.input.isKeyJustPressed(Input.Keys.U)){
+            game.spawnEnemy();
+        }
     }
 
     private boolean esc(){
