@@ -162,40 +162,40 @@ public class ScrGame implements Screen {
         }
     }
 
-    private void explode(Rectangle rect, int damage, int range){
+    private void explode(Rectangle rect, int nDamage, int nRange){
         // Distance from bomb
-        int distance;
+        int nDist;
         // Center location of object
-        Vector2 objectCenter = new Vector2();
+        Vector2 vObjectCenter = new Vector2();
         // Center of location of the bomb
-        Vector2 bombCenter = new Vector2();
+        Vector2 vBombCenter = new Vector2();
 
         // Find Center of Bomb
-        bombCenter.set(rect.getX()+(rect.getWidth()/2), rect.getY()+(rect.getHeight()/2));
+        vBombCenter.set(rect.getX()+(rect.getWidth()/2), rect.getY()+(rect.getHeight()/2));
 
-        // Check collision with map and apply damage
+        // Check collision with map and apply nDamage
         for (int x = 0; x < map.getTiles().length; x++){
             for (int y = 0; y < map.getTiles().length; y++){
                 if(map.getTiles()[x][y].getType() != 1 && map.getTiles()[x][y].getType() != 0) {
                     // Find Center of Object
-                    objectCenter.set(map.getTiles()[x][y].getX()+(map.getTiles()[x][y].getW()/2),
+                    vObjectCenter.set(map.getTiles()[x][y].getX()+(map.getTiles()[x][y].getW()/2),
                             map.getTiles()[x][y].getY()+(map.getTiles()[x][y].getH()/2));
 
-                    // Find distance
-                    objectCenter.sub(bombCenter);
-                    objectCenter.setAngle(0);
-                    distance = (int)objectCenter.x;
+                    // Find nDist
+                    vObjectCenter.sub(vBombCenter);
+                    vObjectCenter.setAngle(0);
+                    nDist = (int)vObjectCenter.x;
 
-                    if(range >= distance){
+                    if(nRange >= nDist){
                         // Is in explosion radius
 
-                        // Find the damage level
-                        if(distance >= (range/3)*2) {
-                            map.getTiles()[x][y].decreaseHealth(damage / 3);
-                        } else if(distance >= range/3) {
-                            map.getTiles()[x][y].decreaseHealth((damage/3)*2);
+                        // Find the nDamage level
+                        if(nDist >= (nRange/3)*2) {
+                            map.getTiles()[x][y].decreaseHealth(nDamage / 3);
+                        } else if(nDist >= nRange/3) {
+                            map.getTiles()[x][y].decreaseHealth((nDamage/3)*2);
                         } else {
-                            map.getTiles()[x][y].decreaseHealth(damage);
+                            map.getTiles()[x][y].decreaseHealth(nDamage);
                         }
 
                         // Check to see if the wall changed
@@ -207,26 +207,26 @@ public class ScrGame implements Screen {
         // Update the Textures
         map.getMapGen().updateTexture(map.getTxtTiles());
 
-        // Check collision with player and apply damage
+        // Check collision with player and apply nDamage
         // Find Center of Object
-        objectCenter.set(player.getX()+(player.getW()/2),
+        vObjectCenter.set(player.getX()+(player.getW()/2),
                 player.getY()+(player.getH()/2));
 
-        // Find distance
-        objectCenter.sub(bombCenter);
-        objectCenter.setAngle(0);
-        distance = (int)objectCenter.x;
+        // Find nDist
+        vObjectCenter.sub(vBombCenter);
+        vObjectCenter.setAngle(0);
+        nDist = (int)vObjectCenter.x;
 
-        if(range >= distance) {
+        if(nRange >= nDist) {
             // Is in explosion radius
 
-            // Find the damage level
-            if (distance >= (range / 3) * 2) {
-                player.decreaseHealth(damage / 3);
-            } else if (distance >= range / 3) {
-                player.decreaseHealth((damage / 3) * 2);
+            // Find the nDamage level
+            if (nDist >= (nRange / 3) * 2) {
+                player.decreaseHealth(nDamage / 3);
+            } else if (nDist >= nRange / 3) {
+                player.decreaseHealth((nDamage / 3) * 2);
             } else {
-                player.decreaseHealth(damage);
+                player.decreaseHealth(nDamage);
             }
         }
     }

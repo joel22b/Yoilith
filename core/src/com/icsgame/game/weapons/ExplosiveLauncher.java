@@ -21,11 +21,11 @@ public class ExplosiveLauncher {
     // ExplosiveLauncher info
     String sExplosiveLauncher;
     int nDamage, nBombsPerShot, nBombs, nBombsMax, nCooldown, nSpray, nAngleRan, nRange, nTime;
-    Vector2 velRan = new Vector2();
+    Vector2 vVelRan = new Vector2();
     Rectangle rectExplosive = new Rectangle();
     float fSpeed;
-    boolean canFire = true;
-    int tickCount = 0;
+    boolean bCanFire = true;
+    int nTickCount = 0;
 
 
     public ExplosiveLauncher(ScrGame game, Player player){
@@ -34,34 +34,34 @@ public class ExplosiveLauncher {
     }
 
     public void fire(){
-        if(canFire){
+        if(bCanFire){
             if(nBombs > 0) {
                 for (int i = 0; i < nBombsPerShot; i++) {
                     // Get the correct angle and velocity vector
                     nAngleRan = ranGen.nextInt(nSpray*2)-nSpray;
-                    velRan.set(player.getAngleHead());
-                    velRan.setAngle(nAngleRan+player.getAngleHead().angle());
-                    velRan.nor();
+                    vVelRan.set(player.getAngleHead());
+                    vVelRan.setAngle(nAngleRan+player.getAngleHead().angle());
+                    vVelRan.nor();
 
                     // Get Bullet Starting Location
-                    rectExplosive.set(player.getHeadX()+(velRan.x*player.getHeadSize()), player.getHeadY()+(velRan.y*player.getHeadSize()), 80, 80);
+                    rectExplosive.set(player.getHeadX()+(vVelRan.x*player.getHeadSize()), player.getHeadY()+(vVelRan.y*player.getHeadSize()), 80, 80);
                     // Create Bullet
                     game.getExplosives().add(new Explosive(new Texture("extra/bomb.png"),
-                            rectExplosive, velRan, fSpeed, nDamage, nRange, nTime));
+                            rectExplosive, vVelRan, fSpeed, nDamage, nRange, nTime));
                 }
-                canFire = false;
+                bCanFire = false;
                 nBombs--;
             }
         }
     }
 
     public void update(){
-        if(!canFire){
-            if(tickCount >= nCooldown){
-                tickCount = 0;
-                canFire = true;
+        if(!bCanFire){
+            if(nTickCount >= nCooldown){
+                nTickCount = 0;
+                bCanFire = true;
             } else {
-                tickCount++;
+                nTickCount++;
             }
         }
     }

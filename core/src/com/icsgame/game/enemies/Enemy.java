@@ -15,7 +15,7 @@ public class Enemy {
 
     protected Rectangle rect;
     protected Texture txt;
-    protected Vector2 vel;
+    protected Vector2 vVel;
     protected float fSpeed;
 
     protected Random ranGen = new Random();
@@ -26,7 +26,7 @@ public class Enemy {
         rect = new Rectangle(0, 0, w, h);
         this.fSpeed = fSpeed;
 
-        vel = new Vector2();
+        vVel = new Vector2();
 
         spawnController();
     }
@@ -41,15 +41,15 @@ public class Enemy {
         aiController();
 
         // Update position
-        setX(getX()+(vel.x*fSpeed));
-        setY(getY()+(vel.y*fSpeed));
+        setX(getX()+(vVel.x*fSpeed));
+        setY(getY()+(vVel.y*fSpeed));
 
         return false;
     }
 
     protected void aiController() {
-        vel.set(game.getPlayer().getX()-getX(), game.getPlayer().getY()-getY());
-        vel.nor();
+        vVel.set(game.getPlayer().getX()-getX(), game.getPlayer().getY()-getY());
+        vVel.nor();
     }
 
     protected void spawnController() {

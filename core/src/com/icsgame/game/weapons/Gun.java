@@ -5,7 +5,6 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.icsgame.game.Player;
 import com.icsgame.screens.ScrGame;
-import sun.misc.IOUtils;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -22,11 +21,11 @@ public class Gun {
     // Gun info
     String sGun;
     int nDamage, nBulletPerShot, nAmmo, nAmmoMax, nCooldown, nSpray, nAngleRan, nDist;
-    Vector2 velRan = new Vector2();
+    Vector2 vVelRan = new Vector2();
     Rectangle rectBullet = new Rectangle();
     float fSpeed;
-    boolean canFire = true;
-    int tickCount = 0;
+    boolean bCanFire = true;
+    int nTickCount = 0;
 
 
     public Gun(ScrGame game, Player player){
@@ -35,35 +34,35 @@ public class Gun {
     }
 
     public void fire(){
-        if(canFire){
+        if(bCanFire){
             if(nAmmo > 0) {
                 for (int i = 0; i < nBulletPerShot; i++) {
                     // Get the correct angle and velocity vector
                     nAngleRan = ranGen.nextInt(nSpray*2)-nSpray;
-                    velRan.set(player.getAngleHead());
-                    velRan.setAngle(nAngleRan+player.getAngleHead().angle());
-                    velRan.nor();
+                    vVelRan.set(player.getAngleHead());
+                    vVelRan.setAngle(nAngleRan+player.getAngleHead().angle());
+                    vVelRan.nor();
 
                     // Get Bullet Starting Location
-                    rectBullet.set(player.getHeadX()+(velRan.x*player.getHeadSize()), player.getHeadY()+(velRan.y*player.getHeadSize()), 20, 20);
+                    rectBullet.set(player.getHeadX()+(vVelRan.x*player.getHeadSize()), player.getHeadY()+(vVelRan.y*player.getHeadSize()), 20, 20);
 
                     // Create Bullet
                     game.getBullets().add(new Bullet(new Texture("bullet.png"),
-                            rectBullet, velRan, nDamage, nAngleRan, fSpeed, nDist));
+                            rectBullet, vVelRan, nDamage, nAngleRan, fSpeed, nDist));
                 }
-                canFire = false;
+                bCanFire = false;
                 nAmmo--;
             }
         }
     }
 
     public void update(){
-        if(!canFire){
-            if(tickCount >= nCooldown){
-                tickCount = 0;
-                canFire = true;
+        if(!bCanFire){
+            if(nTickCount >= nCooldown){
+                nTickCount = 0;
+                bCanFire = true;
             } else {
-                tickCount++;
+                nTickCount++;
             }
         }
     }
