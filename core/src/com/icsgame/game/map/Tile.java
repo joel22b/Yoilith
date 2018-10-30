@@ -5,6 +5,11 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 
+/* ======================== Tile ================================
+The Tiles on the map
+The map is map up of these
+================================================================== */
+
 public class Tile {
 
     MapMain map;

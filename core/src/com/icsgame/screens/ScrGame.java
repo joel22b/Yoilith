@@ -18,6 +18,12 @@ import com.icsgame.game.weapons.Explosive;
 
 import java.util.ArrayList;
 
+/* ======================== ScrGame ================================
+Implements a Screen
+This is the game
+Runs the game
+================================================================== */
+
 public class ScrGame implements Screen {
 
     Main main;

@@ -11,6 +11,11 @@ import com.icsgame.game.weapons.ExplosiveLauncher;
 import com.icsgame.game.weapons.Gun;
 import com.icsgame.screens.ScrGame;
 
+/* ======================== Player ================================
+This is the player
+Holds all info in regards to the player
+================================================================== */
+
 public class Player {
 
     ScrGame game;

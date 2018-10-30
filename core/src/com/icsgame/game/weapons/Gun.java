@@ -12,6 +12,12 @@ import java.io.InputStream;
 import java.util.Properties;
 import java.util.Random;
 
+/* =========================== Gun =============================
+Weapon that fires Bullets
+Contained in Player or Enemies
+Fires Bullets
+================================================================ */
+
 public class Gun {
 
     ScrGame game;

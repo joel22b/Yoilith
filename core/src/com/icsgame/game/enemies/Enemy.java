@@ -9,6 +9,10 @@ import com.icsgame.screens.ScrGame;
 
 import java.util.Random;
 
+/* ======================== Enemy ================================
+Basic generic enemy class
+================================================================== */
+
 public class Enemy {
 
     protected ScrGame game;

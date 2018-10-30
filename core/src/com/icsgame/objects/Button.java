@@ -6,6 +6,16 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 
+/* ======================== Button ================================
+Extends a Sprite
+Changes texture based on if you can click and if the mouse is over it
+
+To Use:
+Create a Button (give everything to the constructor)
+Call the update function every frame
+Check if justClicked(); returns true (true means the button is clicked)
+================================================================== */
+
 public class Button extends Sprite{
 
     int nTxt;

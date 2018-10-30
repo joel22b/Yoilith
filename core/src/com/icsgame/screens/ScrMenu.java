@@ -7,6 +7,11 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.icsgame.Main;
 import com.icsgame.objects.Button;
 
+/* ======================== ScrMenu ================================
+Implements a Screen
+The Main Menu of the game
+================================================================== */
+
 public class ScrMenu implements Screen {
 
     Main main;

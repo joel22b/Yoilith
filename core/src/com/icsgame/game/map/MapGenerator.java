@@ -8,6 +8,12 @@ import com.icsgame.game.utils.RectCollision;
 import java.util.ArrayList;
 import java.util.Random;
 
+/* ======================== MapGenerator ================================
+Creates a new map procedurally
+
+To create a new map, call the generateMap(); method
+================================================================== */
+
 public class MapGenerator {
 
     MapMain map;

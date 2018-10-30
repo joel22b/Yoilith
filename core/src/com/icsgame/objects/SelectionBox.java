@@ -6,6 +6,12 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
+/* ======================== SelectionBox ================================
+Creates a selection box so the player can cycle through options and select one
+txtImages are the images it will show
+arsReturn is the string it will return
+====================================================================== */
+
 public class SelectionBox {
 
     int nX, nY, nW, nH, nIndex = 0;
@@ -16,7 +22,8 @@ public class SelectionBox {
     Button btnLeft, btnRight;
     BitmapFont fontRed, fontBlack;
 
-    public SelectionBox(int nX, int nY, int nW, int nH, Texture txtOutline, String txtButtonLeft, String txtButtonRight, Texture[] txtImages, String sTitle, String[] arsReturn){
+    public SelectionBox(int nX, int nY, int nW, int nH, Texture txtOutline, String txtButtonLeft, String txtButtonRight,
+                        Texture[] txtImages, String sTitle, String[] arsReturn){
         this.nX = nX;
         this.nY = nY;
         this.nW = nW;

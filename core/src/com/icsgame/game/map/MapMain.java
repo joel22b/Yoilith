@@ -8,6 +8,12 @@ import com.icsgame.screens.ScrGame;
 import java.util.ArrayList;
 import java.util.Random;
 
+/* ======================== MapMain ================================
+Controls the map
+Contains all information regarding the map
+Responsible for creating and maintaining the map
+================================================================== */
+
 public class MapMain {
 
     ScrGame game;

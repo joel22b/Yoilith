@@ -10,6 +10,12 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.icsgame.Main;
 import com.icsgame.objects.Button;
 
+/* ======================== ScrHighscores ================================
+Implements a Screen
+Displays the highscores to the player
+Will grab data from a SQL database
+================================================================== */
+
 public class ScrHighscores implements Screen {
 
     Main main;

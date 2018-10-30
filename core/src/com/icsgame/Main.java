@@ -7,6 +7,12 @@ import com.icsgame.screens.ScrHighscores;
 import com.icsgame.screens.ScrMenu;
 import com.icsgame.screens.ScrSetup;
 
+/* ======================== Main ================================
+Extends a Game
+Runs the program
+Controls the Screens
+================================================================== */
+
 public class Main extends Game {
 
 	// Screens

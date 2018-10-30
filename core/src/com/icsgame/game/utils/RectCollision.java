@@ -3,6 +3,10 @@ package com.icsgame.game.utils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
+/* ======================== RectCollision ================================
+Contains all the collision methods that involve libGDX Rectangles
+======================================================================= */
+
 public class RectCollision {
 
     public RectCollision(){}

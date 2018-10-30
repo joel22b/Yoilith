@@ -6,6 +6,12 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
+/* =========================== Explosive =============================
+The explosives that go on the map
+Contains all information needed for the explosive
+update(); returns true when nTime = 0
+=================================================================== */
+
 public class Explosive extends Sprite {
 
     Texture txtExplosive;

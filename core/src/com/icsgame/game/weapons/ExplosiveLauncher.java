@@ -12,6 +12,12 @@ import java.io.InputStream;
 import java.util.Properties;
 import java.util.Random;
 
+/* =========================== ExplosiveLauncher =============================
+The weapon that fires Explosives
+Contained in a player or enemy
+Loads in data from .properties file
+================================================================ */
+
 public class ExplosiveLauncher {
 
     ScrGame game;

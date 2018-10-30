@@ -11,6 +11,11 @@ import com.icsgame.Main;
 import com.icsgame.objects.Button;
 import com.icsgame.objects.SelectionBox;
 
+/* ======================== ScrSetup ================================
+Implements a Screen
+Lets the player configure the game and start a game
+================================================================== */
+
 public class ScrSetup implements Screen {
 
     Main main;

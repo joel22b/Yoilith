@@ -5,6 +5,10 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.icsgame.screens.ScrGame;
 
+/* ======================== InputManager ================================
+Controls all the inputs into the game
+====================================================================== */
+
 public class InputManager {
 
     ScrGame game;

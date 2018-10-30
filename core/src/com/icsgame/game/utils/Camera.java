@@ -9,6 +9,12 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.icsgame.screens.ScrGame;
 
+/* ======================== Camera ================================
+Controls what on screen
+
+Call the follow(); method and the camera will follow the object given
+================================================================== */
+
 public class Camera {
 
     ScrGame game;

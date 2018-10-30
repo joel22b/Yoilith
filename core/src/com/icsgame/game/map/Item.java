@@ -4,6 +4,10 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 
+/* ======================== Item ================================
+The little stationary items placed around the map
+================================================================== */
+
 public class Item {
 
     protected MapMain map;

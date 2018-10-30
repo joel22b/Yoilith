@@ -8,6 +8,10 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.icsgame.game.Player;
 import com.icsgame.game.utils.Camera;
 
+/* ======================== PlayerInfo ================================
+Displays the information about the player in the top left of the screen
+==================================================================== */
+
 public class PlayerInfo {
 
     Camera camera;

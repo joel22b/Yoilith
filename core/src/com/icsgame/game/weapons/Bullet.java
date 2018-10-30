@@ -8,6 +8,11 @@ import com.badlogic.gdx.math.Vector2;
 
 import java.util.Random;
 
+/* =========================== Bullet =============================
+The bullet that flies across the map
+Contains all the needed information for the bullet
+================================================================ */
+
 public class Bullet extends Sprite {
 
     Vector2 vel = new Vector2();
