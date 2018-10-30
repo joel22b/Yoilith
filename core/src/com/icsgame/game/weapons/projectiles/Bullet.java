@@ -1,4 +1,4 @@
-package com.icsgame.game.weapons;
+package com.icsgame.game.weapons.projectiles;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;

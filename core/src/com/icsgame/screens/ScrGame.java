@@ -13,8 +13,8 @@ import com.icsgame.game.utils.Camera;
 import com.icsgame.game.utils.InputManager;
 import com.icsgame.game.map.MapMain;
 import com.icsgame.game.utils.RectCollision;
-import com.icsgame.game.weapons.Bullet;
-import com.icsgame.game.weapons.Explosive;
+import com.icsgame.game.weapons.projectiles.Bullet;
+import com.icsgame.game.weapons.projectiles.Explosive;
 
 import java.util.ArrayList;
 
