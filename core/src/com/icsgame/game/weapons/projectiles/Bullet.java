@@ -1,68 +1,34 @@
 package com.icsgame.game.weapons.projectiles;
 
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
-import java.util.Random;
-
 /* =========================== Bullet =============================
+Extends Projectile
 The bullet that flies across the map
 Contains all the needed information for the bullet
 ================================================================ */
 
-public class Bullet extends Sprite {
+public class Bullet extends Projectile {
 
-    Vector2 vel = new Vector2();
-    Rectangle rect;
-    int nDamage, nDist;
-    float fSpeed;
+    int nDist;
 
-    public Bullet(Texture txtBullet, Rectangle rect, Vector2 vel, int nDamage, int nSpray, float fSpeed, int nDist){
-        super(txtBullet, (int)rect.getX(), (int)rect.getY(), (int)rect.getWidth(), (int)rect.getHeight());
-        this.rect = rect;
-        this.vel.set(vel);
-        this.nDamage = nDamage;
+    public Bullet(Texture txt, Rectangle rect, Vector2 vVel, int nDamage, float fSpeed, int nDist){
+        super(txt, rect, vVel, nDamage, fSpeed);
+
+        this.nDist = nDist;
+
         setX(rect.getX());
         setY(rect.getY());
-        setRegion(txtBullet);
-        this.fSpeed = fSpeed;
-        setRotation(this.vel.angle()-90+nSpray);
-        this.nDist = nDist;
     }
 
-    public boolean update(){
-        setX(super.getX()+(vel.x*fSpeed));
-        setY(super.getY()+(vel.y*fSpeed));
-
+    @Override
+    protected boolean shouldKill(){
         nDist--;
         if(nDist <= 0){
             return true;
         }
         return false;
-    }
-
-    public void render(SpriteBatch batch){
-        batch.begin();
-        draw(batch);
-        batch.end();
-    }
-
-    public void dispose(){
-        getTexture().dispose();
-    }
-
-    public Rectangle getRect() { return rect; }
-
-    public void setX(float x){
-        rect.setX(x);
-        super.setX(x);
-    }
-
-    public void setY(float y){
-        rect.setY(y);
-        super.setY(y);
     }
 }

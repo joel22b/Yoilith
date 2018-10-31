@@ -15,6 +15,7 @@ import com.icsgame.game.map.MapMain;
 import com.icsgame.game.utils.RectCollision;
 import com.icsgame.game.weapons.projectiles.Bullet;
 import com.icsgame.game.weapons.projectiles.Explosive;
+import com.icsgame.game.weapons.projectiles.Projectile;
 
 import java.util.ArrayList;
 
@@ -47,14 +48,19 @@ public class ScrGame implements Screen {
     // Player
     Player player;
 
-    // Bullets
-    ArrayList<Bullet> bullets;
-    ArrayList<Explosive> explosives;
+    // ArrayLists
+    ArrayList<Projectile> projectiles;
     ArrayList<Enemy> enemies;
 
     public ScrGame(Main _main) {
         main = _main;
-        createGameAssets();
+
+        rectCollision = new RectCollision();
+        map = new MapMain(this, rectCollision);
+        camera = new Camera(this, main.nWidth, main.nHeight);
+        camera.setFollowBox(300, 200);
+        input = new InputManager(this);
+        playerInfo = new PlayerInfo(camera);
     }
 
     public void setupGame(){
@@ -65,26 +71,23 @@ public class ScrGame implements Screen {
         camera.setPosition(player.getPosition());
         playerInfo.setPlayer(player);
 
-        bullets = new ArrayList<>();
-        explosives = new ArrayList<>();
+        projectiles = new ArrayList<>();
         enemies = new ArrayList<>();
     }
 
-    private void createGameAssets(){
-        rectCollision = new RectCollision();
-        map = new MapMain(this, rectCollision);
-        camera = new Camera(this, main.nWidth, main.nHeight);
-        camera.setFollowBox(300, 200);
-        input = new InputManager(this);
-        playerInfo = new PlayerInfo(camera);
-    }
-
-    private void doTick(){
-        if(!input.handleInput() && player.getHealth() > 0) {
+    // Main loop of the game
+    private void doTick(){ // Runs the game at a regular tick rate
+        if(!input.handleInput() && player.getHealth() > 0) { // Kill game condition
+            // Test collision
             collisionDetection();
+
+            // Update
             update();
+
+            // Render
             renderGame();
         } else {
+            // Kill game
             main.changeScreen(0);
             killGame();
         }
@@ -101,18 +104,15 @@ public class ScrGame implements Screen {
             }
         }
 
-        // Bullets Update
-        for (int i = 0; i < bullets.size(); i++){
-            if(bullets.get(i).update()){
-                killBullet(i);
-            }
-        }
+        // Projectiles Update
+        for (int i = 0; i < projectiles.size(); i++){
+            if(projectiles.get(i).update()){
+                if(projectiles.get(i).getClass() == Explosive.class) { // Checks if the Projectile is an Explosive
+                    Explosive explosive = (Explosive)projectiles.get(i);
+                    explode(explosive.getRect(), explosive.getDamage(), explosive.getRange());
+                }
 
-        // Explosives Update
-        for (int i = 0; i < explosives.size(); i++){
-            if(explosives.get(i).update()){
-                explode(explosives.get(i).getRect(), explosives.get(i).getDamage(), explosives.get(i).getRange());
-                killExplosive(i);
+                killProjectile(i);
             }
         }
 
@@ -133,14 +133,9 @@ public class ScrGame implements Screen {
         // Render Player
         player.render(batch);
 
-        // Render Bullets
-        for (int i = 0; i < bullets.size(); i++){
-            bullets.get(i).render(batch);
-        }
-
-        // Render Explosives
-        for (int i = 0; i < explosives.size(); i++){
-            explosives.get(i).render(batch);
+        // Render Projectiles
+        for (int i = 0; i < projectiles.size(); i++){
+            projectiles.get(i).render(batch);
         }
 
         // Render UI
@@ -157,10 +152,10 @@ public class ScrGame implements Screen {
                         rectCollision.collisionResponseSimple(player.getRect(), map.getTiles()[x][y].getRect(), player.getVel());
                     }
 
-                    // For Bullets
-                    for (int i = 0; i < bullets.size(); i++){
-                        if (rectCollision.isColliding(bullets.get(i).getRect(), map.getTiles()[x][y].getRect())){
-                            killBullet(i);
+                    // For Projectiles
+                    for (int i = 0; i < projectiles.size(); i++){
+                        if (rectCollision.isColliding(projectiles.get(i).getRect(), map.getTiles()[x][y].getRect())){
+                            killProjectile(i);
                         }
                     }
                 }
@@ -241,17 +236,13 @@ public class ScrGame implements Screen {
         map.kill();
         player.kill();
         player = null;
-        bullets = null;
+        projectiles = null;
+        enemies = null;
     }
 
-    private void killBullet(int index){
-        bullets.get(index).dispose();
-        bullets.remove(index);
-    }
-
-    private void killExplosive(int index){
-        explosives.get(index).dispose();
-        explosives.remove(index);
+    private void killProjectile(int index){
+        projectiles.get(index).dispose();
+        projectiles.remove(index);
     }
 
     @Override
@@ -287,9 +278,7 @@ public class ScrGame implements Screen {
 
     public Camera getCamera() { return camera; }
 
-    public ArrayList<Bullet> getBullets() { return bullets; }
-
-    public ArrayList<Explosive> getExplosives() { return explosives; }
+    public ArrayList<Projectile> getProjectiles() { return projectiles; }
 
     public Main getMain() { return main; }
 

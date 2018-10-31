@@ -1,6 +1,7 @@
 package com.icsgame.game.weapons;
 
 import com.icsgame.game.Player;
+import com.icsgame.game.weapons.projectiles.Projectile;
 import com.icsgame.screens.ScrGame;
 
 import java.util.Random;
@@ -10,10 +11,10 @@ Abstract class that contains the need basics for any weapon
 Extended in every weapon
 
 Method:             Type:           Mandate:
-constructor();      constructor     creates weapon
-update();           boolean         true means it should be killed
+update();           void            updates gun, update nCooldown
 loadType(sType);    void            sets up weapon from .properties file
 fire();             void            fires gun if you can
+fireShot();         Projectile      configures the Projectile
 reload();           void            reloads
 getAmmo();          int             return nAmmo
 getAmmoMax();       int             return nAmmoMax
@@ -61,13 +62,13 @@ public abstract class Weapon {
 
                 // Fire the number of shots required
                 for (int i = 0; i < nShotsPerFire; i++) {
-                    fireShot();
+                    game.getProjectiles().add(fireShot());
                 }
             }
         }
     }
 
-    protected abstract void fireShot();
+    protected abstract Projectile fireShot();
 
     public abstract void loadType(String sType);
 

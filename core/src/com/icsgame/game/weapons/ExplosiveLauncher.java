@@ -5,6 +5,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.icsgame.game.Player;
 import com.icsgame.game.weapons.projectiles.Explosive;
+import com.icsgame.game.weapons.projectiles.Projectile;
 import com.icsgame.screens.ScrGame;
 
 import java.io.FileInputStream;
@@ -33,7 +34,7 @@ public class ExplosiveLauncher extends Weapon {
     }
 
     @Override
-    protected void fireShot() {
+    protected Projectile fireShot() {
         // Get the correct angle and velocity vector
         nAngleRan = ranGen.nextInt(nSpray*2)-nSpray;
         vVelRan.set(player.getAngleHead());
@@ -44,8 +45,8 @@ public class ExplosiveLauncher extends Weapon {
         rectExplosive.set(player.getHeadX()+(vVelRan.x*player.getHeadSize()),
                 player.getHeadY()+(vVelRan.y*player.getHeadSize()), 80, 80);
         // Create Bullet
-        game.getExplosives().add(new Explosive(new Texture("extra/bomb.png"),
-                rectExplosive, vVelRan, fSpeed, nDamage, nRange, nTime));
+        return new Explosive(new Texture("extra/bomb.png"),
+                rectExplosive, vVelRan, fSpeed, nDamage, nRange, nTime);
     }
 
     @Override

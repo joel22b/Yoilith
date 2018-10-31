@@ -76,7 +76,7 @@ public class PlayerInfo {
 
         renderBar(batch, camera.getX()-(camera.getW()/2)+nMargin+ objectOffset(),
                 camera.getY()+(camera.getH()/2)- (objectOffset()*3), nObjectSize, txtGrey, txtRed,
-                player.getExplosiveLauncher().getAmmo(), player.getExplosiveLauncher().getAmmo(), 5);
+                player.getExplosiveLauncher().getAmmo(), player.getExplosiveLauncher().getAmmoMax(), 5);
 
 
         batch.end();
