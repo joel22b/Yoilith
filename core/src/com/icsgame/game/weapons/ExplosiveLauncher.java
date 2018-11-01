@@ -23,8 +23,7 @@ Loads in data from .properties file
 public class ExplosiveLauncher extends Weapon {
 
     // ExplosiveLauncher info
-    int nSpray, nAngleRan, nRange, nTime;
-    Vector2 vVelRan = new Vector2();
+    int nRange, nTime;
     Rectangle rectExplosive = new Rectangle();
     float fSpeed;
 
@@ -35,16 +34,10 @@ public class ExplosiveLauncher extends Weapon {
 
     @Override
     protected Projectile fireShot() {
-        // Get the correct angle and velocity vector
-        nAngleRan = ranGen.nextInt(nSpray*2)-nSpray;
-        vVelRan.set(player.getAngleHead());
-        vVelRan.setAngle(nAngleRan+player.getAngleHead().angle());
-        vVelRan.nor();
-
         // Get Bullet Starting Location
         rectExplosive.set(player.getHeadX()+(vVelRan.x*player.getHeadSize()),
                 player.getHeadY()+(vVelRan.y*player.getHeadSize()), 80, 80);
-        // Create Bullet
+        // Create Explosive
         return new Explosive(new Texture("extra/bomb.png"),
                 rectExplosive, vVelRan, fSpeed, nDamage, nRange, nTime);
     }

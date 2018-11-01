@@ -81,4 +81,8 @@ public abstract class Projectile extends Sprite {
         rect.setY(y);
         super.setY(y);
     }
+
+    public void reverseDirection() {
+        vVel.set(vVel.x*(-1), vVel.y*(-1));
+    }
 }

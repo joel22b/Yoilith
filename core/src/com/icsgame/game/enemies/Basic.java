@@ -1,0 +1,16 @@
+package com.icsgame.game.enemies;
+
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.math.Rectangle;
+import com.icsgame.screens.ScrGame;
+
+public class Basic extends Enemy {
+
+    public Basic(ScrGame game, Texture txt, int w, int h, float fSpeed) {
+        super(game, txt, w, h, fSpeed);
+    }
+
+    public Basic(ScrGame game, Texture txt, Rectangle rect, float fSpeed) {
+        super(game, txt, rect, fSpeed);
+    }
+}

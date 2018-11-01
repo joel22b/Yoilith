@@ -2,6 +2,8 @@ package com.icsgame.game.enemies;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Circle;
+import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.icsgame.game.map.Tile;
@@ -13,7 +15,7 @@ import java.util.Random;
 Basic generic enemy class
 ================================================================== */
 
-public class Enemy {
+public abstract class Enemy {
 
     protected ScrGame game;
 
@@ -27,7 +29,18 @@ public class Enemy {
     public Enemy(ScrGame game, Texture txt, int w, int h, float fSpeed) {
         this.game = game;
         this.txt = txt;
-        rect = new Rectangle(0, 0, w, h);
+        this.rect = new Rectangle(0, 0, w, h);
+        this.fSpeed = fSpeed;
+
+        vVel = new Vector2();
+
+        spawnController();
+    }
+
+    public Enemy(ScrGame game, Texture txt, Rectangle rect, float fSpeed) {
+        this.game = game;
+        this.txt = txt;
+        this.rect.set(rect);
         this.fSpeed = fSpeed;
 
         vVel = new Vector2();
@@ -64,6 +77,15 @@ public class Enemy {
     }
 
     protected boolean canSpawn(Tile[][] tiles) {
+        // Check if the enemy is close to the player
+        Circle playerNoSpawnArea = new Circle();
+        playerNoSpawnArea.set(game.getPlayer().getCenterPosition(), game.nNoSpawnPlayerRadius);
+
+        if(Intersector.overlaps(playerNoSpawnArea, rect)) {
+            return false;
+        }
+
+        // Check if it is colliding with the map
         for (int x = 0; x < tiles.length; x++){
             for (int y = 0; y < tiles.length; y++){
                 if(game.getRectCollision().isColliding(tiles[x][y].getRect(), rect) && tiles[x][y].getType() != 1){

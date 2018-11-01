@@ -23,8 +23,7 @@ Fires Bullets
 public class Gun extends Weapon {
 
     // Gun info
-    int nSpray, nAngleRan, nDist;
-    Vector2 vVelRan = new Vector2();
+    int nDist;
     Rectangle rectBullet = new Rectangle();
     float fSpeed;
 
@@ -35,12 +34,6 @@ public class Gun extends Weapon {
 
     @Override
     protected Projectile fireShot() {
-        // Get the correct angle and velocity vector
-        nAngleRan = ranGen.nextInt(nSpray*2)-nSpray;
-        vVelRan.set(player.getAngleHead());
-        vVelRan.setAngle(nAngleRan+player.getAngleHead().angle());
-        vVelRan.nor();
-
         // Get Bullet Starting Location
         rectBullet.set(player.getHeadX()+(vVelRan.x*player.getHeadSize()),
                 player.getHeadY()+(vVelRan.y*player.getHeadSize()), 20, 20);

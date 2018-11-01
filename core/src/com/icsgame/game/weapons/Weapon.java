@@ -1,5 +1,6 @@
 package com.icsgame.game.weapons;
 
+import com.badlogic.gdx.math.Vector2;
 import com.icsgame.game.Player;
 import com.icsgame.game.weapons.projectiles.Projectile;
 import com.icsgame.screens.ScrGame;
@@ -27,6 +28,10 @@ public abstract class Weapon {
     protected Random ranGen = new Random();
 
     protected int nDamage; // The damage inflicted by this weapon
+    protected int nSpray; // The amount of spray for the Projectile
+
+    protected int nAngleRan; // The random angle for each Projectile
+    protected Vector2 vVelRan; // The random velocity of the projectile
 
     protected int nAmmo; // Current ammo count
     protected int nAmmoMax; // Maximum ammo
@@ -60,8 +65,16 @@ public abstract class Weapon {
                 // Make it so you can't fire until cooldown is done
                 bCanFire = false;
 
+                // Get the correct angle and velocity vector
+                vVelRan.set(player.getAngleHead());
+
                 // Fire the number of shots required
                 for (int i = 0; i < nShotsPerFire; i++) {
+                    // Get a randomized velocity
+                    nAngleRan = ranGen.nextInt(nSpray*2)-nSpray;
+                    vVelRan.setAngle(nAngleRan+player.getAngleHead().angle());
+                    vVelRan.nor();
+
                     game.getProjectiles().add(fireShot());
                 }
             }

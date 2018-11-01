@@ -7,13 +7,13 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.icsgame.Main;
 import com.icsgame.game.Player;
+import com.icsgame.game.enemies.Basic;
 import com.icsgame.game.enemies.Enemy;
 import com.icsgame.game.ui.PlayerInfo;
 import com.icsgame.game.utils.Camera;
 import com.icsgame.game.utils.InputManager;
 import com.icsgame.game.map.MapMain;
 import com.icsgame.game.utils.RectCollision;
-import com.icsgame.game.weapons.projectiles.Bullet;
 import com.icsgame.game.weapons.projectiles.Explosive;
 import com.icsgame.game.weapons.projectiles.Projectile;
 
@@ -51,6 +51,10 @@ public class ScrGame implements Screen {
     // ArrayLists
     ArrayList<Projectile> projectiles;
     ArrayList<Enemy> enemies;
+
+    // ====================== Hardcoded Variables =======================
+    public int nNoSpawnPlayerRadius = 200;
+    // ==================================================================
 
     public ScrGame(Main _main) {
         main = _main;
@@ -155,7 +159,11 @@ public class ScrGame implements Screen {
                     // For Projectiles
                     for (int i = 0; i < projectiles.size(); i++){
                         if (rectCollision.isColliding(projectiles.get(i).getRect(), map.getTiles()[x][y].getRect())){
-                            killProjectile(i);
+                            if(projectiles.get(i).getClass() == Explosive.class) { // Checks if the Projectile is an Explosive
+                                projectiles.get(i).reverseDirection();
+                            } else {
+                                killProjectile(i);
+                            }
                         }
                     }
                 }
@@ -271,7 +279,9 @@ public class ScrGame implements Screen {
     }
 
     public void spawnEnemy(){
-        enemies.add(new Enemy(this, new Texture("themeDesert/tileBoundary.png"), 80, 80, 2));
+
+        enemies.add(new Basic(this, new Texture("themeDesert/tileBoundary.png"),
+                80, 80, 2));
     }
 
     public Player getPlayer(){ return player; }

@@ -182,4 +182,8 @@ public class Player {
     public void decreaseHealth(int decrease) {
         nHealth -= decrease;
     }
+
+    public Vector2 getCenterPosition() {
+        return new Vector2(getX()+(getW()/2), getY()+(getH()/2));
+    }
 }
