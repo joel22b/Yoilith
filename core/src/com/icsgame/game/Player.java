@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
@@ -26,6 +27,7 @@ public class Player {
     int nHealthMax = 100, nHealth = nHealthMax, nBombsMax = 10, nBombs = nBombsMax;
     Texture txtPlayer;
     Sprite sprPlayerTop;
+    //Polygon polyPlayerTop;
     Rectangle rect;
     Vector2 vel, angleHead = new Vector2();
     Vector3 posMouse3D;
@@ -39,10 +41,15 @@ public class Player {
 
         Texture txtHead = new Texture(playerFile+"/playerHead.png");
 
-        // Create Sprites
+        // Setup Head
         sprPlayerTop = new Sprite(txtHead, (int)(getX()+(getW()/2)-20), (int)(getY()+((getH()/4)*3)-20),
                 (int)(getW()+40), (int)(getH()+40));
         sprPlayerTop.setRegion(txtHead);
+
+        /*polyPlayerTop = new Polygon(new float[]{sprPlayerTop.getX(), sprPlayerTop.getY(),
+                sprPlayerTop.getX(), sprPlayerTop.getY()+sprPlayerTop.getHeight(),
+                sprPlayerTop.getX()+sprPlayerTop.getWidth(), sprPlayerTop.getY()+sprPlayerTop.getHeight(),
+                sprPlayerTop.getX()+sprPlayerTop.getWidth(), sprPlayerTop.getY()});*/
 
         // Create Weapons
         gun = new Gun(game, this);

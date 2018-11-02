@@ -24,22 +24,23 @@ public class ExplosiveLauncher extends Weapon {
 
     // ExplosiveLauncher info
     int nRange, nTime;
-    Rectangle rectExplosive = new Rectangle();
     float fSpeed;
 
     public ExplosiveLauncher(ScrGame game, Player player){
+        super();
         this.game = game;
         this.player = player;
     }
 
     @Override
     protected Projectile fireShot() {
-        // Get Bullet Starting Location
-        rectExplosive.set(player.getHeadX()+(vVelRan.x*player.getHeadSize()),
-                player.getHeadY()+(vVelRan.y*player.getHeadSize()), 80, 80);
+        // Set Width and Height of Explosive
+        rectProjectile.setWidth(60);
+        rectProjectile.setHeight(60);
+
         // Create Explosive
         return new Explosive(new Texture("extra/bomb.png"),
-                rectExplosive, vVelRan, fSpeed, nDamage, nRange, nTime);
+                rectProjectile, vVelRan, fSpeed, nDamage, nRange, nTime);
     }
 
     @Override

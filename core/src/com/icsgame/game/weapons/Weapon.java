@@ -1,5 +1,6 @@
 package com.icsgame.game.weapons;
 
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.icsgame.game.Player;
 import com.icsgame.game.weapons.projectiles.Projectile;
@@ -25,13 +26,14 @@ public abstract class Weapon {
 
     protected ScrGame game;
     protected Player player;
-    protected Random ranGen = new Random();
+    protected Random ranGen;
 
     protected int nDamage; // The damage inflicted by this weapon
     protected int nSpray; // The amount of spray for the Projectile
 
     protected int nAngleRan; // The random angle for each Projectile
     protected Vector2 vVelRan; // The random velocity of the projectile
+    protected Rectangle rectProjectile; // The Starting location of the Projectile
 
     protected int nAmmo; // Current ammo count
     protected int nAmmoMax; // Maximum ammo
@@ -43,6 +45,12 @@ public abstract class Weapon {
     protected int nShotsPerFire; // The number of shots for every time you fire
 
     protected String sType; // The name of the .properties file
+
+    public Weapon() {
+        ranGen = new Random();
+        vVelRan = new Vector2();
+        rectProjectile = new Rectangle();
+    }
 
     public void update() {
         if(!bCanFire){
@@ -68,10 +76,18 @@ public abstract class Weapon {
                 // Get the correct angle and velocity vector
                 vVelRan.set(player.getAngleHead());
 
+                // Create rect
+                rectProjectile.set((player.getHeadX()+(player.getHeadSize()/2))+
+                                ((player.getHeadSize()/2)*(float)Math.sin(Math.toRadians(90-vVelRan.angle()))),
+                        (player.getHeadY()+(player.getHeadSize()/2))+
+                                ((player.getHeadSize()/2)*(float)Math.cos(Math.toRadians(90-vVelRan.angle()))),
+                        100, 100);
+
                 // Fire the number of shots required
                 for (int i = 0; i < nShotsPerFire; i++) {
                     // Get a randomized velocity
                     nAngleRan = ranGen.nextInt(nSpray*2)-nSpray;
+
                     vVelRan.setAngle(nAngleRan+player.getAngleHead().angle());
                     vVelRan.nor();
 

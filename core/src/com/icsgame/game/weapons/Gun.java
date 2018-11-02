@@ -24,23 +24,23 @@ public class Gun extends Weapon {
 
     // Gun info
     int nDist;
-    Rectangle rectBullet = new Rectangle();
     float fSpeed;
 
     public Gun(ScrGame game, Player player){
+        super();
         this.game = game;
         this.player = player;
     }
 
     @Override
     protected Projectile fireShot() {
-        // Get Bullet Starting Location
-        rectBullet.set(player.getHeadX()+(vVelRan.x*player.getHeadSize()),
-                player.getHeadY()+(vVelRan.y*player.getHeadSize()), 20, 20);
+        // Set Width and Height of Bullet
+        rectProjectile.setWidth(20);
+        rectProjectile.setHeight(20);
 
         // Create Bullet
         return new Bullet(new Texture("bullet.png"),
-                rectBullet, vVelRan, nDamage, fSpeed, nDist);
+                rectProjectile, vVelRan, nDamage, fSpeed, nDist);
     }
 
     @Override
