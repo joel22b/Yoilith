@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.icsgame.game.Player;
 import com.icsgame.game.utils.Camera;
+import com.icsgame.objects.Bar;
 
 /* ======================== PlayerInfo ================================
 Displays the information about the player in the top left of the screen
@@ -23,6 +24,7 @@ public class PlayerInfo {
     // UI Assets
     BitmapFont fontBlack;
     Texture txtHeart, txtBullet, txtBomb, txtBlack, txtRed, txtGreen, txtBlue, txtGrey;
+    Bar barHealth, barGun, barBomb;
 
     public PlayerInfo(Camera camera){
         this.camera = camera;
@@ -56,43 +58,30 @@ public class PlayerInfo {
         batch.draw(txtHeart, camera.getX()-(camera.getW()/2)+nMargin,
                 camera.getY()+(camera.getH()/2)-nObjectSize-nMargin, nObjectSize, nObjectSize);
 
-        renderBar(batch, camera.getX()-(camera.getW()/2)+nMargin+objectOffset(),
-                camera.getY()+(camera.getH()/2)- nObjectSize -nMargin, nObjectSize, txtGreen, txtRed, player.getHealth(),
-                player.getHealthMax(), 5);
-
+        barHealth.update(camera.getX()-(camera.getW()/2)+nMargin+objectOffset(),
+                camera.getY()+(camera.getH()/2)- (objectOffset()*1), player.getHealth(),
+                player.getHealthMax());
+        barHealth.render(batch);
 
         // Render Ammo Bar
         batch.draw(txtBullet, camera.getX()-(camera.getW()/2)+nMargin,
                 camera.getY()+(camera.getH()/2)- (objectOffset()*2), nObjectSize, nObjectSize);
 
-        renderBar(batch, camera.getX()-(camera.getW()/2)+nMargin+ objectOffset(),
-                camera.getY()+(camera.getH()/2)- (objectOffset()*2), nObjectSize, txtBlue, txtGrey,
-                player.getGun().getAmmo(), player.getGun().getAmmoMax(), 5);
-
+        barGun.update(camera.getX()-(camera.getW()/2)+nMargin+objectOffset(),
+                camera.getY()+(camera.getH()/2)- (objectOffset()*2), player.getGun().getAmmo(),
+                player.getGun().getAmmoMax());
+        barGun.render(batch);
 
         // Render Bombs Bar
         batch.draw(txtBomb, camera.getX()-(camera.getW()/2)+nMargin,
                 camera.getY()+(camera.getH()/2)- (objectOffset()*3), nObjectSize, nObjectSize);
 
-        renderBar(batch, camera.getX()-(camera.getW()/2)+nMargin+ objectOffset(),
-                camera.getY()+(camera.getH()/2)- (objectOffset()*3), nObjectSize, txtGrey, txtRed,
-                player.getExplosiveLauncher().getAmmo(), player.getExplosiveLauncher().getAmmoMax(), 5);
-
+        barBomb.update(camera.getX()-(camera.getW()/2)+nMargin+objectOffset(),
+                camera.getY()+(camera.getH()/2)- (objectOffset()*3),
+                player.getExplosiveLauncher().getAmmo(), player.getExplosiveLauncher().getAmmoMax());
+        barBomb.render(batch);
 
         batch.end();
-    }
-
-    private void renderBar(SpriteBatch batch, float x, float y, int h, Texture txtFront, Texture txtBack,
-                           int nValue, int nMax, int nScale){
-        // Background
-        batch.draw(txtBlack, x, y, nMax*nScale, h);
-
-        // Bar
-        batch.draw(txtBack, x+2, y+2, (nMax*nScale)-4, h-4);
-        batch.draw(txtFront, x+2, y+2, (nValue*nScale)-4, h-4);
-
-        // Text
-        fontBlack.draw(batch, String.valueOf(nValue), x+((nMax*nScale)/2-23), y+h-10);
     }
 
     private void renderBox(SpriteBatch batch, float x, float y, float w, float h, float size, Texture txt){
@@ -104,5 +93,17 @@ public class PlayerInfo {
 
     private int objectOffset() { return nMargin+nObjectSize;}
 
-    public void setPlayer(Player player) { this.player = player; }
+    public void setPlayer(Player player) {
+        this.player = player;
+
+        barHealth = new Bar(txtRed, txtGreen, camera.getX()-(camera.getW()/2)+nMargin+objectOffset(),
+                camera.getY()+(camera.getH()/2)- nObjectSize -nMargin, nObjectSize, player.getHealth(),
+                player.getHealthMax(), 5, true);
+        barGun = new Bar(txtGrey, txtBlue, camera.getX()-(camera.getW()/2)+nMargin+objectOffset(),
+                camera.getY()+(camera.getH()/2)- (objectOffset()*2), nObjectSize, player.getGun().getAmmo(),
+                player.getGun().getAmmoMax(), 5, true);
+        barBomb = new Bar(txtRed, txtGrey, camera.getX()-(camera.getW()/2)+nMargin+objectOffset(),
+                camera.getY()+(camera.getH()/2)- (objectOffset()*3), nObjectSize,
+                player.getExplosiveLauncher().getAmmo(), player.getExplosiveLauncher().getAmmoMax(), 5, true);
+    }
 }

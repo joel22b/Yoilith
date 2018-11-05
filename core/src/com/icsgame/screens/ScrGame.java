@@ -153,7 +153,16 @@ public class ScrGame implements Screen {
                 if(map.getTiles()[x][y].getType() != 1) {
                     // For Player
                     if (rectCollision.isColliding(player.getRect(), map.getTiles()[x][y].getRect())) {
-                        rectCollision.collisionResponseSimple(player.getRect(), map.getTiles()[x][y].getRect(), player.getVel());
+                        rectCollision.collisionResponseSimple(player.getRect(), map.getTiles()[x][y].getRect(),
+                                player.getVel());
+                    }
+
+                    // For Enemies
+                    for (int i = 0; i < enemies.size(); i++) {
+                        if(rectCollision.isColliding(enemies.get(i).getRect(), map.getTiles()[x][y].getRect())) {
+                            rectCollision.collisionResponseSimple(enemies.get(i).getRect(), map.getTiles()[x][y].getRect(),
+                                    enemies.get(i).getVel(), enemies.get(i).getSpeed());
+                        }
                     }
 
                     // For Projectiles
@@ -167,6 +176,15 @@ public class ScrGame implements Screen {
                         }
                     }
                 }
+            }
+        }
+
+        // With Enemies
+        for (int i = 0; i < enemies.size(); i++) {
+            //With Player
+            if(rectCollision.isColliding(enemies.get(i).getRect(), player.getRect())) {
+                rectCollision.collisionResponseSimple(enemies.get(i).getRect(), player.getRect(), enemies.get(i).getVel(),
+                        enemies.get(i).getSpeed());
             }
         }
     }

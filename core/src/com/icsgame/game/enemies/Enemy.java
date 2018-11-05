@@ -7,6 +7,7 @@ import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.icsgame.game.map.Tile;
+import com.icsgame.objects.Bar;
 import com.icsgame.screens.ScrGame;
 
 import java.util.Random;
@@ -19,20 +20,28 @@ public abstract class Enemy {
 
     protected ScrGame game;
 
+    protected int nHealth;
+    protected int nHealthMax;
+
     protected Rectangle rect;
     protected Texture txt;
     protected Vector2 vVel;
     protected float fSpeed;
+    protected Bar bar;
 
     protected Random ranGen = new Random();
 
-    public Enemy(ScrGame game, Texture txt, int w, int h, float fSpeed) {
+    public Enemy(ScrGame game, Texture txt, int w, int h, float fSpeed, int nHealth, int nHealthMax) {
         this.game = game;
         this.txt = txt;
         this.rect = new Rectangle(0, 0, w, h);
         this.fSpeed = fSpeed;
+        this.nHealth = nHealth;
+        this.nHealthMax = nHealthMax;
 
         vVel = new Vector2();
+        bar = new Bar("extra/red.png", "extra/green.png", getX(), getY()+rect.getHeight()+5, 20,
+                nHealth, nHealthMax, 4, false);
 
         spawnController();
     }
@@ -51,6 +60,10 @@ public abstract class Enemy {
     public void render(SpriteBatch batch) {
         batch.begin();
         batch.draw(txt, rect.x, rect.y, rect.width, rect.height);
+
+        // Health Bar
+        bar.update(getX(), getY()+rect.getHeight()+5, nHealth, nHealthMax);
+        bar.render(batch);
         batch.end();
     }
 
@@ -96,6 +109,7 @@ public abstract class Enemy {
         return true;
     }
 
+
     public void setX(float x) {
         rect.setX(x);
     }
@@ -109,4 +123,8 @@ public abstract class Enemy {
     public float getY() { return rect.getY(); }
 
     public Rectangle getRect() { return rect; }
+
+    public Vector2 getVel() { return vVel; }
+
+    public float getSpeed() { return fSpeed; }
 }

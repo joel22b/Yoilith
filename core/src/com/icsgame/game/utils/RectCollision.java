@@ -15,7 +15,8 @@ public class RectCollision {
         return rectA.overlaps(rectB);
     }
 
-    public boolean collisionResponseSimple(Rectangle rectA, Rectangle rectB, Vector2 velA) { // A Simple collision detection method for now (has 1 static object)
+    public boolean collisionResponseSimple(Rectangle rectA, Rectangle rectB, Vector2 velA) {
+        // A Simple collision detection method for now (has 1 static object)
         Rectangle rectTemp = new Rectangle();
         rectTemp.set(rectA);
 
@@ -41,6 +42,39 @@ public class RectCollision {
         if(!isColliding(rectTemp, rectB)){
             rectA.setX(rectA.getX()-velA.x);
             rectA.setY(rectA.getY()-velA.y);
+            return true;
+        }
+
+        return false;
+    }
+
+    public boolean collisionResponseSimple(Rectangle rectA, Rectangle rectB, Vector2 velA, float fSpeedA) {
+        // A Simple collision detection method for now (has 1 static object)
+        Rectangle rectTemp = new Rectangle();
+        rectTemp.set(rectA);
+
+        // Checks X
+        rectTemp.setX(rectTemp.getX()-(velA.x*fSpeedA));
+        if(!isColliding(rectTemp, rectB)){
+            rectA.setX(rectA.getX()-(velA.x*fSpeedA));
+            return true;
+        }
+        rectTemp.set(rectA);
+
+        // Checks Y
+        rectTemp.setY(rectTemp.getY()-(velA.y*fSpeedA));
+        if(!isColliding(rectTemp, rectB)){
+            rectA.setY(rectA.getY()-(velA.y*fSpeedA));
+            return true;
+        }
+        rectTemp.set(rectA);
+
+        // Checks Both
+        rectTemp.setX(rectTemp.getX()-(velA.x*fSpeedA));
+        rectTemp.setY(rectTemp.getY()-(velA.y*fSpeedA));
+        if(!isColliding(rectTemp, rectB)){
+            rectA.setX(rectA.getX()-(velA.x*fSpeedA));
+            rectA.setY(rectA.getY()-(velA.y*fSpeedA));
             return true;
         }
 

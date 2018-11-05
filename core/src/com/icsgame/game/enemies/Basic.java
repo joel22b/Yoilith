@@ -7,7 +7,7 @@ import com.icsgame.screens.ScrGame;
 public class Basic extends Enemy {
 
     public Basic(ScrGame game, Texture txt, int w, int h, float fSpeed) {
-        super(game, txt, w, h, fSpeed);
+        super(game, txt, w, h, fSpeed, 20, 20);
     }
 
     public Basic(ScrGame game, Texture txt, Rectangle rect, float fSpeed) {
