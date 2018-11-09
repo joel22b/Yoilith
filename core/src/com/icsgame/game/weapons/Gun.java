@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.icsgame.game.Player;
+import com.icsgame.game.enemies.Enemy;
 import com.icsgame.game.weapons.projectiles.Bullet;
 import com.icsgame.game.weapons.projectiles.Projectile;
 import com.icsgame.screens.ScrGame;
@@ -30,6 +31,14 @@ public class Gun extends Weapon {
         super();
         this.game = game;
         this.player = player;
+        isPlayer = true;
+    }
+
+    public Gun(ScrGame game, Enemy enemy){
+        super();
+        this.game = game;
+        this.enemy = enemy;
+        isPlayer = false;
     }
 
     @Override

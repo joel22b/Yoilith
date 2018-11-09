@@ -4,10 +4,12 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.icsgame.screens.ScrGame;
+import com.icsgame.screens.ScrLineOfSight;
 
 /* ======================== Camera ================================
 Controls what on screen
@@ -120,6 +122,8 @@ public class Camera {
     public void setPosition(Vector2 pos) {
         camera.translate(pos.x - camera.position.x, pos.y - camera.position.y);
     }
+
+    public Matrix4 getProjectionMatrix() { return camera.combined; }
 
     public float getX() { return camera.position.x; }
 

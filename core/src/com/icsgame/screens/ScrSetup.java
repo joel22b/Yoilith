@@ -19,6 +19,7 @@ Lets the player configure the game and start a game
 public class ScrSetup implements Screen {
 
     Main main;
+    ScrGame game;
     SpriteBatch batch;
     Texture txtBG;
     Sprite sprBG;
@@ -28,8 +29,9 @@ public class ScrSetup implements Screen {
     Texture[] txtThemeImages = new Texture[2], txtGunImages = new Texture[5];
     String[] arsThemeReturns = new String[2], arsGunReturns = new String[5];
 
-    public ScrSetup (Main _main){
+    public ScrSetup (Main _main, ScrGame game){
         main = _main;
+        this.game = game;
         batch = new SpriteBatch();
         txtBG = new Texture("backgroundBlackBoards.jpg");
         sprBG = new Sprite(txtBG, 0, 0, main.nWidth, main.nHeight);
@@ -87,7 +89,7 @@ public class ScrSetup implements Screen {
 
     private void checkButtons(){ // Checks if Buttons are pressed
         if(btnStart.justClicked()){
-            main.scrScrGame.setupGame();
+            game.setupGame();
             main.changeScreen(3);
         }
         if(btnBack.justClicked()){

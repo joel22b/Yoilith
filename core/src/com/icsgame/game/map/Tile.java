@@ -3,6 +3,7 @@ package com.icsgame.game.map;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Rectangle;
 
 /* ======================== Tile ================================
@@ -16,6 +17,7 @@ public class Tile {
     Texture txtTile, txtDamage = null;
     int nType, nHealth, healthMax;
     Rectangle rect = new Rectangle();
+    Polygon polygon;
 
     /* =========== Type Meaning =================
     0 = boundary wall
@@ -47,6 +49,10 @@ public class Tile {
         rect.height = _nSize;
         this.nHealth = nHealth;
         healthMax = nHealth;
+
+        polygon = new Polygon(new float[]{getX(), getY(), getX()+getW(), getY(), getX()+getW(), getY()+getH(), getX(), getY()+getH()});
+        polygon.setPosition(getX(), getY());
+        polygon.setOrigin(getX()+(getW()/2), getY()+(getH()/2));
     }
 
     public void render(SpriteBatch batch){
@@ -89,7 +95,13 @@ public class Tile {
 
     public Rectangle getRect(){ return rect; }
 
+    public Polygon getPolygon() { return polygon; }
+
     public  int getType() { return nType; }
 
     public void decreaseHealth(int decrease) { nHealth -= decrease; }
+
+    public void setTexture(Texture txt) {
+        txtTile = txt;
+    }
 }

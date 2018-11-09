@@ -3,6 +3,7 @@ package com.icsgame.game.weapons;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.icsgame.game.Player;
+import com.icsgame.game.enemies.Enemy;
 import com.icsgame.game.weapons.projectiles.Projectile;
 import com.icsgame.screens.ScrGame;
 
@@ -25,8 +26,12 @@ getAmmoMax();       int             return nAmmoMax
 public abstract class Weapon {
 
     protected ScrGame game;
-    protected Player player;
     protected Random ranGen;
+
+    // Only one of the following
+    protected boolean isPlayer; // True= player, False= enemy
+    protected Player player;
+    protected Enemy enemy;
 
     protected int nDamage; // The damage inflicted by this weapon
     protected int nSpray; // The amount of spray for the Projectile
@@ -74,21 +79,25 @@ public abstract class Weapon {
                 bCanFire = false;
 
                 // Get the correct angle and velocity vector
-                vVelRan.set(player.getAngleHead());
+                if(isPlayer) {
+                    vVelRan.set(player.getAngleHead());
+                } else {
+
+                }
 
                 // Create rect
-                rectProjectile.set((player.getHeadX()+(player.getHeadSize()/2))+
-                                ((player.getHeadSize()/2)*(float)Math.sin(Math.toRadians(90-vVelRan.angle()))),
-                        (player.getHeadY()+(player.getHeadSize()/2))+
-                                ((player.getHeadSize()/2)*(float)Math.cos(Math.toRadians(90-vVelRan.angle()))),
+                rectProjectile.set((player.getHeadX() + (player.getHeadSize() / 2)) +
+                                ((player.getHeadSize() / 2) * (float) Math.sin(Math.toRadians(90 - vVelRan.angle()))),
+                        (player.getHeadY() + (player.getHeadSize() / 2)) +
+                                ((player.getHeadSize() / 2) * (float) Math.cos(Math.toRadians(90 - vVelRan.angle()))),
                         100, 100);
 
                 // Fire the number of shots required
                 for (int i = 0; i < nShotsPerFire; i++) {
                     // Get a randomized velocity
-                    nAngleRan = ranGen.nextInt(nSpray*2)-nSpray;
+                    nAngleRan = ranGen.nextInt(nSpray * 2) - nSpray;
 
-                    vVelRan.setAngle(nAngleRan+player.getAngleHead().angle());
+                    vVelRan.setAngle(nAngleRan + vVelRan.angle());
                     vVelRan.nor();
 
                     game.getProjectiles().add(fireShot());

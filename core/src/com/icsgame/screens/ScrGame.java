@@ -27,30 +27,30 @@ Runs the game
 
 public class ScrGame implements Screen {
 
-    Main main;
+    protected Main main;
     public SpriteBatch batch = new SpriteBatch();
     public int nX = 0, nY = 0, nW = 20, nH = 20, nTileSize = 100;
 
     // Tick Rate / Frames Info
-    float tickAccumulator, tickRate;
-    int TICK_RATE = 30;
-    float TICK_PERIOD = 1 / TICK_RATE;
+    protected float tickAccumulator, tickRate;
+    protected int TICK_RATE = 30;
+    protected float TICK_PERIOD = 1 / TICK_RATE;
 
     // Game Assets
-    MapMain map;
-    Camera camera;
-    InputManager input;
-    RectCollision rectCollision;
+    protected MapMain map;
+    protected Camera camera;
+    protected InputManager input;
+    protected RectCollision rectCollision;
 
     // Game UI
-    PlayerInfo playerInfo;
+    protected PlayerInfo playerInfo;
 
     // Player
-    Player player;
+    protected Player player;
 
     // ArrayLists
-    ArrayList<Projectile> projectiles;
-    ArrayList<Enemy> enemies;
+    protected ArrayList<Projectile> projectiles;
+    protected ArrayList<Enemy> enemies;
 
     // ====================== Hardcoded Variables =======================
     public int nNoSpawnPlayerRadius = 200;
@@ -80,7 +80,7 @@ public class ScrGame implements Screen {
     }
 
     // Main loop of the game
-    private void doTick(){ // Runs the game at a regular tick rate
+    protected void doTick(){ // Runs the game at a regular tick rate
         if(!input.handleInput() && player.getHealth() > 0) { // Kill game condition
             // Test collision
             collisionDetection();
@@ -97,13 +97,13 @@ public class ScrGame implements Screen {
         }
     }
 
-    private void update(){
+    protected void update(){
         //Player Update
         player.update();
 
         // Enemies Update
         for (int i = 0; i < enemies.size(); i++) {
-            if(enemies.get(i).update()){
+            if (enemies.get(i).update()) {
                 // Kill
             }
         }
@@ -125,7 +125,7 @@ public class ScrGame implements Screen {
         camera.follow(player.getX(), player.getY(), (int)player.getW(), (int)player.getH());
     }
 
-    private  void renderGame(){
+    protected void renderGame(){
         // Render Game Assets
         map.render(batch);
 
@@ -146,7 +146,7 @@ public class ScrGame implements Screen {
         playerInfo.render(batch);
     }
 
-    private void collisionDetection(){
+    protected void collisionDetection(){
         // With Map
         for (int x = 0; x < map.getTiles().length; x++){
             for (int y = 0; y < map.getTiles().length; y++){
@@ -189,7 +189,7 @@ public class ScrGame implements Screen {
         }
     }
 
-    private void explode(Rectangle rect, int nDamage, int nRange){
+    protected void explode(Rectangle rect, int nDamage, int nRange){
         // Distance from bomb
         int nDist;
         // Center location of object
@@ -266,7 +266,7 @@ public class ScrGame implements Screen {
         enemies = null;
     }
 
-    private void killProjectile(int index){
+    protected void killProjectile(int index){
         projectiles.get(index).dispose();
         projectiles.remove(index);
     }

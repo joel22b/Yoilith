@@ -2,6 +2,7 @@ package com.icsgame.game.map;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Vector2;
 import com.icsgame.game.utils.RectCollision;
 import com.icsgame.screens.ScrGame;
 
@@ -53,6 +54,20 @@ public class MapMain {
         mapGen.generateMap(txtTiles, txtDecorations, nX, nY, nW, nH, nWTile);
         tiles = mapGen.getTiles();
         decorations = mapGen.getDecorations();
+    }
+
+    public Tile getTile(int x, int y) {
+        int nX = Math.floorDiv(x, nWTile);
+        int nY = Math.floorDiv(y, nHTile);
+
+        return tiles[nX][nY];
+    }
+
+    public Vector2 getTileIndex(int x, int y) {
+        int nX = Math.floorDiv(x, nWTile);
+        int nY = Math.floorDiv(y, nHTile);
+
+        return new Vector2(nX, nY);
     }
 
     public void render(SpriteBatch batch){

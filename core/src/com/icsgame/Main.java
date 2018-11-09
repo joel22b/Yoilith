@@ -2,10 +2,7 @@ package com.icsgame;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
-import com.icsgame.screens.ScrGame;
-import com.icsgame.screens.ScrHighscores;
-import com.icsgame.screens.ScrMenu;
-import com.icsgame.screens.ScrSetup;
+import com.icsgame.screens.*;
 
 /* ======================== Main ================================
 Extends a Game
@@ -20,6 +17,7 @@ public class Main extends Game {
 	ScrHighscores scrHighscores;
 	public ScrSetup scrSetup;
 	public ScrGame scrScrGame;
+	public ScrLineOfSight scrScrLineOfSight;
 
 	// Width and Height Of Screen
 	public int nWidth, nHeight;
@@ -31,8 +29,10 @@ public class Main extends Game {
 
 		scrMenu = new com.icsgame.screens.ScrMenu(this);
 		scrHighscores = new com.icsgame.screens.ScrHighscores(this);
-		scrSetup = new com.icsgame.screens.ScrSetup(this);
 		scrScrGame = new ScrGame(this);
+		scrScrLineOfSight = new ScrLineOfSight(this);
+
+		scrSetup = new com.icsgame.screens.ScrSetup(this, scrScrLineOfSight);
 		changeScreen(0);
 	}
 
@@ -61,7 +61,7 @@ public class Main extends Game {
 				break;
 			case 3:
 				// Game
-				setScreen(scrScrGame);
+				setScreen(scrScrLineOfSight);
 				break;
 			default:
 				break;
