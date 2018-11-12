@@ -55,6 +55,10 @@ public class Camera {
         return camera.unproject(coordinate);
     }
 
+    public Vector3 project(Vector3 coordinate){
+        return camera.project(coordinate);
+    }
+
     public void follow(float nX, float nY, int nW, int nH){
         // Calculate Velocity
         fSpeed = (float)Math.sqrt(Math.pow((nX+(nW/2))-camera.position.x, 2)+Math.pow((nY+(nH/2))-camera.position.y, 2))/50;

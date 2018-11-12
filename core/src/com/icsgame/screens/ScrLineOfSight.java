@@ -1,10 +1,13 @@
 package com.icsgame.screens;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 import com.icsgame.Main;
 import com.icsgame.game.Player;
 import com.icsgame.game.enemies.Basic;
@@ -17,6 +20,7 @@ import com.icsgame.game.utils.InputManager;
 import com.icsgame.game.utils.RectCollision;
 import com.icsgame.game.weapons.projectiles.Explosive;
 import com.icsgame.game.weapons.projectiles.Projectile;
+import com.icsgame.objects.TestPolygon;
 
 import java.util.ArrayList;
 
@@ -25,7 +29,9 @@ public class ScrLineOfSight extends ScrGame {
     public SpriteBatch batch = new SpriteBatch();
     public int nX = 0, nY = 0, nW = 3, nH = 3, nTileSize = 100;
 
-    public int nNoSpawnPlayerRadius = 80;
+    public ShapeRenderer shapeRenderer = new ShapeRenderer();
+
+    ArrayList<TestPolygon> testPolygons = new ArrayList<>();
 
     public ScrLineOfSight(Main _main) {
         super(_main);
@@ -37,6 +43,8 @@ public class ScrLineOfSight extends ScrGame {
         camera.setFollowBox(300, 200);
         input = new InputManager(this);
         playerInfo = new PlayerInfo(camera);
+
+        nNoSpawnPlayerRadius = 50;
     }
 
     @Override
@@ -84,25 +92,18 @@ public class ScrLineOfSight extends ScrGame {
 
     @Override
     protected void update(){
-        //Player Update
-        player.update();
+        shapeRenderer.setProjectionMatrix(getCamera().getProjectionMatrix());
+        shapeRenderer.setAutoShapeType(true);
+        shapeRenderer.setColor(0, 0, 1, 1);
 
-        // Enemies Update
-        for (int i = 0; i < enemies.size(); i++) {
-            if (enemies.get(i).update()) {
-                // Kill
-            }
-        }
-
-        // Projectiles Update
-        for (int i = 0; i < projectiles.size(); i++){
-            if(projectiles.get(i).update()){
-                if(projectiles.get(i).getClass() == Explosive.class) { // Checks if the Projectile is an Explosive
-                    Explosive explosive = (Explosive)projectiles.get(i);
-                    explode(explosive.getRect(), explosive.getDamage(), explosive.getRange());
-                }
-
-                killProjectile(i);
+        if (Gdx.input.justTouched()) {
+            if (testPolygons.size() < 1) {
+                testPolygons.add(new TestPolygon(this));
+            } else if (!testPolygons.get(testPolygons.size()-1).addPoint(new Vector2(
+                    camera.unProject(new Vector3(Gdx.input.getX(), 0, 0)).x,
+                    camera.unProject(new Vector3(0, Gdx.input.getY(), 0)).y
+            ))) {
+                testPolygons.add(new TestPolygon(this));
             }
         }
 
@@ -116,21 +117,9 @@ public class ScrLineOfSight extends ScrGame {
         // Render Game Assets
         map.render(batch);
 
-        // Render Enemies
-        for (int i = 0; i < enemies.size(); i++) {
-            enemies.get(i).render(batch);
+        for (int i = 0; i < testPolygons.size(); i++) {
+            testPolygons.get(i).render(shapeRenderer);
         }
-
-        // Render Player
-        player.render(batch);
-
-        // Render Projectiles
-        for (int i = 0; i < projectiles.size(); i++){
-            projectiles.get(i).render(batch);
-        }
-
-        // Render UI
-        playerInfo.render(batch);
     }
 
     @Override

@@ -19,10 +19,10 @@ public abstract class Enemy {
 
     public boolean bCan = true;
     ShapeRenderer shapeRenderer = new ShapeRenderer();
-    Vector2 p0 = new Vector2();
-    Vector2 p1 = new Vector2();
-    Vector2 p2 = new Vector2();
-    Polygon polygon;
+    Vector3 p0 = new Vector3();
+    Vector3 p1 = new Vector3();
+    Vector3 p2 = new Vector3();
+    Polygon polygon, overlap;
 
     protected ScrGame game;
 
@@ -158,9 +158,16 @@ public abstract class Enemy {
         System.out.println("enemy x:"+vEnemy.x+" y:"+vEnemy.y);
         System.out.println("player1 x:"+vPlayer1.x+" y:"+vPlayer1.y);
 
-        p0.set(vPlayer1);
-        p1.set(vPlayer2);
-        p2.set(vEnemy);
+        p0.set(vPlayer1, 0);
+        p1.set(vPlayer2, 0);
+        p2.set(vEnemy, 0);
+
+        /*
+        p0.set(game.getCamera().unProject(p0));
+        p1.set(game.getCamera().unProject(p1));
+        p2.set(game.getCamera().unProject(p2));
+        */
+
         polygon = new Polygon(new float[]{vPlayer2.x, vPlayer2.y, vPlayer1.x, vPlayer1.y, vEnemy.x, vEnemy.y});
 
         // Check if the ray collides with any walls
@@ -169,23 +176,36 @@ public abstract class Enemy {
                 if (game.getMap().getTiles()[x][y].getType() != 1) {
                     Tile tile = game.getMap().getTiles()[x][y];
                     //System.out.println("Is Wall! Tile ["+x+"]["+y+"] Type: "+tile.getType());
-                    if (Intersector.overlapConvexPolygons(polygon, tile.getPolygon())) {
-                        System.out.println("Intersector! Tile ["+x+"]["+y+"] Type: "+tile.getType());
-                        System.out.print("Polygon Vertices: ");
-                        for (int i = 0; i < 8; i++) {
-                            if(i!=0) {
-                                System.out.print(", ");
+                    overlap = null;
+                    Intersector.intersectPolygons(polygon, tile.getPolygon(), overlap);
+                        if(overlap != null) {
+                            System.out.println("Intersector! Tile [" + x + "][" + y + "] Type: " + tile.getType());
+                            System.out.print("Tile Polygon Vertices: ");
+                            for (int i = 0; i < 8; i++) {
+                                if (i != 0) {
+                                    System.out.print(", ");
+                                }
+                                System.out.print(tile.getPolygon().getVertices()[i]);
                             }
-                            System.out.print(tile.getPolygon().getVertices()[i]);
+                            System.out.println();
+                            System.out.print("Line Polygon Vertices: ");
+                            for (int i = 0; i < 6; i++) {
+                                if (i != 0) {
+                                    System.out.print(", ");
+                                }
+                                System.out.print(polygon.getVertices()[i]);
+                            }
+                            System.out.println();
+                            tile.setTexture(new Texture("extra/red.png"));
+
+
+                            System.out.println("------------------------------------------------");
+                            //polygon = tile.getPolygon();
+                            //return false;
+
+                            return false;
                         }
-                        System.out.println();
-                        tile.setTexture(new Texture("extra/red.png"));
 
-
-                        System.out.println("------------------------------------------------");
-                        //polygon = tile.getPolygon();
-                        //return false;
-                    }
                 }
             }
         }
