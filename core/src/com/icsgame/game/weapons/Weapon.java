@@ -81,16 +81,21 @@ public abstract class Weapon {
                 // Get the correct angle and velocity vector
                 if(isPlayer) {
                     vVelRan.set(player.getAngleHead());
+                    // Create rect
+                    rectProjectile.set((player.getHeadX() + (player.getHeadSize() / 2)) +
+                                    ((player.getHeadSize() / 2) * (float) Math.sin(Math.toRadians(90 - vVelRan.angle()))),
+                            (player.getHeadY() + (player.getHeadSize() / 2)) +
+                                    ((player.getHeadSize() / 2) * (float) Math.cos(Math.toRadians(90 - vVelRan.angle()))),
+                            100, 100);
                 } else {
+                    vVelRan.set((game.getPlayer().getX()+(game.getPlayer().getW()/2))-(enemy.getX()+(enemy.getRect().width/2)),
+                            (game.getPlayer().getX()+(game.getPlayer().getW()/2))-(enemy.getY()+(enemy.getRect().height/2)));
 
+                    // Create rect
+                    rectProjectile.set(enemy.getX() + (enemy.getRect().width / 2),
+                            (enemy.getY() + (enemy.getRect().height / 2)),
+                            100, 100);
                 }
-
-                // Create rect
-                rectProjectile.set((player.getHeadX() + (player.getHeadSize() / 2)) +
-                                ((player.getHeadSize() / 2) * (float) Math.sin(Math.toRadians(90 - vVelRan.angle()))),
-                        (player.getHeadY() + (player.getHeadSize() / 2)) +
-                                ((player.getHeadSize() / 2) * (float) Math.cos(Math.toRadians(90 - vVelRan.angle()))),
-                        100, 100);
 
                 // Fire the number of shots required
                 for (int i = 0; i < nShotsPerFire; i++) {
@@ -115,4 +120,8 @@ public abstract class Weapon {
     public int getAmmo() { return nAmmo; }
 
     public int getAmmoMax() { return nAmmoMax; }
+
+    public boolean canFire() {
+        return bCanFire;
+    }
 }

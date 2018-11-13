@@ -39,6 +39,7 @@ public class Gun extends Weapon {
         this.game = game;
         this.enemy = enemy;
         isPlayer = false;
+        rectProjectile = new Rectangle();
     }
 
     @Override

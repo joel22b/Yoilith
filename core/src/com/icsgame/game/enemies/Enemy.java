@@ -2,7 +2,6 @@ package com.icsgame.game.enemies;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.*;
 import com.icsgame.game.map.Tile;
 import com.icsgame.game.weapons.Weapon;
@@ -17,12 +16,7 @@ Basic generic enemy class
 
 public abstract class Enemy {
 
-    public boolean bCan = true;
-    ShapeRenderer shapeRenderer = new ShapeRenderer();
-    Vector3 p0 = new Vector3();
-    Vector3 p1 = new Vector3();
-    Vector3 p2 = new Vector3();
-    Polygon polygon, overlap;
+    protected Polygon polygon;
 
     protected ScrGame game;
 
@@ -76,42 +70,24 @@ public abstract class Enemy {
 
     public void render(SpriteBatch batch) {
         batch.begin();
+
         batch.draw(txt, rect.x, rect.y, rect.width, rect.height);
 
         // Health Bar
         bar.update(getX(), getY()+rect.getHeight()+5, nHealth, nHealthMax);
         bar.render(batch);
 
-        shapeRenderer.setProjectionMatrix(game.getCamera().getProjectionMatrix());
-        shapeRenderer.setAutoShapeType(true);
-        shapeRenderer.setColor(0, 0, 1, 1);
-        shapeRenderer.begin();
-        //shapeRenderer.line(p0, p1);
-        //shapeRenderer.line(p0, p2);
-
-        if(polygon != null) {
-            shapeRenderer.line(new Vector2(polygon.getVertices()[0], polygon.getVertices()[1]),
-                    new Vector2(polygon.getVertices()[2], polygon.getVertices()[3]));
-            shapeRenderer.line(new Vector2(polygon.getVertices()[0], polygon.getVertices()[1]),
-                    new Vector2(polygon.getVertices()[4], polygon.getVertices()[5]));
-            shapeRenderer.line(new Vector2(polygon.getVertices()[2], polygon.getVertices()[3]),
-                    new Vector2(polygon.getVertices()[4], polygon.getVertices()[5]));
-        }
-
-        shapeRenderer.end();
         batch.end();
     }
 
     public boolean update() {
-        if(bCan) {
-            aiController();
+        aiController();
 
-            // Update position
-            setX(getX() + (vVel.x * fSpeed));
-            setY(getY() + (vVel.y * fSpeed));
+        weapon.update();
 
-            bCan = false;
-        }
+        // Update position
+        setX(getX() + (vVel.x * fSpeed));
+        setY(getY() + (vVel.y * fSpeed));
 
         return false;
     }
@@ -125,20 +101,19 @@ public abstract class Enemy {
         vAimAngle.set(game.getPlayer().getX()-getX(), game.getPlayer().getY()-getY());
         fAimAngle = vAimAngle.angle();
 
-        if(hasLineOfSight()) {
-            weapon.fire();
-            System.out.println("FIRE!!!");
-            System.out.println("------------------------------------------------");
+        if(weapon.canFire()) {
+            if (hasLineOfSight()) {
+                weapon.fire();
+                System.out.println("FIRE!!!");
+            }
         }
     }
 
     protected boolean hasLineOfSight() {
-        System.out.println("===================================================");
-
         polygon = new Polygon();
         float[] vertices = new float[6];
         vertices[0] = game.getPlayer().getX()+(game.getPlayer().getW()/2);
-        vertices[1] = game.getPlayer().getY();
+        vertices[1] = game.getPlayer().getY()+(game.getPlayer().getH()/2);
         vertices[2] = game.getPlayer().getHeadX();
         vertices[3] = game.getPlayer().getHeadY();
         vertices[4] = getX()+(rect.width/2);
@@ -152,23 +127,6 @@ public abstract class Enemy {
                     Tile tile = game.getMap().getTiles()[x][y];
                     //System.out.println("Is Wall! Tile ["+x+"]["+y+"] Type: "+tile.getType());
                     if (Intersector.overlapConvexPolygons(polygon, tile.getPolygon())) {
-                        System.out.print("Tile Polygon Vertices: ");
-                        for (int i = 0; i < 8; i++) {
-                            if (i != 0) {
-                                System.out.print(", ");
-                            }
-                            System.out.print(tile.getPolygon().getVertices()[i]);
-                        }
-                        System.out.println();
-                        System.out.print("Line Polygon Vertices: ");
-                        for (int i = 0; i < 6; i++) {
-                            if (i != 0) {
-                                System.out.print(", ");
-                            }
-                            System.out.print(polygon.getVertices()[i]);
-                        }
-                        System.out.println();
-
                         return false;
                     }
                 }
