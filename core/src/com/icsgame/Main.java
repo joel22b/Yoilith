@@ -32,7 +32,7 @@ public class Main extends Game {
 		scrScrGame = new ScrGame(this);
 		scrScrLineOfSight = new ScrLineOfSight(this);
 
-		scrSetup = new com.icsgame.screens.ScrSetup(this, scrScrLineOfSight);
+		scrSetup = new com.icsgame.screens.ScrSetup(this, scrScrGame);
 		changeScreen(0);
 	}
 
@@ -61,7 +61,7 @@ public class Main extends Game {
 				break;
 			case 3:
 				// Game
-				setScreen(scrScrLineOfSight);
+				setScreen(scrScrGame);
 				break;
 			default:
 				break;

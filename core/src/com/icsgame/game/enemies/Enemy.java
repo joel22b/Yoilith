@@ -133,42 +133,17 @@ public abstract class Enemy {
     }
 
     protected boolean hasLineOfSight() {
-        Vector2 vTileEnemy = new Vector2();
-        Vector2 vTilePlayer = new Vector2();
-
         System.out.println("===================================================");
 
-        // Get Tile location of player and enemy
-        vTileEnemy.set(game.getMap().getTileIndex((int)(getX()+(rect.getWidth()/2)), (int)(getY()+(rect.getHeight()/2))));
-        vTilePlayer.set(game.getMap().getTileIndex((int)(game.getPlayer().getX()+(game.getPlayer().getW()/2)),
-                (int)(game.getPlayer().getY()+(game.getPlayer().getH()/2))));
-
-        System.out.println("tile enemy x:"+vTileEnemy.x+" y:"+vTileEnemy.y);
-        System.out.println("tile player x:"+vTilePlayer.x+" y:"+vTilePlayer.y);
-
-        // Make a line Segment of the line of sight
-        Vector2 vPlayer1 = new Vector2();
-        vPlayer1.set(game.getPlayer().getCenterPosition());
-        Vector2 vPlayer2 = new Vector2();
-        vPlayer2.set(game.getPlayer().getHeadX(), game.getPlayer().getHeadY());
-        Vector2 vEnemy = new Vector2();
-        vEnemy.set(getX()+(rect.width), getY()+(rect.height));
-
-        System.out.println("player2 x:"+vPlayer2.x+" y:"+vPlayer2.y);
-        System.out.println("enemy x:"+vEnemy.x+" y:"+vEnemy.y);
-        System.out.println("player1 x:"+vPlayer1.x+" y:"+vPlayer1.y);
-
-        p0.set(vPlayer1, 0);
-        p1.set(vPlayer2, 0);
-        p2.set(vEnemy, 0);
-
-        /*
-        p0.set(game.getCamera().unProject(p0));
-        p1.set(game.getCamera().unProject(p1));
-        p2.set(game.getCamera().unProject(p2));
-        */
-
-        polygon = new Polygon(new float[]{vPlayer2.x, vPlayer2.y, vPlayer1.x, vPlayer1.y, vEnemy.x, vEnemy.y});
+        polygon = new Polygon();
+        float[] vertices = new float[6];
+        vertices[0] = game.getPlayer().getX()+(game.getPlayer().getW()/2);
+        vertices[1] = game.getPlayer().getY();
+        vertices[2] = game.getPlayer().getHeadX();
+        vertices[3] = game.getPlayer().getHeadY();
+        vertices[4] = getX()+(rect.width/2);
+        vertices[5] = getY()+(rect.height/2);
+        polygon.setVertices(vertices);
 
         // Check if the ray collides with any walls
         for (int x = 0; x < game.getMap().getTiles().length; x++) {
@@ -176,40 +151,30 @@ public abstract class Enemy {
                 if (game.getMap().getTiles()[x][y].getType() != 1) {
                     Tile tile = game.getMap().getTiles()[x][y];
                     //System.out.println("Is Wall! Tile ["+x+"]["+y+"] Type: "+tile.getType());
-                    overlap = null;
-                    Intersector.intersectPolygons(polygon, tile.getPolygon(), overlap);
-                        if(overlap != null) {
-                            System.out.println("Intersector! Tile [" + x + "][" + y + "] Type: " + tile.getType());
-                            System.out.print("Tile Polygon Vertices: ");
-                            for (int i = 0; i < 8; i++) {
-                                if (i != 0) {
-                                    System.out.print(", ");
-                                }
-                                System.out.print(tile.getPolygon().getVertices()[i]);
+                    if (Intersector.overlapConvexPolygons(polygon, tile.getPolygon())) {
+                        System.out.print("Tile Polygon Vertices: ");
+                        for (int i = 0; i < 8; i++) {
+                            if (i != 0) {
+                                System.out.print(", ");
                             }
-                            System.out.println();
-                            System.out.print("Line Polygon Vertices: ");
-                            for (int i = 0; i < 6; i++) {
-                                if (i != 0) {
-                                    System.out.print(", ");
-                                }
-                                System.out.print(polygon.getVertices()[i]);
-                            }
-                            System.out.println();
-                            tile.setTexture(new Texture("extra/red.png"));
-
-
-                            System.out.println("------------------------------------------------");
-                            //polygon = tile.getPolygon();
-                            //return false;
-
-                            return false;
+                            System.out.print(tile.getPolygon().getVertices()[i]);
                         }
+                        System.out.println();
+                        System.out.print("Line Polygon Vertices: ");
+                        for (int i = 0; i < 6; i++) {
+                            if (i != 0) {
+                                System.out.print(", ");
+                            }
+                            System.out.print(polygon.getVertices()[i]);
+                        }
+                        System.out.println();
 
+                        return false;
+                    }
                 }
             }
         }
-
+        System.out.println();
         return true;
     }
 

@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
 
 /* ======================== Tile ================================
 The Tiles on the map
@@ -39,20 +40,32 @@ public class Tile {
     16 = wall horizontal tunnel
     ========================================== */
 
-    public Tile(MapMain _map, int _nType, Texture _txtTile, int _nX, int _nY, int _nSize, int nHealth){
+    public Tile(MapMain _map, int _nType, Texture _txtTile, int _nX, int _nY, int nSize, int nHealth){
         map = _map;
         nType = _nType;
         txtTile = _txtTile;
         rect.x = _nX;
         rect.y = _nY;
-        rect.width = _nSize;
-        rect.height = _nSize;
+        rect.width = nSize;
+        rect.height = nSize;
         this.nHealth = nHealth;
         healthMax = nHealth;
 
-        polygon = new Polygon(new float[]{getX(), getY(), getX()+getW(), getY(), getX()+getW(), getY()+getH(), getX(), getY()+getH()});
-        polygon.setPosition(getX(), getY());
-        polygon.setOrigin(getX()+(getW()/2), getY()+(getH()/2));
+        float[] vertices = new float[8];
+        Vector2 position = map.getTileIndex(getX(), getY());
+        vertices[0] = (position.x/2)*nSize;
+        vertices[1] = (position.y/2)*nSize;
+        vertices[2] = (position.x/2)*nSize+nSize;
+        vertices[3] = (position.y/2)*nSize;
+        vertices[4] = (position.x/2)*nSize+nSize;
+        vertices[5] = (position.y/2)*nSize+nSize;
+        vertices[6] = (position.x/2)*nSize;
+        vertices[7] = (position.y/2)*nSize+nSize;
+
+        polygon = new Polygon(vertices);
+
+        polygon.setPosition(getX()/2, getY()/2);
+        polygon.setOrigin((getX()/2)+(nSize/2), (getY()/2)+(nSize/2));
     }
 
     public void render(SpriteBatch batch){

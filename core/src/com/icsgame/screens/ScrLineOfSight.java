@@ -52,15 +52,15 @@ public class ScrLineOfSight extends ScrGame {
         map.createMap(nX, nY, nW, nH, nTileSize, "Desert");
 
         map.getTiles()[0][0] = new Tile(map, 1, new Texture("themeDesert/tileFloor.png"), 0, 0, nTileSize, 50);
-        map.getTiles()[0][1] = new Tile(map, 1, new Texture("themeDesert/tileFloor.png"), 100, 0, nTileSize, 50);
-        map.getTiles()[0][2] = new Tile(map, 1, new Texture("themeDesert/tileFloor.png"), 200, 0, nTileSize, 50);
+        map.getTiles()[0][1] = new Tile(map, 1, new Texture("themeDesert/tileFloor.png"), 0, 100, nTileSize, 50);
+        map.getTiles()[0][2] = new Tile(map, 1, new Texture("themeDesert/tileFloor.png"), 0, 200, nTileSize, 50);
 
-        map.getTiles()[1][0] = new Tile(map, 1, new Texture("themeDesert/tileFloor.png"), 0, 100, nTileSize, 50);
+        map.getTiles()[1][0] = new Tile(map, 1, new Texture("themeDesert/tileFloor.png"), 100, 0, nTileSize, 50);
         map.getTiles()[1][1] = new Tile(map, 2, new Texture("themeDesert/tileWallAlone.png"), 100, 100, nTileSize, 50);
-        map.getTiles()[1][2] = new Tile(map, 1, new Texture("themeDesert/tileFloor.png"), 200, 100, nTileSize, 50);
+        map.getTiles()[1][2] = new Tile(map, 1, new Texture("themeDesert/tileFloor.png"), 100, 200, nTileSize, 50);
 
-        map.getTiles()[2][0] = new Tile(map, 1, new Texture("themeDesert/tileFloor.png"), 0, 200, nTileSize, 50);
-        map.getTiles()[2][1] = new Tile(map, 1, new Texture("themeDesert/tileFloor.png"), 100, 200, nTileSize, 50);
+        map.getTiles()[2][0] = new Tile(map, 1, new Texture("themeDesert/tileFloor.png"), 200, 0, nTileSize, 50);
+        map.getTiles()[2][1] = new Tile(map, 1, new Texture("themeDesert/tileFloor.png"), 200, 100, nTileSize, 50);
         map.getTiles()[2][2] = new Tile(map, 1, new Texture("themeDesert/tileFloor.png"), 200, 200, nTileSize, 50);
 
         // Player

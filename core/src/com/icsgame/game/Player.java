@@ -150,9 +150,9 @@ public class Player {
 
     public Vector2 getAngleHead() { return angleHead; }
 
-    public float getHeadX() { return sprPlayerTop.getX(); }
+    public float getHeadX() { return sprPlayerTop.getX()+(sprPlayerTop.getWidth()/2); }
 
-    public float getHeadY() { return sprPlayerTop.getY(); }
+    public float getHeadY() { return sprPlayerTop.getY()+(sprPlayerTop.getHeight()/2); }
 
     public float getHeadSize() { return sprPlayerTop.getWidth(); }
 
