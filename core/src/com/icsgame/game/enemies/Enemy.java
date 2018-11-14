@@ -89,7 +89,7 @@ public abstract class Enemy {
         setX(getX() + (vVel.x * fSpeed));
         setY(getY() + (vVel.y * fSpeed));
 
-        return false;
+        return nHealth <= 0;
     }
 
     protected void aiController() {
@@ -104,7 +104,6 @@ public abstract class Enemy {
         if(weapon.canFire()) {
             if (hasLineOfSight()) {
                 weapon.fire();
-                System.out.println("FIRE!!!");
             }
         }
     }
@@ -132,7 +131,6 @@ public abstract class Enemy {
                 }
             }
         }
-        System.out.println();
         return true;
     }
 
@@ -170,6 +168,15 @@ public abstract class Enemy {
         return true;
     }
 
+    public void dispose() {
+        txt.dispose();
+        rect = null;
+        vVel = null;
+        vAimAngle = null;
+        bar = null;
+        polygon = null;
+        weapon = null;
+    }
 
     public void setX(float x) {
         rect.setX(x);
@@ -188,4 +195,6 @@ public abstract class Enemy {
     public Vector2 getVel() { return vVel; }
 
     public float getSpeed() { return fSpeed; }
+
+    public void decreaseHealth(int decrease) { nHealth -= decrease; }
 }

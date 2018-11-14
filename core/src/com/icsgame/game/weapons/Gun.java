@@ -49,8 +49,13 @@ public class Gun extends Weapon {
         rectProjectile.setHeight(20);
 
         // Create Bullet
-        return new Bullet(new Texture("bullet.png"),
-                rectProjectile, vVelRan, nDamage, fSpeed, nDist);
+        if (isPlayer) {
+            return new Bullet(new Texture("bullet.png"),
+                    rectProjectile, vVelRan, nDamage, fSpeed, nDist, 0);
+        } else {
+            return new Bullet(new Texture("bullet.png"),
+                    rectProjectile, vVelRan, nDamage, fSpeed, nDist, 1);
+        }
     }
 
     @Override

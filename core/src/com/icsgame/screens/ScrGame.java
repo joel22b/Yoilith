@@ -104,7 +104,7 @@ public class ScrGame implements Screen {
         // Enemies Update
         for (int i = 0; i < enemies.size(); i++) {
             if (enemies.get(i).update()) {
-                // Kill
+                killEnemy(i);
             }
         }
 
@@ -185,6 +185,33 @@ public class ScrGame implements Screen {
             if(rectCollision.isColliding(enemies.get(i).getRect(), player.getRect())) {
                 rectCollision.collisionResponseSimple(enemies.get(i).getRect(), player.getRect(), enemies.get(i).getVel(),
                         enemies.get(i).getSpeed());
+            }
+        }
+
+        // With Projectiles
+        for (int i = 0; i < projectiles.size(); i++) {
+            // With Player
+            if (rectCollision.isColliding(projectiles.get(i).getRect(), player.getRect())) {
+                if (projectiles.get(i).getClass() != Explosive.class) { // Checks if the Projectile is an Explosive
+                    if (projectiles.get(i).getTeam() != 0) {
+                        player.decreaseHealth(projectiles.get(i).getDamage());
+                        killProjectile(i);
+                        break;
+                    }
+                }
+            }
+
+            // With Enemies
+            for (int e = 0; e < enemies.size(); e++) {
+                if (rectCollision.isColliding(projectiles.get(i).getRect(), enemies.get(e).getRect())) {
+                    if (projectiles.get(i).getClass() != Explosive.class) { // Checks if the Projectile is an Explosive
+                        if (projectiles.get(i).getTeam() != 1) {
+                            enemies.get(e).decreaseHealth(projectiles.get(i).getDamage());
+                            killProjectile(i);
+                            break;
+                        }
+                    }
+                }
             }
         }
     }
@@ -269,6 +296,11 @@ public class ScrGame implements Screen {
     protected void killProjectile(int index){
         projectiles.get(index).dispose();
         projectiles.remove(index);
+    }
+
+    protected void killEnemy(int index){
+        enemies.get(index).dispose();
+        enemies.remove(index);
     }
 
     @Override

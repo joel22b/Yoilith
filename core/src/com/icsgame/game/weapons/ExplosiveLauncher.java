@@ -30,6 +30,7 @@ public class ExplosiveLauncher extends Weapon {
         super();
         this.game = game;
         this.player = player;
+        isPlayer = true;
     }
 
     @Override
@@ -39,8 +40,13 @@ public class ExplosiveLauncher extends Weapon {
         rectProjectile.setHeight(60);
 
         // Create Explosive
-        return new Explosive(new Texture("extra/bomb.png"),
-                rectProjectile, vVelRan, fSpeed, nDamage, nRange, nTime);
+        if (isPlayer) {
+            return new Explosive(new Texture("extra/bomb.png"),
+                    rectProjectile, vVelRan, fSpeed, nDamage, nRange, nTime, 0);
+        } else {
+            return new Explosive(new Texture("extra/bomb.png"),
+                    rectProjectile, vVelRan, fSpeed, nDamage, nRange, nTime, 1);
+        }
     }
 
     @Override

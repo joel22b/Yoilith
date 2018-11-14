@@ -12,11 +12,7 @@ public class Basic extends Enemy {
     public Basic(ScrGame game, Texture txt, int w, int h, float fSpeed) {
         super(game, txt, w, h, fSpeed, 20, 20);
         gun = new Gun(game, this);
-        gun.loadType("pistol");
+        gun.loadType("machine_gun");
         weapon = gun;
-    }
-
-    public Basic(ScrGame game, Texture txt, Rectangle rect, float fSpeed) {
-        super(game, txt, rect, fSpeed);
     }
 }

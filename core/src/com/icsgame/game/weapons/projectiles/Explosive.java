@@ -15,8 +15,8 @@ public class Explosive extends Projectile {
 
     int nTime, nRange;
 
-    public Explosive(Texture txt, Rectangle rect, Vector2 vVel, float fSpeed, int nDamage, int nRange, int nTime){
-        super(txt, rect, vVel, nDamage, fSpeed);
+    public Explosive(Texture txt, Rectangle rect, Vector2 vVel, float fSpeed, int nDamage, int nRange, int nTime, int nTeam){
+        super(txt, rect, vVel, nDamage, fSpeed, nTeam);
 
         this.nRange = nRange;
         this.nTime = nTime;

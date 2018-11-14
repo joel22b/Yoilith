@@ -55,6 +55,7 @@ public abstract class Weapon {
         ranGen = new Random();
         vVelRan = new Vector2();
         rectProjectile = new Rectangle();
+        bCanFire = true;
     }
 
     public void update() {
@@ -78,13 +79,16 @@ public abstract class Weapon {
                 // Make it so you can't fire until cooldown is done
                 bCanFire = false;
 
+                // Add spray
+                nAngleRan = ranGen.nextInt(nSpray*2)-nSpray;
+
                 // Get the correct angle and velocity vector
                 if(isPlayer) {
                     vVelRan.set(player.getAngleHead());
                     // Create rect
-                    rectProjectile.set((player.getHeadX() + (player.getHeadSize() / 2)) +
+                    rectProjectile.set((player.getHeadX()) +
                                     ((player.getHeadSize() / 2) * (float) Math.sin(Math.toRadians(90 - vVelRan.angle()))),
-                            (player.getHeadY() + (player.getHeadSize() / 2)) +
+                            (player.getHeadY()) +
                                     ((player.getHeadSize() / 2) * (float) Math.cos(Math.toRadians(90 - vVelRan.angle()))),
                             100, 100);
                 } else {
@@ -96,17 +100,11 @@ public abstract class Weapon {
                             (enemy.getY() + (enemy.getRect().height / 2)),
                             100, 100);
                 }
+                System.out.println(vVelRan.angle());
+                vVelRan.setAngle(nAngleRan + vVelRan.angle());
+                vVelRan.nor();
 
-                // Fire the number of shots required
-                for (int i = 0; i < nShotsPerFire; i++) {
-                    // Get a randomized velocity
-                    nAngleRan = ranGen.nextInt(nSpray * 2) - nSpray;
-
-                    vVelRan.setAngle(nAngleRan + vVelRan.angle());
-                    vVelRan.nor();
-
-                    game.getProjectiles().add(fireShot());
-                }
+                game.getProjectiles().add(fireShot());
             }
         }
     }

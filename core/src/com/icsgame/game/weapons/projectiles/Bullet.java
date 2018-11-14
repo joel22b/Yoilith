@@ -14,8 +14,8 @@ public class Bullet extends Projectile {
 
     int nDist;
 
-    public Bullet(Texture txt, Rectangle rect, Vector2 vVel, int nDamage, float fSpeed, int nDist){
-        super(txt, rect, vVel, nDamage, fSpeed);
+    public Bullet(Texture txt, Rectangle rect, Vector2 vVel, int nDamage, float fSpeed, int nDist, int nTeam){
+        super(txt, rect, vVel, nDamage, fSpeed, nTeam);
 
         this.nDist = nDist;
 
