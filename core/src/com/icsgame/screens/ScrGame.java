@@ -283,6 +283,31 @@ public class ScrGame implements Screen {
                 player.decreaseHealth(nDamage);
             }
         }
+
+        // Check Enemies
+        for (int i = 0; i < enemies.size(); i++) {
+            // Find Center of Object
+            vObjectCenter.set(enemies.get(i).getX()+(enemies.get(i).getRect().width/2),
+                    enemies.get(i).getY()+(enemies.get(i).getRect().height/2));
+
+            // Find nDist
+            vObjectCenter.sub(vBombCenter);
+            vObjectCenter.setAngle(0);
+            nDist = (int)vObjectCenter.x;
+
+            if(nRange >= nDist) {
+                // Is in explosion radius
+
+                // Find the nDamage level
+                if (nDist >= (nRange / 3) * 2) {
+                    enemies.get(i).decreaseHealth(nDamage / 3);
+                } else if (nDist >= nRange / 3) {
+                    enemies.get(i).decreaseHealth((nDamage / 3) * 2);
+                } else {
+                    enemies.get(i).decreaseHealth(nDamage);
+                }
+            }
+        }
     }
 
     public void killGame(){
