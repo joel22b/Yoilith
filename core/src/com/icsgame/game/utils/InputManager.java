@@ -28,8 +28,11 @@ public class InputManager {
     }
 
     private void click(){
-        if(Gdx.input.isTouched()){
+        if(Gdx.input.isButtonPressed(Input.Buttons.LEFT)){
             game.getPlayer().useWeapon();
+        }
+        if(Gdx.input.isButtonPressed(Input.Buttons.RIGHT)){
+            game.getPlayer().useMelee();
         }
     }
 

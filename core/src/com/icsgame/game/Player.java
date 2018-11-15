@@ -10,6 +10,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.icsgame.game.weapons.ExplosiveLauncher;
 import com.icsgame.game.weapons.Gun;
+import com.icsgame.game.weapons.Melee;
 import com.icsgame.screens.ScrGame;
 
 /* ======================== Player ================================
@@ -22,6 +23,7 @@ public class Player {
     ScrGame game;
 
     // Player Info
+    Melee melee;
     Gun gun;
     ExplosiveLauncher explosiveLauncher;
     int nHealthMax = 100, nHealth = nHealthMax, nBombsMax = 10, nBombs = nBombsMax;
@@ -52,6 +54,8 @@ public class Player {
                 sprPlayerTop.getX()+sprPlayerTop.getWidth(), sprPlayerTop.getY()});*/
 
         // Create Weapons
+        melee = new Melee(game, this);
+        melee.loadType("sword");
         gun = new Gun(game, this);
         gun.loadType(game.getMain().scrSetup.getSbGunReturn());
         explosiveLauncher = new ExplosiveLauncher(game, this);
@@ -184,6 +188,10 @@ public class Player {
         } else if(nActiveWeapon == 1) { // Bombs
             explosiveLauncher.reload();
         }
+    }
+
+    public void useMelee() {
+        melee.fire();
     }
 
     public void decreaseHealth(int decrease) {

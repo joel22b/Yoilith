@@ -80,7 +80,11 @@ public abstract class Weapon {
                 bCanFire = false;
 
                 // Add spray
-                nAngleRan = ranGen.nextInt(nSpray*2)-nSpray;
+                if(nSpray == 0) {
+                    nAngleRan = 0;
+                } else {
+                    nAngleRan = ranGen.nextInt(nSpray * 2) - nSpray;
+                }
 
                 // Get the correct angle and velocity vector
                 if(isPlayer) {
@@ -100,7 +104,7 @@ public abstract class Weapon {
                             (enemy.getY() + (enemy.getRect().height / 2)),
                             100, 100);
                 }
-                System.out.println(vVelRan.angle());
+                //System.out.println(vVelRan.angle());
                 vVelRan.setAngle(nAngleRan + vVelRan.angle());
                 vVelRan.nor();
 

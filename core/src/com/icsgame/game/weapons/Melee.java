@@ -1,11 +1,10 @@
 package com.icsgame.game.weapons;
 
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.math.Vector2;
 import com.icsgame.game.Player;
 import com.icsgame.game.enemies.Enemy;
 import com.icsgame.game.weapons.projectiles.Bullet;
+import com.icsgame.game.weapons.projectiles.MeleeAttack;
 import com.icsgame.game.weapons.projectiles.Projectile;
 import com.icsgame.screens.ScrGame;
 
@@ -14,46 +13,56 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
-/* =========================== Gun =============================
-Extends Weapon
-Weapon that fires Bullets
-Contained in Player or Enemies
-Fires Bullets
-================================================================ */
+public class Melee extends Weapon {
 
-public class Gun extends Weapon {
+    int nRange; // The range of the weapon
 
-    // Gun info
-    int nDist;
-    float fSpeed;
-
-    public Gun(ScrGame game, Player player){
+    public Melee(ScrGame game, Player player){
         super();
         this.game = game;
         this.player = player;
         isPlayer = true;
+
+        nSpray = 0;
+        nShotsPerFire = 1;
+        nAmmo = 1;
+        nAmmoMax = nAmmo;
     }
 
-    public Gun(ScrGame game, Enemy enemy){
+    public Melee(ScrGame game, Enemy enemy){
         super();
         this.game = game;
         this.enemy = enemy;
         isPlayer = false;
+
+        nSpray = 0;
+        nShotsPerFire = 1;
+        nAmmo = 1;
+        nAmmoMax = nAmmo;
     }
 
     @Override
     protected Projectile fireShot() {
-        // Set Width and Height of Bullet
-        rectProjectile.setWidth(20);
-        rectProjectile.setHeight(20);
+        nAmmo = 1;
 
-        // Create Bullet
+        System.out.println("Firing Melee shot");
+
+        // Create MeleeAttack
         if (isPlayer) {
-            return new Bullet(new Texture("bullet.png"),
-                    rectProjectile, vVelRan, nDamage, fSpeed, nDist, 0);
+            // Setup rect
+            rectProjectile.setPosition(rectProjectile.getX()-nRange, rectProjectile.getY()-nRange);
+            rectProjectile.setWidth(nRange*2);
+            rectProjectile.setHeight(nRange*2);
+
+            return new MeleeAttack(rectProjectile, nDamage, 0);
         } else {
-            return new Bullet(new Texture("bullet.png"),
-                    rectProjectile, vVelRan, nDamage, fSpeed, nDist, 1);
+            // Setup rect
+            rectProjectile.setPosition(rectProjectile.getX()-(nRange+enemy.getRect().getWidth()),
+                    rectProjectile.getY()-(nRange+enemy.getRect().getHeight()));
+            rectProjectile.setWidth((nRange+enemy.getRect().getWidth())*2);
+            rectProjectile.setHeight((nRange+enemy.getRect().getHeight())*2);
+
+            return new MeleeAttack(rectProjectile, nDamage, 1);
         }
     }
 
@@ -75,12 +84,7 @@ public class Gun extends Weapon {
             // get the property value
             nDamage = Integer.valueOf(prop.getProperty("damage"));
             nCooldown = Integer.valueOf(prop.getProperty("cooldown"));
-            nAmmoMax = Integer.valueOf(prop.getProperty("ammoMax"));
-            nShotsPerFire = Integer.valueOf(prop.getProperty("bulletPerShot"));
-            nSpray = Integer.valueOf(prop.getProperty("spray"));
-            fSpeed = Float.valueOf(prop.getProperty("speed"));
-            nDist = Integer.valueOf(prop.getProperty("distance"));
-            nAmmo = nAmmoMax;
+            nRange = Integer.valueOf(prop.getProperty("range"));
 
         } catch (IOException ex) {
             ex.printStackTrace();
