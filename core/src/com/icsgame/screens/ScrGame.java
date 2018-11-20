@@ -191,9 +191,12 @@ public class ScrGame implements Screen {
         // With Projectiles
         for (int i = 0; i < projectiles.size(); i++) {
             // With Player
-            if (rectCollision.isColliding(projectiles.get(i).getRect(), player.getRect())) {
+            if (projectiles.get(i).getTeam() != 0) {
+                //System.out.println("P: Team != 0");
                 if (projectiles.get(i).getClass() != Explosive.class) { // Checks if the Projectile is an Explosive
-                    if (projectiles.get(i).getTeam() != 0) {
+                    //System.out.println("P: Not Bomb");
+                    if (rectCollision.isColliding(projectiles.get(i).getRect(), player.getRect())) {
+                        System.out.println("HIT PLAYER");
                         player.decreaseHealth(projectiles.get(i).getDamage());
                         killProjectile(i);
                         break;
@@ -203,9 +206,12 @@ public class ScrGame implements Screen {
 
             // With Enemies
             for (int e = 0; e < enemies.size(); e++) {
-                if (rectCollision.isColliding(projectiles.get(i).getRect(), enemies.get(e).getRect())) {
+                if (projectiles.get(i).getTeam() != 1) {
+                    //System.out.println("E: Team != 1");
                     if (projectiles.get(i).getClass() != Explosive.class) { // Checks if the Projectile is an Explosive
-                        if (projectiles.get(i).getTeam() != 1) {
+                        //System.out.println("E: Not Bomb");
+                        if (rectCollision.isColliding(projectiles.get(i).getRect(), enemies.get(e).getRect())) {
+                            System.out.println("HIT ENEMY");
                             enemies.get(e).decreaseHealth(projectiles.get(i).getDamage());
                             killProjectile(i);
                             break;

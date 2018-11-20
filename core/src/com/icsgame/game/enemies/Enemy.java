@@ -25,9 +25,6 @@ public abstract class Enemy {
 
     protected Weapon weapon;
 
-    protected float fAimAngle;
-    protected Vector2 vAimAngle;
-
     protected Rectangle rect;
     protected Texture txt;
     protected Vector2 vVel;
@@ -44,13 +41,9 @@ public abstract class Enemy {
         this.nHealth = nHealth;
         this.nHealthMax = nHealthMax;
 
-        fAimAngle = 0;
-
         vVel = new Vector2();
         bar = new Bar("extra/red.png", "extra/green.png", getX(), getY()+rect.getHeight()+5, 20,
-                nHealth, nHealthMax, w/nHealthMax, false);
-
-        vAimAngle = new Vector2();
+                nHealth, nHealthMax, (float)(w/nHealthMax), false);
 
         spawnController();
     }
@@ -62,8 +55,6 @@ public abstract class Enemy {
         this.fSpeed = fSpeed;
 
         vVel = new Vector2();
-
-        vAimAngle = new Vector2();
 
         spawnController();
     }
@@ -98,9 +89,6 @@ public abstract class Enemy {
     }
 
     protected void attack() {
-        vAimAngle.set(game.getPlayer().getX()-getX(), game.getPlayer().getY()-getY());
-        fAimAngle = vAimAngle.angle();
-
         if(weapon.canFire()) {
             if (hasLineOfSight()) {
                 weapon.fire();
@@ -172,7 +160,6 @@ public abstract class Enemy {
         txt.dispose();
         rect = null;
         vVel = null;
-        vAimAngle = null;
         bar = null;
         polygon = null;
         weapon = null;

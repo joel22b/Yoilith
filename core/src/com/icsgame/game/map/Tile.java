@@ -51,6 +51,7 @@ public class Tile {
         this.nHealth = nHealth;
         healthMax = nHealth;
 
+        // Set up polygon in a way that aligns it to the coordinates the intersector class uses
         float[] vertices = new float[8];
         Vector2 position = map.getTileIndex(getX(), getY());
         vertices[0] = (position.x/2)*nSize;
@@ -61,7 +62,6 @@ public class Tile {
         vertices[5] = (position.y/2)*nSize+nSize;
         vertices[6] = (position.x/2)*nSize;
         vertices[7] = (position.y/2)*nSize+nSize;
-
         polygon = new Polygon(vertices);
 
         polygon.setPosition(getX()/2, getY()/2);

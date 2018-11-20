@@ -12,13 +12,13 @@ Draws a bar to display information
 
 public class Bar {
 
-    float x, y;
-    int h, nValue, nMax, nScale;
+    float x, y, fScale;
+    int h, nValue, nMax;
     boolean bFont;
     Texture txtBlack, txtBack, txtFront;
     BitmapFont fontBlack;
 
-    public Bar(Texture txtBack, Texture txtFront, float x, float y, int h, int nValue, int nMax, int nScale, boolean bFont) {
+    public Bar(Texture txtBack, Texture txtFront, float x, float y, int h, int nValue, int nMax, float fScale, boolean bFont) {
         this.txtBlack = new Texture("extra/black.png");
         this.txtBack = txtBack;
         this.txtFront = txtFront;
@@ -27,14 +27,14 @@ public class Bar {
         this.h = h;
         this.nValue = nValue;
         this.nMax = nMax;
-        this.nScale = nScale;
+        this.fScale = fScale;
         this.bFont = bFont;
 
         fontBlack = new BitmapFont(Gdx.files.internal("fontHighscores.fnt"));
         fontBlack.setColor(Color.BLACK);
     }
 
-    public Bar(String sBack, String sFront, float x, float y, int h, int nValue, int nMax, int nScale, boolean bFont) {
+    public Bar(String sBack, String sFront, float x, float y, int h, int nValue, int nMax, float fScale, boolean bFont) {
         this.txtBlack = new Texture("extra/black.png");
         this.txtBack = new Texture(sBack);
         this.txtFront = new Texture(sFront);
@@ -43,7 +43,7 @@ public class Bar {
         this.h = h;
         this.nValue = nValue;
         this.nMax = nMax;
-        this.nScale = nScale;
+        this.fScale = fScale;
         this.bFont = bFont;
 
         fontBlack = new BitmapFont(Gdx.files.internal("fontHighscores.fnt"));
@@ -52,15 +52,15 @@ public class Bar {
 
     public void render(SpriteBatch batch) {
         // Background
-        batch.draw(txtBlack, x, y, nMax*nScale, h);
+        batch.draw(txtBlack, x, y, nMax*fScale, h);
 
         // Bar
-        batch.draw(txtBack, x+2, y+2, (nMax*nScale)-4, h-4);
-        batch.draw(txtFront, x+2, y+2, (nValue*nScale)-4, h-4);
+        batch.draw(txtBack, x+2, y+2, (nMax*fScale)-4, h-4);
+        batch.draw(txtFront, x+2, y+2, (nValue*fScale)-4, h-4);
 
         // Text
         if(bFont) {
-            fontBlack.draw(batch, String.valueOf(nValue), x + ((nMax * nScale) / 2 - 23), y + h - 10);
+            fontBlack.draw(batch, String.valueOf(nValue), x + ((nMax * fScale) / 2 - 23), y + h - 10);
         }
     }
 

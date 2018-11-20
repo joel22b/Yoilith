@@ -10,9 +10,9 @@ public class Basic extends Enemy {
     Gun gun;
 
     public Basic(ScrGame game, Texture txt, int w, int h, float fSpeed) {
-        super(game, txt, w, h, fSpeed, 30, 20);
+        super(game, txt, w, h, fSpeed, 30, 30);
         gun = new Gun(game, this);
-        gun.loadType("machine_gun");
+        gun.loadType("pistol");
         weapon = gun;
     }
 }

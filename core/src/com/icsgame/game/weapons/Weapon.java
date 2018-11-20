@@ -97,7 +97,7 @@ public abstract class Weapon {
                             100, 100);
                 } else {
                     vVelRan.set((game.getPlayer().getX()+(game.getPlayer().getW()/2))-(enemy.getX()+(enemy.getRect().width/2)),
-                            (game.getPlayer().getX()+(game.getPlayer().getW()/2))-(enemy.getY()+(enemy.getRect().height/2)));
+                            (game.getPlayer().getY()+(game.getPlayer().getH()/2))-(enemy.getY()+(enemy.getRect().height/2)));
 
                     // Create rect
                     rectProjectile.set(enemy.getX() + (enemy.getRect().width / 2),
