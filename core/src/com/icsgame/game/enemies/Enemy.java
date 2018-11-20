@@ -93,6 +93,10 @@ public abstract class Enemy {
             if (hasLineOfSight()) {
                 weapon.fire();
             }
+        } else {
+            if (!weapon.hasAmmo() && !weapon.isReloading()) {
+                weapon.reload();
+            }
         }
     }
 

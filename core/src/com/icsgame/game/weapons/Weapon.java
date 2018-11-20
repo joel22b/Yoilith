@@ -38,13 +38,16 @@ public abstract class Weapon {
 
     protected int nAngleRan; // The random angle for each Projectile
     protected Vector2 vVelRan; // The random velocity of the projectile
+    protected Vector2 vVelTemp; // The temperary velocity of the projectile
     protected Rectangle rectProjectile; // The Starting location of the Projectile
 
     protected int nAmmo; // Current ammo count
     protected int nAmmoMax; // Maximum ammo
 
     protected boolean bCanFire; // True means gun can fire
+    protected boolean bReloading; // True means it is reloading
     protected int nCooldown; // The number of ticks until the weapon can be fired again
+    protected int nReload; // The number of ticks until the weapon is reloaded
     protected int nTickCount; // The current count in the cooldown
 
     protected int nShotsPerFire; // The number of shots for every time you fire
@@ -54,8 +57,10 @@ public abstract class Weapon {
     public Weapon() {
         ranGen = new Random();
         vVelRan = new Vector2();
+        vVelTemp = new Vector2(1, 1);
         rectProjectile = new Rectangle();
         bCanFire = true;
+        bReloading = false;
     }
 
     public void update() {
@@ -65,6 +70,17 @@ public abstract class Weapon {
                 bCanFire = true;
             } else {
                 nTickCount++;
+            }
+        } else {
+            if (bReloading) {
+                if(nTickCount >= nReload) {
+                    nTickCount = 0;
+                    nAmmo = nAmmoMax;
+                    bReloading= false;
+                    bCanFire = true;
+                } else {
+                    nTickCount++;
+                }
             }
         }
     }
@@ -78,13 +94,6 @@ public abstract class Weapon {
 
                 // Make it so you can't fire until cooldown is done
                 bCanFire = false;
-
-                // Add spray
-                if(nSpray == 0) {
-                    nAngleRan = 0;
-                } else {
-                    nAngleRan = ranGen.nextInt(nSpray * 2) - nSpray;
-                }
 
                 // Get the correct angle and velocity vector
                 if(isPlayer) {
@@ -105,10 +114,19 @@ public abstract class Weapon {
                             100, 100);
                 }
                 //System.out.println(vVelRan.angle());
-                vVelRan.setAngle(nAngleRan + vVelRan.angle());
-                vVelRan.nor();
 
-                game.getProjectiles().add(fireShot());
+                for (int i = 0; i < nShotsPerFire; i++) {
+                    // Add spray
+                    if(nSpray == 0) {
+                        nAngleRan = 0;
+                    } else {
+                        nAngleRan = ranGen.nextInt(nSpray * 2) - nSpray;
+                    }
+
+                    vVelTemp.setAngle(nAngleRan + vVelRan.angle());
+
+                    game.getProjectiles().add(fireShot());
+                }
             }
         }
     }
@@ -117,11 +135,19 @@ public abstract class Weapon {
 
     public abstract void loadType(String sType);
 
-    public void reload() { nAmmo = nAmmoMax; }
+    public void reload() {
+        bReloading = true;
+        bCanFire = false;
+        nAmmo = 0;
+    }
+
+    public boolean isReloading() { return bReloading; }
 
     public int getAmmo() { return nAmmo; }
 
     public int getAmmoMax() { return nAmmoMax; }
+
+    public boolean hasAmmo() { return nAmmo > 0;}
 
     public boolean canFire() {
         return bCanFire;
