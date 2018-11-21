@@ -147,6 +147,14 @@ public class ScrGame implements Screen {
     }
 
     protected void collisionDetection(){
+        collisionDetectionMap();
+
+        // Collision detection is not working properly 100% of the time here
+        //collisionDetectionProjectiles();
+        collisionDetectionEnemies();
+    }
+
+    private void collisionDetectionMap() {
         // With Map
         for (int x = 0; x < map.getTiles().length; x++){
             for (int y = 0; y < map.getTiles().length; y++){
@@ -165,7 +173,7 @@ public class ScrGame implements Screen {
                         }
                     }
 
-                    // For Projectiles
+                    /*/ For Projectiles
                     for (int i = 0; i < projectiles.size(); i++){
                         if (rectCollision.isColliding(projectiles.get(i).getRect(), map.getTiles()[x][y].getRect())){
                             if(projectiles.get(i).getClass() == Explosive.class) { // Checks if the Projectile is an Explosive
@@ -174,20 +182,13 @@ public class ScrGame implements Screen {
                                 killProjectile(i);
                             }
                         }
-                    }
+                    }*/
                 }
             }
         }
+    }
 
-        // With Enemies
-        for (int i = 0; i < enemies.size(); i++) {
-            //With Player
-            if(rectCollision.isColliding(enemies.get(i).getRect(), player.getRect())) {
-                rectCollision.collisionResponseSimple(enemies.get(i).getRect(), player.getRect(), enemies.get(i).getVel(),
-                        enemies.get(i).getSpeed());
-            }
-        }
-
+    private void collisionDetectionProjectiles() {
         // With Projectiles
         for (int i = 0; i < projectiles.size(); i++) {
             // With Player
@@ -220,6 +221,46 @@ public class ScrGame implements Screen {
                 }
             }
         }
+    }
+
+    private void collisionDetectionEnemies() {
+        // With Enemies
+        for (int i = 0; i < enemies.size(); i++) {
+            //With Player
+            if(rectCollision.isColliding(enemies.get(i).getRect(), player.getRect())) {
+                rectCollision.collisionResponseSimple(enemies.get(i).getRect(), player.getRect(), enemies.get(i).getVel(),
+                        enemies.get(i).getSpeed());
+            }
+        }
+    }
+
+    public boolean collisionMap(Rectangle rect) {
+        for (int x = 0; x < map.getTiles().length; x++) {
+            for (int y = 0; y < map.getTiles().length; y++) {
+                if (map.getTiles()[x][y].getType() != 1) {
+                    if (rectCollision.isColliding(rect, map.getTiles()[x][y].getRect())) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
+    public Enemy collisionEnemies(Rectangle rect) {
+        for (int e = 0; e < enemies.size(); e++) {
+            if (rectCollision.isColliding(rect, enemies.get(e).getRect())) {
+                return enemies.get(e);
+            }
+        }
+        return null;
+    }
+
+    public Player collisionPlayer(Rectangle rect) {
+        if (rectCollision.isColliding(rect, player.getRect())) {
+            return player;
+        }
+        return null;
     }
 
     protected void explode(Rectangle rect, int nDamage, int nRange){

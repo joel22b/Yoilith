@@ -3,6 +3,7 @@ package com.icsgame.game.weapons.projectiles;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.icsgame.screens.ScrGame;
 
 /* =========================== Explosive =============================
 Extends Projectile
@@ -15,8 +16,8 @@ public class Explosive extends Projectile {
 
     int nTime, nRange;
 
-    public Explosive(Texture txt, Rectangle rect, Vector2 vVel, float fSpeed, int nDamage, int nRange, int nTime, int nTeam){
-        super(txt, rect, vVel, nDamage, fSpeed, nTeam);
+    public Explosive(ScrGame game, Texture txt, Rectangle rect, Vector2 vVel, float fSpeed, int nDamage, int nRange, int nTime, int nTeam){
+        super(game, txt, rect, vVel, nDamage, fSpeed, nTeam);
 
         this.nRange = nRange;
         this.nTime = nTime;

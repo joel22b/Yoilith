@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.icsgame.screens.ScrGame;
 
 /* ====================== Projectile =========================
 Abstract
@@ -26,6 +27,8 @@ setY();         void        updates Y coordinate
 
 public abstract class Projectile extends Sprite {
 
+    protected ScrGame game; // The main of the game
+
     protected int nDamage; // The damage done by the Projectile
     protected float fSpeed; // The Speed of the Projectile
 
@@ -35,11 +38,12 @@ public abstract class Projectile extends Sprite {
 
     protected int nTeam; // Whether the projectile was shot by the player or an enemy
 
-    protected Projectile(Texture txt, Rectangle rect, Vector2 vVel, int nDamage, float fSpeed, int nTeam) {
+    protected Projectile(ScrGame game, Texture txt, Rectangle rect, Vector2 vVel, int nDamage, float fSpeed, int nTeam) {
         super(txt, (int)rect.getX(), (int)rect.getY(), (int)rect.getWidth(), (int)rect.getHeight());
         setRegion(txt);
         setRotation(vVel.angle()-90);
 
+        this.game = game;
         this.rect = rect;
         this.vVel = new Vector2();
         this.vVel.set(vVel);

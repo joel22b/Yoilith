@@ -41,10 +41,10 @@ public class ExplosiveLauncher extends Weapon {
 
         // Create Explosive
         if (isPlayer) {
-            return new Explosive(new Texture("extra/bomb.png"),
+            return new Explosive(game, new Texture("extra/bomb.png"),
                     rectProjectile, vVelTemp, fSpeed, nDamage, nRange, nTime, 0);
         } else {
-            return new Explosive(new Texture("extra/bomb.png"),
+            return new Explosive(game, new Texture("extra/bomb.png"),
                     rectProjectile, vVelTemp, fSpeed, nDamage, nRange, nTime, 1);
         }
     }
@@ -67,7 +67,7 @@ public class ExplosiveLauncher extends Weapon {
             // get the property value
             nDamage = Integer.valueOf(prop.getProperty("damage"));
             nCooldown = Integer.valueOf(prop.getProperty("cooldown"));
-            nReload = Integer.valueOf("reload");
+            nReload = Integer.valueOf(prop.getProperty("reload"));
             nAmmoMax = Integer.valueOf(prop.getProperty("bombsMax"));
             nShotsPerFire = Integer.valueOf(prop.getProperty("bombsPerShot"));
             nSpray = Integer.valueOf(prop.getProperty("spray"));

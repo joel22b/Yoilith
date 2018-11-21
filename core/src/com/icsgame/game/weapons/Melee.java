@@ -54,7 +54,7 @@ public class Melee extends Weapon {
             rectProjectile.setWidth(nRange*2);
             rectProjectile.setHeight(nRange*2);
 
-            return new MeleeAttack(rectProjectile, nDamage, 0);
+            return new MeleeAttack(game, rectProjectile, nDamage, 0);
         } else {
             // Setup rect
             rectProjectile.setPosition(rectProjectile.getX()-(nRange+enemy.getRect().getWidth()),
@@ -62,7 +62,7 @@ public class Melee extends Weapon {
             rectProjectile.setWidth((nRange+enemy.getRect().getWidth())*2);
             rectProjectile.setHeight((nRange+enemy.getRect().getHeight())*2);
 
-            return new MeleeAttack(rectProjectile, nDamage, 1);
+            return new MeleeAttack(game, rectProjectile, nDamage, 1);
         }
     }
 

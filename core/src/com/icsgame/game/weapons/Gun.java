@@ -49,10 +49,10 @@ public class Gun extends Weapon {
 
         // Create Bullet
         if (isPlayer) {
-            return new Bullet(new Texture("bullet.png"),
+            return new Bullet(game, new Texture("bullet.png"),
                     rectProjectile, vVelTemp, nDamage, fSpeed, nDist, 0);
         } else {
-            return new Bullet(new Texture("bullet.png"),
+            return new Bullet(game, new Texture("bullet.png"),
                     rectProjectile, vVelTemp, nDamage, fSpeed, nDist, 1);
         }
     }
@@ -75,7 +75,7 @@ public class Gun extends Weapon {
             // get the property value
             nDamage = Integer.valueOf(prop.getProperty("damage"));
             nCooldown = Integer.valueOf(prop.getProperty("cooldown"));
-            nReload = Integer.valueOf("reload");
+            nReload = Integer.valueOf(prop.getProperty("reload"));
             nAmmoMax = Integer.valueOf(prop.getProperty("ammoMax"));
             nShotsPerFire = Integer.valueOf(prop.getProperty("bulletPerShot"));
             nSpray = Integer.valueOf(prop.getProperty("spray"));
