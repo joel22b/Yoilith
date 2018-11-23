@@ -15,6 +15,7 @@ public class Main extends Game {
 	// Screens
 	ScrMenu scrMenu;
 	ScrHighscores scrHighscores;
+	ScrScratch scrScratch;
 	public ScrSetup scrSetup;
 	public ScrGame scrScrGame;
 	public ScrLineOfSight scrScrLineOfSight;
@@ -27,8 +28,9 @@ public class Main extends Game {
 		nWidth = Gdx.graphics.getWidth();
 		nHeight = Gdx.graphics.getHeight();
 
-		scrMenu = new com.icsgame.screens.ScrMenu(this);
-		scrHighscores = new com.icsgame.screens.ScrHighscores(this);
+		scrMenu = new ScrMenu(this);
+		scrHighscores = new ScrHighscores(this);
+		scrScratch = new ScrScratch(this);
 		scrScrGame = new ScrGame(this);
 		scrScrLineOfSight = new ScrLineOfSight(this);
 
@@ -61,7 +63,18 @@ public class Main extends Game {
 				break;
 			case 3:
 				// Game
+				scrSetup.setScrGame(scrScrGame);
 				setScreen(scrScrGame);
+				break;
+			case 4:
+				// Scratch Screen
+				setScreen(scrScratch);
+				break;
+			case 5:
+				// Scratch Line Of Sight
+				scrSetup.setScrGame(scrScrLineOfSight);
+				scrScrLineOfSight.setupGame();
+				setScreen(scrScrLineOfSight);
 				break;
 			default:
 				break;

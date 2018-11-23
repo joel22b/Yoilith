@@ -98,9 +98,27 @@ public class Button extends Sprite{
         }
     }
 
+    @Override
     public float getX() { return rect.getX(); }
 
+    @Override
     public float getY() { return rect.getY(); }
+
+    public float getW() { return rect.getWidth(); }
+
+    public float getH() { return rect.getHeight(); }
+
+    @Override
+    public void setX(float x) {
+        rect.setX(x);
+        super.setX(x);
+    }
+
+    @Override
+    public void setY(float y) {
+        rect.setY(y);
+        super.setY(y);
+    }
 
     public boolean getCanClick() { return bCanClick; }
 

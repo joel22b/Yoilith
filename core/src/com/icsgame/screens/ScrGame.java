@@ -53,7 +53,7 @@ public class ScrGame implements Screen {
     protected ArrayList<Enemy> enemies;
 
     // ====================== Hardcoded Variables =======================
-    public int nNoSpawnPlayerRadius = 200;
+    public int nNoSpawnPlayerRadius = 600;
     // ==================================================================
 
     public ScrGame(Main _main) {
@@ -151,6 +151,7 @@ public class ScrGame implements Screen {
 
         // Collision detection is not working properly 100% of the time here
         //collisionDetectionProjectiles();
+
         collisionDetectionEnemies();
     }
 

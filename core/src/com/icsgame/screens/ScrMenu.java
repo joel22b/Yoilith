@@ -18,7 +18,7 @@ public class ScrMenu implements Screen {
     SpriteBatch batch;
     Texture txtBG;
     Sprite sprBG;
-    Button btnStart, btnHighscores;
+    Button btnStart, btnHighscores, btnScratch;
 
     public ScrMenu (Main _main){
         main = _main;
@@ -29,6 +29,8 @@ public class ScrMenu implements Screen {
         // Create Buttons
         btnStart = new Button(main.nWidth/2-300, 330, 600, 216, "btnStart.png", "btnStartPressed.png", "Blank.png");
         btnHighscores = new Button(main.nWidth/2-300, 60, 600, 216, "btnHighscores.png", "btnHighscoresPressed.png", "Blank.png");
+        btnScratch = new Button(main.nWidth-275, 60, 215, 136, "btnScratch.png", "btnScratchPressed.png", "Blank.png");
+
     }
 
     @Override
@@ -43,6 +45,7 @@ public class ScrMenu implements Screen {
         // Update buttons
         btnStart.update(batch);
         btnHighscores.update(batch);
+        btnScratch.update(batch);
 
         // Checks if buttons are pressed
         checkButtons();
@@ -54,6 +57,9 @@ public class ScrMenu implements Screen {
         }
         if(btnHighscores.justClicked()){
             main.changeScreen(1);
+        }
+        if(btnScratch.justClicked()){
+            main.changeScreen(4);
         }
     }
 

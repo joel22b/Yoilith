@@ -99,6 +99,10 @@ public class ScrSetup implements Screen {
 
     public String getSbGunReturn() { return sbGun.getReturn(); }
 
+    public void setScrGame(ScrGame game) {
+        this.game = game;
+    }
+
     @Override
     public void show() {
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
