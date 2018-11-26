@@ -170,7 +170,7 @@ public class ScrLineOfSight extends ScrGame {
     public void spawnEnemy(){
 
         enemies.add(new Basic(this, new Texture("themeDesert/tileBoundary.png"),
-                80, 80, 2));
+                80, 80, 2, 0.5f));
     }
 
     @Override

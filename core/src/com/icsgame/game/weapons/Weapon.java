@@ -152,4 +152,6 @@ public abstract class Weapon {
     public boolean canFire() {
         return bCanFire;
     }
+
+    public void scaleDamage(float fSrength) { nDamage = (int)(nDamage * fSrength);}
 }

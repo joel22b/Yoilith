@@ -23,6 +23,8 @@ public abstract class Enemy {
     protected int nHealth;
     protected int nHealthMax;
 
+    protected float fStrength; // Modifier on the weapon
+
     protected Weapon weapon;
 
     protected Rectangle rect;
@@ -33,13 +35,14 @@ public abstract class Enemy {
 
     protected Random ranGen = new Random();
 
-    public Enemy(ScrGame game, Texture txt, int w, int h, float fSpeed, int nHealth, int nHealthMax) {
+    public Enemy(ScrGame game, Texture txt, int w, int h, float fSpeed, int nHealth, int nHealthMax, float fStrength) {
         this.game = game;
         this.txt = txt;
         this.rect = new Rectangle(0, 0, w, h);
         this.fSpeed = fSpeed;
         this.nHealth = nHealth;
         this.nHealthMax = nHealthMax;
+        this.fStrength = fStrength;
 
         vVel = new Vector2();
         bar = new Bar("extra/red.png", "extra/green.png", getX(), getY()+rect.getHeight()+5, 20,

@@ -36,8 +36,8 @@ public class SelectionBox {
         this.arsReturn = arsReturn;
 
         // Create Buttons
-        btnLeft = new Button(nX-80, nY+(nH/2)-50, 50, 50, txtButtonLeft, txtButtonLeft, txtButtonLeft);
-        btnRight = new Button(nX+nW+30, nY+(nH/2)-50, 50, 50, txtButtonRight, txtButtonRight, txtButtonRight);
+        btnLeft = new Button(nX-70, nY+(nH/2)-50, 50, 50, txtButtonLeft, txtButtonLeft, txtButtonLeft);
+        btnRight = new Button(nX+nW+20, nY+(nH/2)-50, 50, 50, txtButtonRight, txtButtonRight, txtButtonRight);
 
         // Fonts
         fontRed = new BitmapFont(Gdx.files.internal("fontHighscores.fnt"));
@@ -53,8 +53,8 @@ public class SelectionBox {
         batch.draw(txtImages[nIndex], nX+50, nY+100, nW-100, nH-300);
         btnLeft.draw(batch);
         btnRight.draw(batch);
-        fontRed.draw(batch, sTitle, nX+70, nY+nH-100);
-        fontBlack.draw(batch, arsReturn[nIndex], nX+50, nY+nH-150);
+        fontRed.draw(batch, sTitle, nX+40, nY+nH-100);
+        fontBlack.draw(batch, arsReturn[nIndex], nX+20, nY+nH-150);
         batch.end();
     }
 
@@ -76,4 +76,6 @@ public class SelectionBox {
     }
 
     public String getReturn() { return arsReturn[nIndex]; }
+
+    public void setIndex(int nIndex) { this.nIndex = nIndex; }
 }

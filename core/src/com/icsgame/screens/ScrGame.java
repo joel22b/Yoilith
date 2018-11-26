@@ -52,6 +52,11 @@ public class ScrGame implements Screen {
     protected ArrayList<Projectile> projectiles;
     protected ArrayList<Enemy> enemies;
 
+    // Enemies
+    protected int nEnemySpawnCountdown = 0; // Counts up once per tip, when it reaches nEnemySpawnWait, it resets
+                                            // and spawns and enemy
+    protected int nEnemySpawnWait = 120; // Number of fraps between enemies spawn
+
     // ====================== Hardcoded Variables =======================
     public int nNoSpawnPlayerRadius = 600;
     // ==================================================================
@@ -68,7 +73,7 @@ public class ScrGame implements Screen {
     }
 
     public void setupGame(){
-        map.createMap(nX, nY, nW, nH, nTileSize, "Desert");
+        map.createMap(nX, nY, nW, nH, nTileSize, main.scrSetup.getSbThemeReturn());
 
         // Player
         player = new Player(this, "players/1", map.getMapGen().findPlayerSpawnRect(nX, nY, nW, nH, nTileSize), new Vector2(0, 0));
@@ -77,6 +82,8 @@ public class ScrGame implements Screen {
 
         projectiles = new ArrayList<>();
         enemies = new ArrayList<>();
+
+        setDifficulty(main.scrSetup.getSbDifficultyReturn());
     }
 
     // Main loop of the game
@@ -119,6 +126,8 @@ public class ScrGame implements Screen {
                 killProjectile(i);
             }
         }
+
+        spawnEnemies();
 
         // Camera Update
         camera.update(batch);
@@ -358,6 +367,10 @@ public class ScrGame implements Screen {
         }
     }
 
+    protected void setDifficulty(String sDifficulty) {
+
+    }
+
     public void killGame(){
         map.kill();
         player.kill();
@@ -401,10 +414,18 @@ public class ScrGame implements Screen {
         }
     }
 
+    protected void spawnEnemies() {
+        nEnemySpawnCountdown++;
+        if (nEnemySpawnCountdown >= nEnemySpawnWait) {
+            spawnEnemy();
+            nEnemySpawnCountdown = 0;
+        }
+    }
+
     public void spawnEnemy(){
 
         enemies.add(new Basic(this, new Texture("themeDesert/tileBoundary.png"),
-                80, 80, 2));
+                80, 80, 2, 0.5f));
     }
 
     public Player getPlayer(){ return player; }

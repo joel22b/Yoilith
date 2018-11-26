@@ -25,9 +25,9 @@ public class ScrSetup implements Screen {
     Sprite sprBG;
     Button btnStart, btnBack;
     BitmapFont fontRed;
-    SelectionBox sbTheme, sbGun;
-    Texture[] txtThemeImages = new Texture[2], txtGunImages = new Texture[5];
-    String[] arsThemeReturns = new String[2], arsGunReturns = new String[5];
+    SelectionBox sbTheme, sbGun, sbDifficulty;
+    Texture[] txtThemeImages = new Texture[2], txtGunImages = new Texture[5], txtDifficultyImages = new Texture[5];
+    String[] arsThemeReturns = new String[2], arsGunReturns = new String[5], arsDifficultyReturns = new String[5];
 
     public ScrSetup (Main _main, ScrGame game){
         main = _main;
@@ -50,7 +50,7 @@ public class ScrSetup implements Screen {
         for (int i = 0; i < 2; i++) {
             txtThemeImages[i] = new Texture("theme" + arsThemeReturns[i] + "/themeImage.png");
         }
-        sbTheme = new SelectionBox(main.nWidth-400, 300, 300, 480, new Texture("selectionBackground.png"), "selectionButtonLeft.png", "selectionButtonRight.png", txtThemeImages, "Map Theme", arsThemeReturns);
+        sbTheme = new SelectionBox(main.nWidth-340, 300, 250, 400, new Texture("selectionBackground.png"), "selectionButtonLeft.png", "selectionButtonRight.png", txtThemeImages, "Map Theme", arsThemeReturns);
 
         arsGunReturns[0] = "pistol";
         arsGunReturns[1] = "smg";
@@ -60,7 +60,22 @@ public class ScrSetup implements Screen {
         for (int i = 0; i < 5; i++) {
             txtGunImages[i] = new Texture("themeSnow/themeImage.png");
         }
-        sbGun = new SelectionBox(main.nWidth-880, 300, 300, 480, new Texture("selectionBackground.png"), "selectionButtonLeft.png", "selectionButtonRight.png", txtGunImages, "Map Theme", arsGunReturns);
+        sbGun = new SelectionBox(main.nWidth-770, 300, 250, 400, new Texture("selectionBackground.png"), "selectionButtonLeft.png", "selectionButtonRight.png", txtGunImages, "Gun", arsGunReturns);
+
+        arsDifficultyReturns[0] = "Grondin";
+        txtDifficultyImages[0] = new Texture("Grondin.png");
+        arsDifficultyReturns[1] = "Easy";
+        txtDifficultyImages[1] = new Texture("thumbsUpGreen.png");
+        arsDifficultyReturns[2] = "Normal";
+        txtDifficultyImages[2] = new Texture("circleYellow.png");
+        arsDifficultyReturns[3] = "Hard";
+        txtDifficultyImages[3] = new Texture("thumbsDownRed.png");
+        arsDifficultyReturns[4] = "Give up";
+        txtDifficultyImages[4] = new Texture("skull.png");
+        sbDifficulty = new SelectionBox(main.nWidth-1200, 300, 250, 400,
+                new Texture("selectionBackground.png"), "selectionButtonLeft.png",
+                "selectionButtonRight.png", txtDifficultyImages, "Difficulty", arsDifficultyReturns);
+        sbDifficulty.setIndex(2);
     }
 
     @Override
@@ -80,11 +95,13 @@ public class ScrSetup implements Screen {
         // Draw Selection Boxes
         sbTheme.render(batch);
         sbGun.render(batch);
+        sbDifficulty.render(batch);
 
         // Checks if buttons are pressed
         checkButtons();
         sbTheme.checkButtons();
         sbGun.checkButtons();
+        sbDifficulty.checkButtons();
     }
 
     private void checkButtons(){ // Checks if Buttons are pressed
@@ -97,7 +114,11 @@ public class ScrSetup implements Screen {
         }
     }
 
+    public String getSbDifficultyReturn() { return sbDifficulty.getReturn(); }
+
     public String getSbGunReturn() { return sbGun.getReturn(); }
+
+    public String getSbThemeReturn() { return sbTheme.getReturn(); }
 
     public void setScrGame(ScrGame game) {
         this.game = game;
