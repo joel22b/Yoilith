@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.icsgame.game.Player;
+import com.icsgame.game.enemies.Enemy;
 import com.icsgame.game.weapons.projectiles.Explosive;
 import com.icsgame.game.weapons.projectiles.Projectile;
 import com.icsgame.screens.ScrGame;
@@ -33,13 +34,20 @@ public class ExplosiveLauncher extends Weapon {
         isPlayer = true;
     }
 
+    public ExplosiveLauncher(ScrGame game, Enemy enemy){
+        super();
+        this.game = game;
+        this.enemy = enemy;
+        isPlayer = false;
+    }
+
     @Override
     protected Projectile fireShot() {
-        // Set Width and Height of Explosive
+        // Set Width and Height of Bomber
         rectProjectile.setWidth(60);
         rectProjectile.setHeight(60);
 
-        // Create Explosive
+        // Create Bomber
         if (isPlayer) {
             return new Explosive(game, new Texture("extra/bomb.png"),
                     rectProjectile, vVelTemp, fSpeed, nDamage, nRange, nTime, 0);

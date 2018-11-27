@@ -78,7 +78,7 @@ public class Player {
         // Update Gun
         gun.update();
 
-        // Update Explosive Launcher
+        // Update Bomber Launcher
         explosiveLauncher.update();
 
         // Slowing Down

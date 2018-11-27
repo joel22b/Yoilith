@@ -145,7 +145,7 @@ public class ScrLineOfSight extends ScrGame {
                     // For Projectiles
                     for (int i = 0; i < projectiles.size(); i++){
                         if (rectCollision.isColliding(projectiles.get(i).getRect(), map.getTiles()[x][y].getRect())){
-                            if(projectiles.get(i).getClass() == Explosive.class) { // Checks if the Projectile is an Explosive
+                            if(projectiles.get(i).getClass() == Explosive.class) { // Checks if the Projectile is an Bomber
                                 projectiles.get(i).reverseDirection();
                             } else {
                                 killProjectile(i);
@@ -170,7 +170,7 @@ public class ScrLineOfSight extends ScrGame {
     public void spawnEnemy(){
 
         enemies.add(new Basic(this, new Texture("themeDesert/tileBoundary.png"),
-                80, 80, 2, 0.5f));
+                80, 80, 0.5f));
     }
 
     @Override

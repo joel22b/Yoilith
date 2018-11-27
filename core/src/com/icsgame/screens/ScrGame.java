@@ -7,8 +7,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.icsgame.Main;
 import com.icsgame.game.Player;
-import com.icsgame.game.enemies.Basic;
-import com.icsgame.game.enemies.Enemy;
+import com.icsgame.game.enemies.*;
 import com.icsgame.game.ui.PlayerInfo;
 import com.icsgame.game.utils.Camera;
 import com.icsgame.game.utils.InputManager;
@@ -18,6 +17,7 @@ import com.icsgame.game.weapons.projectiles.Explosive;
 import com.icsgame.game.weapons.projectiles.Projectile;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 /* ======================== ScrGame ================================
 Implements a Screen
@@ -29,6 +29,7 @@ public class ScrGame implements Screen {
 
     protected Main main;
     public SpriteBatch batch = new SpriteBatch();
+    protected Random random = new Random();
     public int nX = 0, nY = 0, nW = 20, nH = 20, nTileSize = 100;
 
     // Tick Rate / Frames Info
@@ -120,7 +121,7 @@ public class ScrGame implements Screen {
         // Projectiles Update
         for (int i = 0; i < projectiles.size(); i++){
             if(projectiles.get(i).update()){
-                if(projectiles.get(i).getClass() == Explosive.class) { // Checks if the Projectile is an Explosive
+                if(projectiles.get(i).getClass() == Explosive.class) { // Checks if the Projectile is an Bomber
                     Explosive explosive = (Explosive)projectiles.get(i);
                     explode(explosive.getRect(), explosive.getDamage(), explosive.getRange());
                 }
@@ -188,7 +189,7 @@ public class ScrGame implements Screen {
                     /*/ For Projectiles
                     for (int i = 0; i < projectiles.size(); i++){
                         if (rectCollision.isColliding(projectiles.get(i).getRect(), map.getTiles()[x][y].getRect())){
-                            if(projectiles.get(i).getClass() == Explosive.class) { // Checks if the Projectile is an Explosive
+                            if(projectiles.get(i).getClass() == Bomber.class) { // Checks if the Projectile is an Bomber
                                 projectiles.get(i).reverseDirection();
                             } else {
                                 killProjectile(i);
@@ -206,7 +207,7 @@ public class ScrGame implements Screen {
             // With Player
             if (projectiles.get(i).getTeam() != 0) {
                 //System.out.println("P: Team != 0");
-                if (projectiles.get(i).getClass() != Explosive.class) { // Checks if the Projectile is an Explosive
+                if (projectiles.get(i).getClass() != Explosive.class) { // Checks if the Projectile is an Bomber
                     //System.out.println("P: Not Bomb");
                     if (rectCollision.isColliding(projectiles.get(i).getRect(), player.getRect())) {
                         System.out.println("HIT PLAYER");
@@ -221,7 +222,7 @@ public class ScrGame implements Screen {
             for (int e = 0; e < enemies.size(); e++) {
                 if (projectiles.get(i).getTeam() != 1) {
                     //System.out.println("E: Team != 1");
-                    if (projectiles.get(i).getClass() != Explosive.class) { // Checks if the Projectile is an Explosive
+                    if (projectiles.get(i).getClass() != Explosive.class) { // Checks if the Projectile is an Bomber
                         //System.out.println("E: Not Bomb");
                         if (rectCollision.isColliding(projectiles.get(i).getRect(), enemies.get(e).getRect())) {
                             System.out.println("HIT ENEMY");
@@ -437,8 +438,20 @@ public class ScrGame implements Screen {
     }
 
     public void spawnEnemy(){
-        enemies.add(new Basic(this, new Texture("themeDesert/tileBoundary.png"),
-                80, 80, 2, fDifficulty));
+        int nRandom = random.nextInt(100);
+        if (nRandom < 10 && nRandom >= 0) {
+            enemies.add(new Bomber(this, new Texture("themeDesert/tileBoundary.png"),
+                    80, 80, fDifficulty));
+        } else if (nRandom < 30 && nRandom >= 10) {
+            enemies.add(new Brute(this, new Texture("themeDesert/tileBoundary.png"),
+                    80, 80, fDifficulty));
+        } else if (nRandom < 50 && nRandom >= 30) {
+            enemies.add(new Fast(this, new Texture("themeDesert/tileBoundary.png"),
+                    80, 80, fDifficulty));
+        } else {
+            enemies.add(new Basic(this, new Texture("themeDesert/tileBoundary.png"),
+                    80, 80, fDifficulty));
+        }
     }
 
     public Player getPlayer(){ return player; }
