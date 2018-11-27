@@ -190,6 +190,11 @@ public class Player {
         }
     }
 
+    public void setAllWeaponStrength(float fStrength) {
+        gun.scaleDamage(fStrength);
+        explosiveLauncher.scaleDamage(fStrength);
+    }
+
     public void useMelee() {
         melee.fire();
     }

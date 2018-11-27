@@ -57,6 +57,8 @@ public class ScrGame implements Screen {
                                             // and spawns and enemy
     protected int nEnemySpawnWait = 120; // Number of fraps between enemies spawn
 
+    protected float fDifficulty;
+
     // ====================== Hardcoded Variables =======================
     public int nNoSpawnPlayerRadius = 600;
     // ==================================================================
@@ -368,7 +370,19 @@ public class ScrGame implements Screen {
     }
 
     protected void setDifficulty(String sDifficulty) {
+        if (sDifficulty.equals("Grondin")) {
+            fDifficulty = 0.1f;
+        } else if (sDifficulty.equals("Easy")) {
+            fDifficulty = 2.0f;
+        } else if (sDifficulty.equals("Hard")) {
+            fDifficulty = 0.7f;
+        } else if (sDifficulty.equals("Give up")) {
+            fDifficulty = 1.0f;
+        } else {
+            fDifficulty = 0.4f;
+        }
 
+        player.setAllWeaponStrength((float)Math.pow(fDifficulty, (-1)));
     }
 
     public void killGame(){
@@ -423,9 +437,8 @@ public class ScrGame implements Screen {
     }
 
     public void spawnEnemy(){
-
         enemies.add(new Basic(this, new Texture("themeDesert/tileBoundary.png"),
-                80, 80, 2, 0.5f));
+                80, 80, 2, fDifficulty));
     }
 
     public Player getPlayer(){ return player; }
