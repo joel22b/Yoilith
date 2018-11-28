@@ -46,7 +46,7 @@ public abstract class Enemy {
 
         vVel = new Vector2();
         bar = new Bar("extra/red.png", "extra/green.png", getX(), getY()+rect.getHeight()+5, 20,
-                nHealth, nHealthMax, (float)(w/nHealthMax), false);
+                nHealth, nHealthMax, 1, false);
 
         spawnController();
     }

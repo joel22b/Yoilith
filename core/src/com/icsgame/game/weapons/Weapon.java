@@ -153,5 +153,8 @@ public abstract class Weapon {
         return bCanFire;
     }
 
-    public void scaleDamage(float fSrength) { nDamage = (int)(nDamage * fSrength);}
+    public void scaleDamage(float fSrength) {
+        nDamage = (int)(nDamage * fSrength);
+        nCooldown = (int)(nCooldown * Math.pow(fSrength, (-1)));
+    }
 }

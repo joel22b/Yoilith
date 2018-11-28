@@ -440,16 +440,16 @@ public class ScrGame implements Screen {
     public void spawnEnemy(){
         int nRandom = random.nextInt(100);
         if (nRandom < 10 && nRandom >= 0) {
-            enemies.add(new Bomber(this, new Texture("themeDesert/tileBoundary.png"),
+            enemies.add(new Bomber(this, new Texture("extra/red.png"),
                     80, 80, fDifficulty));
         } else if (nRandom < 30 && nRandom >= 10) {
-            enemies.add(new Brute(this, new Texture("themeDesert/tileBoundary.png"),
+            enemies.add(new Brute(this, new Texture("extra/blue.png"),
                     80, 80, fDifficulty));
         } else if (nRandom < 50 && nRandom >= 30) {
-            enemies.add(new Fast(this, new Texture("themeDesert/tileBoundary.png"),
+            enemies.add(new Fast(this, new Texture("extra/green.png"),
                     80, 80, fDifficulty));
         } else {
-            enemies.add(new Basic(this, new Texture("themeDesert/tileBoundary.png"),
+            enemies.add(new Basic(this, new Texture("extra/black.png"),
                     80, 80, fDifficulty));
         }
     }
