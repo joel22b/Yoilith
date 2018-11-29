@@ -9,6 +9,7 @@ import com.icsgame.Main;
 import com.icsgame.game.Player;
 import com.icsgame.game.enemies.*;
 import com.icsgame.game.ui.PlayerInfo;
+import com.icsgame.game.ui.ScoreUI;
 import com.icsgame.game.utils.Camera;
 import com.icsgame.game.utils.InputManager;
 import com.icsgame.game.map.MapMain;
@@ -45,6 +46,7 @@ public class ScrGame implements Screen {
 
     // Game UI
     protected PlayerInfo playerInfo;
+    protected ScoreUI scoreUI;
 
     // Player
     protected Player player;
@@ -73,6 +75,7 @@ public class ScrGame implements Screen {
         camera.setFollowBox(300, 200);
         input = new InputManager(this);
         playerInfo = new PlayerInfo(camera);
+        scoreUI = new ScoreUI(camera);
     }
 
     public void setupGame(){
@@ -156,6 +159,7 @@ public class ScrGame implements Screen {
 
         // Render UI
         playerInfo.render(batch);
+        scoreUI.render(batch);
     }
 
     protected void collisionDetection(){
@@ -374,16 +378,16 @@ public class ScrGame implements Screen {
         if (sDifficulty.equals("Grondin")) {
             fDifficulty = 0.1f;
         } else if (sDifficulty.equals("Easy")) {
-            fDifficulty = 2.0f;
+            fDifficulty = 0.3f;
         } else if (sDifficulty.equals("Hard")) {
             fDifficulty = 0.7f;
         } else if (sDifficulty.equals("Give up")) {
             fDifficulty = 1.0f;
         } else {
-            fDifficulty = 0.4f;
+            fDifficulty = 0.5f;
         }
 
-        player.setAllWeaponStrength((float)Math.pow(fDifficulty, (-1)));
+        player.setAllWeaponStrength((float)(Math.pow(fDifficulty, (-1))/2));
     }
 
     public void killGame(){
