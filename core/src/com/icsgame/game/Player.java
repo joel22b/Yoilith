@@ -27,7 +27,8 @@ public class Player {
     Gun gun;
     ExplosiveLauncher explosiveLauncher;
     int nHealthMax = 100, nHealth = nHealthMax, nBombsMax = 10, nBombs = nBombsMax;
-    Texture txtPlayer;
+    int nDir = 0;
+    Texture[] txtPlayer, txtPlayerHead;
     Sprite sprPlayerTop;
     //Polygon polyPlayerTop;
     Rectangle rect;
@@ -37,16 +38,21 @@ public class Player {
 
     public Player(ScrGame game, String playerFile, Rectangle rect, Vector2 vel){
         this.game = game;
-        this.txtPlayer = new Texture(playerFile+"/playerBody.png");
         this.rect = rect;
         this.vel = vel;
 
-        Texture txtHead = new Texture(playerFile+"/playerHead.png");
+        txtPlayer = new Texture[2];
+        txtPlayer[0] = new Texture(playerFile+"/playerBody.png");
+        txtPlayer[1] = new Texture(playerFile+"/playerBodyBack.png");
+
+        txtPlayerHead = new Texture[2];
+        txtPlayerHead[0] = new Texture(playerFile+"/playerHeadWPistol.png");
+        txtPlayerHead[1] = new Texture(playerFile+"/playerHeadBackWPistol.png");
 
         // Setup Head
-        sprPlayerTop = new Sprite(txtHead, (int)(getX()+(getW()/2)-20), (int)(getY()+((getH()/4)*3)-20),
+        sprPlayerTop = new Sprite(txtPlayerHead[0], (int)(getX()+(getW()/2)-20), (int)(getY()+((getH()/4)*3)-20),
                 (int)(getW()+40), (int)(getH()+40));
-        sprPlayerTop.setRegion(txtHead);
+        sprPlayerTop.setRegion(txtPlayerHead[0]);
 
         /*polyPlayerTop = new Polygon(new float[]{sprPlayerTop.getX(), sprPlayerTop.getY(),
                 sprPlayerTop.getX(), sprPlayerTop.getY()+sprPlayerTop.getHeight(),
@@ -66,7 +72,7 @@ public class Player {
         batch.begin();
 
         // Player Bottom
-        batch.draw(txtPlayer, getX(), getY(), getW(), getH());
+        batch.draw(txtPlayer[nDir], getX(), getY(), getW(), getH());
 
         // Player Top
         sprPlayerTop.draw(batch);
@@ -75,6 +81,17 @@ public class Player {
     }
 
     public void update(){
+        // Update nDir
+        if (nDir == 0) {
+            if (vel.angle() < 180) {
+                nDir = 1;
+            }
+        } else {
+            if (vel.angle() > 180) {
+                nDir = 0;
+            }
+        }
+
         // Update Gun
         gun.update();
 
@@ -92,6 +109,15 @@ public class Player {
         posMouse3D = game.getCamera().unProject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0));
         angleHead.set(posMouse3D.x-(sprPlayerTop.getX()+(sprPlayerTop.getWidth()/2)), posMouse3D.y-(sprPlayerTop.getY()+(sprPlayerTop.getHeight()/2)));
         sprPlayerTop.setRotation(angleHead.angle()+90);
+
+        // Update Head Texture
+        if (angleHead.angle() < 180) {
+            sprPlayerTop.setTexture(txtPlayerHead[1]);
+            sprPlayerTop.setRegion(txtPlayerHead[1]);
+        } else {
+            sprPlayerTop.setTexture(txtPlayerHead[0]);
+            sprPlayerTop.setRegion(txtPlayerHead[0]);
+        }
     }
 
     public void setupHealth(int nHealth, int nHealthMax){
