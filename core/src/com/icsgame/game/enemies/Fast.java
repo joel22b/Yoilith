@@ -8,8 +8,8 @@ public class Fast extends Enemy {
 
     Gun gun;
 
-    public Fast(ScrGame game, Texture txt, int w, int h, float fStrength) {
-        super(game, txt, w, h, 4, 10, 10, fStrength/2);
+    public Fast(ScrGame game, Texture txt, int w, int h, float fStrength, int nScoreIncrease) {
+        super(game, txt, w, h, 4, 10, 10, fStrength/2, nScoreIncrease);
         gun = new Gun(game, this);
         gun.loadType("pistol");
         gun.scaleDamage(fStrength);

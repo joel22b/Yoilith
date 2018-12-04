@@ -61,6 +61,9 @@ public class InputManager {
         if(Gdx.input.isKeyJustPressed(Input.Keys.U)){
             game.spawnEnemy();
         }
+        if(Gdx.input.isKeyJustPressed(Input.Keys.Y)){
+            game.increaseCombo();
+        }
     }
 
     private boolean esc(){

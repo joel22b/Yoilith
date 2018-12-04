@@ -396,6 +396,8 @@ public class ScrGame implements Screen {
         player = null;
         projectiles = null;
         enemies = null;
+        scoreUI.setScore(0);
+        scoreUI.resetCombo();
     }
 
     protected void killProjectile(int index){
@@ -404,6 +406,9 @@ public class ScrGame implements Screen {
     }
 
     protected void killEnemy(int index){
+        scoreUI.addScore(enemies.get(index).getScoreIncrease());
+        scoreUI.addCombo(1);
+
         enemies.get(index).dispose();
         enemies.remove(index);
     }
@@ -445,16 +450,16 @@ public class ScrGame implements Screen {
         int nRandom = random.nextInt(100);
         if (nRandom < 10 && nRandom >= 0) {
             enemies.add(new Bomber(this, new Texture("extra/red.png"),
-                    80, 80, fDifficulty));
+                    80, 80, fDifficulty, 20));
         } else if (nRandom < 30 && nRandom >= 10) {
             enemies.add(new Brute(this, new Texture("extra/blue.png"),
-                    80, 80, fDifficulty));
+                    80, 80, fDifficulty, 50));
         } else if (nRandom < 50 && nRandom >= 30) {
             enemies.add(new Fast(this, new Texture("extra/green.png"),
-                    80, 80, fDifficulty));
+                    80, 80, fDifficulty, 5));
         } else {
             enemies.add(new Basic(this, new Texture("extra/black.png"),
-                    80, 80, fDifficulty));
+                    80, 80, fDifficulty, 10));
         }
     }
 
@@ -467,6 +472,10 @@ public class ScrGame implements Screen {
     public Main getMain() { return main; }
 
     public MapMain getMap() { return map; }
+
+    public void increaseCombo() { scoreUI.addCombo(1); }
+
+    public void scoreComboSizeStart() { scoreUI.startComboSize(); }
 
     public RectCollision getRectCollision() {
         return rectCollision;

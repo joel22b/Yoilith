@@ -9,8 +9,8 @@ public class Bomber extends Enemy {
 
     ExplosiveLauncher explosiveLauncher;
 
-    public Bomber(ScrGame game, Texture txt, int w, int h, float fStrength) {
-        super(game, txt, w, h, 2, 50, 50, fStrength);
+    public Bomber(ScrGame game, Texture txt, int w, int h, float fStrength, int nScoreIncrease) {
+        super(game, txt, w, h, 2, 50, 50, fStrength, nScoreIncrease);
         explosiveLauncher = new ExplosiveLauncher(game, this);
         explosiveLauncher.loadType("explosive_launcher");
         explosiveLauncher.scaleDamage(fStrength);

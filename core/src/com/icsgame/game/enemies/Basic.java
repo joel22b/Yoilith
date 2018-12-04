@@ -9,8 +9,8 @@ public class Basic extends Enemy {
 
     Gun gun;
 
-    public Basic(ScrGame game, Texture txt, int w, int h, float fStrength) {
-        super(game, txt, w, h, 2, 30, 30, fStrength);
+    public Basic(ScrGame game, Texture txt, int w, int h, float fStrength, int nScoreIncrease) {
+        super(game, txt, w, h, 2, 30, 30, fStrength, nScoreIncrease);
         gun = new Gun(game, this);
         gun.loadType("smg");
         gun.scaleDamage(fStrength);
