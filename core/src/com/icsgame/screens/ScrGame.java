@@ -105,7 +105,7 @@ public class ScrGame implements Screen {
             renderGame();
         } else {
             // Kill game
-            main.changeScreen(0);
+            main.changeScreen(6);
             killGame();
         }
     }
@@ -480,6 +480,8 @@ public class ScrGame implements Screen {
     public RectCollision getRectCollision() {
         return rectCollision;
     }
+
+    public int getScore() { return scoreUI.getScore(); }
 
     @Override
     public void show() {

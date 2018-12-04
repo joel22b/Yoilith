@@ -19,6 +19,7 @@ public class Main extends Game {
 	public ScrSetup scrSetup;
 	public ScrGame scrScrGame;
 	public ScrLineOfSight scrScrLineOfSight;
+	ScrDeath scrDeath;
 
 	// Width and Height Of Screen
 	public int nWidth, nHeight;
@@ -33,6 +34,7 @@ public class Main extends Game {
 		scrScratch = new ScrScratch(this);
 		scrScrGame = new ScrGame(this);
 		scrScrLineOfSight = new ScrLineOfSight(this);
+		scrDeath = new ScrDeath(this);
 
 		scrSetup = new com.icsgame.screens.ScrSetup(this, scrScrGame);
 		changeScreen(0);
@@ -76,6 +78,10 @@ public class Main extends Game {
 				scrScrLineOfSight.setupGame();
 				setScreen(scrScrLineOfSight);
 				break;
+			case 6:
+				// Game Over
+				scrDeath.setScore(scrScrGame.getScore());
+				setScreen(scrDeath);
 			default:
 				break;
 		}

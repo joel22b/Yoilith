@@ -123,6 +123,8 @@ public class ScoreUI {
 
     public void setScore(int nScore) { this.nScore = nScore; }
 
+    public int getScore() { return nScore; }
+
     public void addCombo(int nAdd) {
         nCombo += nAdd;
         nComboTimeCount = 0;
