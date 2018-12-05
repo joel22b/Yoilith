@@ -448,17 +448,17 @@ public class ScrGame implements Screen {
 
     public void spawnEnemy(){
         int nRandom = random.nextInt(100);
-        if (nRandom < 10 && nRandom >= 0) {
-            enemies.add(new Bomber(this, new Texture("extra/red.png"),
+        if (nRandom < 10 && nRandom >= 0) { // Bomber
+            enemies.add(new Bomber(this, new Texture("enemies/enemyBombardier.png"),
                     80, 80, fDifficulty, 20));
-        } else if (nRandom < 30 && nRandom >= 10) {
-            enemies.add(new Brute(this, new Texture("extra/blue.png"),
+        } else if (nRandom < 30 && nRandom >= 10) { // Brute
+            enemies.add(new Brute(this, new Texture("enemies/enemyAlex.png"),
                     80, 80, fDifficulty, 50));
-        } else if (nRandom < 50 && nRandom >= 30) {
-            enemies.add(new Fast(this, new Texture("extra/green.png"),
+        } else if (nRandom < 50 && nRandom >= 30) { // Fast
+            enemies.add(new Fast(this, new Texture("enemies/enemySpider.png"),
                     80, 80, fDifficulty, 5));
-        } else {
-            enemies.add(new Basic(this, new Texture("extra/black.png"),
+        } else { // Normal
+            enemies.add(new Basic(this, new Texture("enemies/enemyGuck.png"), // Guck is from Ethan Plant
                     80, 80, fDifficulty, 10));
         }
     }
