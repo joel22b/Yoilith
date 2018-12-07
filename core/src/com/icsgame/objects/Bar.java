@@ -70,4 +70,9 @@ public class Bar {
         this.nValue = nValue;
         this.nMax = nMax;
     }
+
+    public void update(int nValue, int nMax) {
+        this.nValue = nValue;
+        this.nMax = nMax;
+    }
 }

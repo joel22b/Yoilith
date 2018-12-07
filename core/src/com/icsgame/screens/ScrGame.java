@@ -16,6 +16,7 @@ import com.icsgame.game.map.MapMain;
 import com.icsgame.game.utils.RectCollision;
 import com.icsgame.game.weapons.projectiles.Explosive;
 import com.icsgame.game.weapons.projectiles.Projectile;
+import com.icsgame.soundEngine.SoundEngine;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -43,6 +44,7 @@ public class ScrGame implements Screen {
     protected Camera camera;
     protected InputManager input;
     protected RectCollision rectCollision;
+    protected SoundEngine soundEngine;
 
     // Game UI
     protected PlayerInfo playerInfo;
@@ -76,6 +78,7 @@ public class ScrGame implements Screen {
         input = new InputManager(this);
         playerInfo = new PlayerInfo(camera);
         scoreUI = new ScoreUI(camera);
+        soundEngine = new SoundEngine();
     }
 
     public void setupGame(){
@@ -111,6 +114,9 @@ public class ScrGame implements Screen {
     }
 
     protected void update(){
+        // Update audio
+        soundEngine.update();
+
         //Player Update
         player.update();
 
@@ -482,6 +488,8 @@ public class ScrGame implements Screen {
     }
 
     public int getScore() { return scoreUI.getScore(); }
+
+    public SoundEngine getSoundEngine() { return soundEngine; }
 
     @Override
     public void show() {

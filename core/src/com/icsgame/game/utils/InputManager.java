@@ -64,6 +64,9 @@ public class InputManager {
         if(Gdx.input.isKeyJustPressed(Input.Keys.Y)){
             game.increaseCombo();
         }
+        if(Gdx.input.isKeyJustPressed(Input.Keys.C)){
+            game.getSoundEngine().nextSong();
+        }
     }
 
     private boolean esc(){
