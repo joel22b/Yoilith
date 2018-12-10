@@ -22,16 +22,20 @@ public class SoundEngine {
 
         // Load Background Music
         nSong = 0;
-        music = new Music[2];
-        arnMusicPlayed = new int[2];
+        music = new Music[6];
+        arnMusicPlayed = new int[6];
         clearMusicHistory();
 
         music[0] = Gdx.audio.newMusic(Gdx.files.internal("audio/bobaBox.mp3"));
         music[1] = Gdx.audio.newMusic(Gdx.files.internal("audio/electroman.mp3"));
+        music[2] = Gdx.audio.newMusic(Gdx.files.internal("audio/background1.mp3"));
+        music[3] = Gdx.audio.newMusic(Gdx.files.internal("audio/background2.mp3"));
+        music[4] = Gdx.audio.newMusic(Gdx.files.internal("audio/background3.mp3"));
+        music[5] = Gdx.audio.newMusic(Gdx.files.internal("audio/background4.mp3"));
         //music[2] = Gdx.audio.newMusic(Gdx.files.internal("audio/"));
 
         // Set Volumes
-        setMusicVolume(1.0f);
+        setVolMusic(1.0f);
         fVolSound = 1.0f;
     }
 
@@ -41,9 +45,7 @@ public class SoundEngine {
         }
     }
 
-    public void setMusicVolume(float fVolMusic) {
-        this.fVolMusic = fVolMusic;
-
+    public void setMusicVolume() {
         for (int i = 0; i < music.length; i++) {
             music[i].setVolume(this.fVolMusic);
         }
@@ -71,9 +73,18 @@ public class SoundEngine {
 
     public float getVolMusic() { return fVolMusic; }
 
-    public void setVolMusic(float fVolMusic) { this.fVolMusic = fVolMusic; }
+    public void setVolMusic(float fVolMusic) {
+        this.fVolMusic = fVolMusic;
+        setMusicVolume();
+    }
+
+    public void addVolMusic(float fVolMusic) {
+        setVolMusic(getVolMusic()+fVolMusic);
+    }
 
     public float getVolSound() { return fVolSound; }
 
     public void setVolSound(float fVolSound) { this.fVolSound = fVolSound; }
+
+    public void addVolSound(float fVolSound) { this.fVolSound += fVolSound; }
 }
