@@ -287,6 +287,9 @@ public class ScrGame implements Screen {
     }
 
     protected void explode(Rectangle rect, int nDamage, int nRange){
+        // Play Explosion Sound
+        soundEngine.playExplosion();
+
         // Distance from bomb
         int nDist;
         // Center location of object

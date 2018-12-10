@@ -47,6 +47,9 @@ public class Gun extends Weapon {
         rectProjectile.setWidth(20);
         rectProjectile.setHeight(20);
 
+        // Play sound
+        game.getSoundEngine().playGunShot();
+
         // Create Bullet
         if (isPlayer) {
             return new Bullet(game, new Texture("bullet.png"),

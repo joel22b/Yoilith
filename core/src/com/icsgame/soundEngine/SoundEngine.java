@@ -3,6 +3,7 @@ package com.icsgame.soundEngine;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 public class SoundEngine {
@@ -14,6 +15,8 @@ public class SoundEngine {
 
     // Background Music
     Music[] music;
+    ArrayList<Music> sounds;
+    String sGunShot, sExplosion;
     int[] arnMusicPlayed;
     int nSong;
 
@@ -34,14 +37,27 @@ public class SoundEngine {
         music[5] = Gdx.audio.newMusic(Gdx.files.internal("audio/background4.mp3"));
         //music[2] = Gdx.audio.newMusic(Gdx.files.internal("audio/"));
 
+        // Load Sounds
+        sounds = new ArrayList<>();
+
+        sGunShot = "audio/gunShot.mp3";
+        sExplosion = "audio/explosion.mp3";
+
         // Set Volumes
         setVolMusic(1.0f);
-        fVolSound = 1.0f;
+        setVolSound(1.0f);
     }
 
     public void update() {
         if (!music[nSong].isPlaying()) {
             nextSong();
+        }
+
+        for (int i = 0; i < sounds.size(); i++) {
+            if (!sounds.get(i).isPlaying()) {
+                sounds.remove(i);
+                i--;
+            }
         }
     }
 
@@ -84,7 +100,22 @@ public class SoundEngine {
 
     public float getVolSound() { return fVolSound; }
 
-    public void setVolSound(float fVolSound) { this.fVolSound = fVolSound; }
+    public void setVolSound(float fVolSound) {
+        this.fVolSound = fVolSound;
+    }
 
-    public void addVolSound(float fVolSound) { this.fVolSound += fVolSound; }
+    public void addVolSound(float fVolSound) {
+        setVolSound(getVolSound()+fVolSound);
+    }
+
+    private void addSound(String soundFile) {
+        Music sound = Gdx.audio.newMusic(Gdx.files.internal(soundFile));
+        sounds.add(sound);
+        sounds.get(sounds.size()-1).setVolume(fVolSound);
+        sounds.get(sounds.size()-1).play();
+    }
+
+    public void playGunShot() { addSound(sGunShot); }
+
+    public void playExplosion() { addSound(sExplosion); }
 }
