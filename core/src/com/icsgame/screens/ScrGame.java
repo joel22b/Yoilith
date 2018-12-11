@@ -16,7 +16,7 @@ import com.icsgame.game.map.MapMain;
 import com.icsgame.game.utils.RectCollision;
 import com.icsgame.game.weapons.projectiles.Explosive;
 import com.icsgame.game.weapons.projectiles.Projectile;
-import com.icsgame.soundEngine.SoundEngine;
+import com.icsgame.game.utils.SoundEngine;
 
 import java.util.ArrayList;
 import java.util.Random;

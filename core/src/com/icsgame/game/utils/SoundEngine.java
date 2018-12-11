@@ -1,4 +1,4 @@
-package com.icsgame.soundEngine;
+package com.icsgame.game.utils;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;

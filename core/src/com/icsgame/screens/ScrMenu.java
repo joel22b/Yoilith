@@ -10,7 +10,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.icsgame.Main;
 import com.icsgame.objects.Bar;
 import com.icsgame.objects.Button;
-import com.icsgame.soundEngine.SoundEngine;
 
 /* ======================== ScrMenu ================================
 Implements a Screen
