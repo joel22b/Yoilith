@@ -29,11 +29,11 @@ public class Main extends Game {
 		nWidth = Gdx.graphics.getWidth();
 		nHeight = Gdx.graphics.getHeight();
 
-		scrMenu = new ScrMenu(this);
 		scrHighscores = new ScrHighscores(this);
 		scrScratch = new ScrScratch(this);
 		scrScrGame = new ScrGame(this);
 		scrScrLineOfSight = new ScrLineOfSight(this);
+		scrMenu = new ScrMenu(this);
 		scrDeath = new ScrDeath(this);
 
 		scrSetup = new com.icsgame.screens.ScrSetup(this, scrScrGame);

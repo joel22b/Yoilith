@@ -136,4 +136,6 @@ public class Camera {
     public float getW() { return camera.viewportWidth; }
 
     public float getH() { return camera.viewportHeight; }
+
+    public OrthographicCamera getCamera() { return camera; }
 }

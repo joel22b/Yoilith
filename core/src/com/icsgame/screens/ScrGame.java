@@ -8,6 +8,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.icsgame.Main;
 import com.icsgame.game.Player;
 import com.icsgame.game.enemies.*;
+import com.icsgame.game.ui.AudioPanel;
 import com.icsgame.game.ui.PlayerInfo;
 import com.icsgame.game.ui.ScoreUI;
 import com.icsgame.game.utils.Camera;
@@ -49,6 +50,7 @@ public class ScrGame implements Screen {
     // Game UI
     protected PlayerInfo playerInfo;
     protected ScoreUI scoreUI;
+    protected AudioPanel audioPanel;
 
     // Player
     protected Player player;
@@ -79,6 +81,7 @@ public class ScrGame implements Screen {
         playerInfo = new PlayerInfo(camera);
         scoreUI = new ScoreUI(camera);
         soundEngine = new SoundEngine();
+        audioPanel = new AudioPanel(this, main.nWidth-240, 20, "white", true);
     }
 
     public void setupGame(){
@@ -166,6 +169,8 @@ public class ScrGame implements Screen {
         // Render UI
         playerInfo.render(batch);
         scoreUI.render(batch);
+        audioPanel.setPosition(new Vector2(camera.getX()+(camera.getW()/2)-240, camera.getY()-(camera.getH()/2)+20));
+        audioPanel.update(batch);
     }
 
     protected void collisionDetection(){

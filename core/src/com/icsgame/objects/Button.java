@@ -1,10 +1,13 @@
 package com.icsgame.objects;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 
 /* ======================== Button ================================
 Extends a Sprite
@@ -69,6 +72,25 @@ public class Button extends Sprite{
         if(bCanClick){
             if(Gdx.input.justTouched()){
                 if(isMousedOver()){
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public boolean isMousedOver(OrthographicCamera camera){ // Checks if the mouse is over the button, not whether the mouse was clicked with camera support
+        Vector3 vMouse = camera.unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0));
+        if(rect.contains(vMouse.x, vMouse.y)){
+            return true;
+        }
+        return false;
+    }
+
+    public boolean justClicked(OrthographicCamera camera){ // Checks if the button was just clicked with camera support
+        if(bCanClick){
+            if(Gdx.input.justTouched()){
+                if(isMousedOver(camera)){
                     return true;
                 }
             }
