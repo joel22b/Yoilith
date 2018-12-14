@@ -36,20 +36,20 @@ public class Player {
     Vector2 vel, angleHead = new Vector2();
     Vector3 posMouse3D;
     int nActiveWeapon = 0, nWeaponNum = 2; // The Weapon that is currently in use
-    //Animator animator;
+    Animator animator;
 
     public Player(ScrGame game, String playerFile, Rectangle rect, Vector2 vel){
         this.game = game;
         this.rect = rect;
         this.vel = vel;
 
-        //animator = new Animator(new Texture(playerFile+"/playerSheet.png"), 4, 5);
-        //animator.setPosition(getX(), getY());
-        //animator.setSize(getW(), getH());
+        animator = new Animator(new Texture(playerFile+"/playerSheet.png"), 4, 4);
+        animator.setPosition(getX(), getY());
+        animator.setSize(getW(), getH());
 
-        txtPlayer = new Texture[2];
-        txtPlayer[0] = new Texture(playerFile+"/playerBody.png");
-        txtPlayer[1] = new Texture(playerFile+"/playerBodyBack.png");
+        //txtPlayer = new Texture[2];
+        //txtPlayer[0] = new Texture(playerFile+"/playerBody.png");
+        //txtPlayer[1] = new Texture(playerFile+"/playerBodyBack.png");
 
         txtPlayerHead = new Texture[2];
         txtPlayerHead[0] = new Texture(playerFile+"/playerHeadWPistol.png");
@@ -75,12 +75,12 @@ public class Player {
     }
 
     public void render(SpriteBatch batch){
-        //animator.draw(batch, nDir);
+        animator.draw(batch, nDir, ((vel.x > 0.5f || vel.x < -0.5f)||(vel.y > 0.5f || vel.y < -0.5f)));
 
         batch.begin();
 
         // Player Bottom
-        batch.draw(txtPlayer[nDir], getX(), getY(), getW(), getH());
+        //batch.draw(txtPlayer[nDir], getX(), getY(), getW(), getH());
 
         // Player Top
         sprPlayerTop.draw(batch);
@@ -92,7 +92,7 @@ public class Player {
         // Update nDir
         if (nDir == 0) {
             if (vel.angle() < 180) {
-                nDir = 1;
+                nDir = 2;
             }
         } else {
             if (vel.angle() > 180) {
@@ -101,7 +101,7 @@ public class Player {
         }
 
         // Update animator
-        //animator.setPosition(getX(), getY());
+        animator.setPosition(getX(), getY());
 
         // Update Gun
         gun.update();

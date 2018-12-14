@@ -42,9 +42,11 @@ public class Animator {
         vSize.set(fW, fH);
     }
 
-    public void draw(SpriteBatch batch, int nAnimation) {
-        // Get the time passed
-        fElapsedTime += Gdx.graphics.getDeltaTime();
+    public void draw(SpriteBatch batch, int nAnimation, boolean bAnimate) {
+        if (bAnimate) {
+            // Get the time passed
+            fElapsedTime += Gdx.graphics.getDeltaTime();
+        }
 
         // Draw the correct animation
         batch.begin();
