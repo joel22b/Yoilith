@@ -128,6 +128,10 @@ public abstract class Weapon {
                     game.getProjectiles().add(fireShot());
                 }
             }
+        } else {
+            if (!hasAmmo() && !bReloading) {
+                reload();
+            }
         }
     }
 
@@ -136,9 +140,11 @@ public abstract class Weapon {
     public abstract void loadType(String sType);
 
     public void reload() {
-        bReloading = true;
-        bCanFire = false;
-        nAmmo = 0;
+        if (!bReloading) {
+            bReloading = true;
+            bCanFire = false;
+            nAmmo = 0;
+        }
     }
 
     public boolean isReloading() { return bReloading; }
