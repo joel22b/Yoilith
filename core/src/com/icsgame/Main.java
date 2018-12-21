@@ -16,6 +16,7 @@ public class Main extends Game {
 	ScrMenu scrMenu;
 	ScrHighscores scrHighscores;
 	ScrScratch scrScratch;
+	ScrInstruct scrInstruct;
 	public ScrSetup scrSetup;
 	public ScrGame scrScrGame;
 	public ScrLineOfSight scrScrLineOfSight;
@@ -31,6 +32,7 @@ public class Main extends Game {
 
 		scrHighscores = new ScrHighscores(this);
 		scrScratch = new ScrScratch(this);
+		scrInstruct = new ScrInstruct(this);
 		scrScrGame = new ScrGame(this);
 		scrScrLineOfSight = new ScrLineOfSight(this);
 		scrMenu = new ScrMenu(this);
@@ -82,6 +84,9 @@ public class Main extends Game {
 				// Game Over
 				scrDeath.setScore(scrScrGame.getScore());
 				setScreen(scrDeath);
+			case 7:
+				// Instructions
+				setScreen(scrInstruct);
 			default:
 				break;
 		}

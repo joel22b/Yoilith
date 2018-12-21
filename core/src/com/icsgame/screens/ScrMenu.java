@@ -23,7 +23,7 @@ public class ScrMenu implements Screen {
     SpriteBatch batch;
     Texture txtBG;
     Sprite sprBG;
-    Button btnStart, btnHighscores, btnScratch;
+    Button btnStart, btnHighscores, btnInstruct, btnScratch;
     AudioPanel audioPanel;
 
     public ScrMenu (Main _main){
@@ -36,6 +36,8 @@ public class ScrMenu implements Screen {
         btnStart = new Button(main.nWidth/2-300, 330, 600, 216, "btnStart.png", "btnStartPressed.png", "Blank.png");
         btnHighscores = new Button(main.nWidth/2-300, 60, 600, 216, "btnHighscores.png", "btnHighscoresPressed.png", "Blank.png");
         btnScratch = new Button(main.nWidth-275, 60, 215, 136, "btnScratch.png", "btnScratchPressed.png", "Blank.png");
+        btnInstruct = new Button(main.nWidth-150, main.nHeight-150, 100, 100, "extra/btnHelp.png",
+                "extra/btnHelpPressed.png", "Blank.png");
 
         audioPanel = new AudioPanel(main.scrScrGame, 20, 20, "white", false);
     }
@@ -53,6 +55,7 @@ public class ScrMenu implements Screen {
         btnStart.update(batch);
         btnHighscores.update(batch);
         btnScratch.update(batch);
+        btnInstruct.update(batch);
 
         audioPanel.update(batch);
 
@@ -69,6 +72,9 @@ public class ScrMenu implements Screen {
         }
         if(btnScratch.justClicked()){
             main.changeScreen(4);
+        }
+        if(btnInstruct.justClicked()){
+            main.changeScreen(7);
         }
     }
 

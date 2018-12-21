@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.icsgame.Main;
 import com.icsgame.objects.Button;
+import com.icsgame.objects.Instruction;
 
 public class ScrInstruct implements Screen {
 
@@ -18,6 +19,8 @@ public class ScrInstruct implements Screen {
     Sprite sprBG;
     Button btnBack;
     BitmapFont font;
+
+    Instruction[] arInstructions;
 
     public ScrInstruct(Main main) {
         this.main = main;
@@ -32,6 +35,11 @@ public class ScrInstruct implements Screen {
         // Create Font
         font = new BitmapFont(Gdx.files.internal("fontHighscores.fnt"));
         font.setColor(Color.YELLOW);
+
+        // Set up Instructons
+        arInstructions = new Instruction[1];
+
+        arInstructions[0] = new Instruction(100, 100, 100, 100, "movement");
     }
 
     @Override
