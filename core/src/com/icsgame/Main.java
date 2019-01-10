@@ -84,9 +84,11 @@ public class Main extends Game {
 				// Game Over
 				scrDeath.setScore(scrScrGame.getScore());
 				setScreen(scrDeath);
+				break;
 			case 7:
 				// Instructions
 				setScreen(scrInstruct);
+				break;
 			default:
 				break;
 		}
