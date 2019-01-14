@@ -59,6 +59,7 @@ public class Main extends Game {
 				break;
 			case 1:
 				// Highscores
+				scrHighscores.loadHighscores();
 				setScreen(scrHighscores);
 				break;
 			case 2:

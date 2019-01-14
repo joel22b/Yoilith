@@ -10,6 +10,9 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.icsgame.Main;
 import com.icsgame.objects.Button;
 
+import java.io.*;
+import java.util.Properties;
+
 public class ScrDeath implements Screen {
 
     Main main;
@@ -20,6 +23,7 @@ public class ScrDeath implements Screen {
     BitmapFont font, fontBig, fontBigBack;
 
     int nScore = 0;
+    String sName = "";
 
     public ScrDeath(Main main) {
         this.main = main;
@@ -72,6 +76,40 @@ public class ScrDeath implements Screen {
             main.changeScreen(2);
         }
     }
+
+    /*public void saveToFile(){
+        int[] arnScores = new int[10];
+
+        Properties prop = new Properties();
+        InputStream input = null;
+        OutputStream output = null;
+
+        try {
+            input = new FileInputStream("libs/highscores.properties");
+            output = new FileOutputStream("libs/highscores.properties");
+
+            // set the properties value
+            prop.setProperty("guiScale", Float.toString(guiScale));
+            prop.setProperty("volumeGlobal", Float.toString(volumeGlobal));
+            prop.setProperty("volumeMusic", Float.toString(volumeMusic));
+            prop.setProperty("volumeSound", Float.toString(volumeSound));
+
+            // save properties to project root folder
+            prop.store(output, null);
+
+        } catch (IOException io) {
+            io.printStackTrace();
+        } finally {
+            if (output != null) {
+                try {
+                    output.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+
+        }
+    }*/
 
     public void setScore(int nScore) { this.nScore = nScore; }
 
